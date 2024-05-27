@@ -1,30 +1,38 @@
-import { FIREBASE_AUTH } from "@/FireBaseConfig";
+// import React from 'react';
 import { Stack } from "expo-router";
-import { onAuthStateChanged } from "firebase/auth";
-import { useEffect, useState } from "react";
+import { AuthProvider, useAuth } from '../context/AuthContext';
+import { View, ActivityIndicator } from 'react-native';
+import React from 'react';
 
-export default function RootLayout() {
-  const [user, setUser] = useState(null);
+const AuthStack = () => {
+  const { user, loading } = useAuth();
 
-  useEffect(() => {
-    onAuthStateChanged(FIREBASE_AUTH, (user) => {
-      setUser(user);
-    });
-  }, []);
-
-  return (
-    <Stack>
-      { user ? (
-          <Stack.Screen 
-            name="index" 
-            options={{ headerShown: false }}/>
+  if (loading) {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <ActivityIndicator size="large" color="#0000ff" />
+      </View>
+    );
+  } else {
+    console.log('hello');
+    return (
+      <Stack>
+        {user ? (
+          <Stack.Screen name="home" options={{ headerShown: false }} />
         ) : (
-          <Stack.Screen 
-            name="(Home)" 
-            options={{ headerShown: false }}/>
-        )
-      }
-       
-    </Stack>
+          <Stack.Screen name="login" options={{ headerShown: false }} />
+        )}
+      </Stack>
+    );
+  }
+};
+
+const RootLayout = () => {
+  return (
+    <AuthProvider>
+      <AuthStack />
+    </AuthProvider>
   );
 }
+
+export default RootLayout;

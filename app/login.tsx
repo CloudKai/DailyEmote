@@ -1,10 +1,11 @@
-import { FIREBASE_AUTH } from '@/FireBaseConfig';
+import { getAuth } from 'firebase/auth';
 import { useState, useLayoutEffect } from 'react';
 import { View, Text, TextInput, ActivityIndicator, Button } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import styles from '../../styles/globalStyles';
+import styles from '../styles/globalStyles';
 import { createUserWithEmailAndPassword, sendPasswordResetEmail, signInWithEmailAndPassword } from 'firebase/auth';
 import { Link, useRouter } from 'expo-router';
+import React from 'react';
 
 /**
  * Log-in page that will be displayed when app is first opened.
@@ -14,10 +15,8 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
-  const auth = FIREBASE_AUTH;
+  const auth = getAuth();
   const router = useRouter();
-
-  // console.log(auth);
 
   /**
    * layout formatter of the header
@@ -32,16 +31,16 @@ const Login = () => {
   /**
    * function when 'Login' Button is pressed
    */
-  const logIn = () => {
+  const logIn = async () => {
     setLoading(true);
     try {
-      const response = signInWithEmailAndPassword(auth, email, password);
+      const response = await signInWithEmailAndPassword(auth, email, password);
       // console.log(response);
-      router.replace('../Home/Home_Page');
+      router.replace('./home');
     } catch (error: any) {
       console.log(error);
       alert('Sign in failed: ' + error.message)
-    } finally {
+    } finally { 
       setLoading(false);
     }
   }
@@ -55,7 +54,7 @@ const Login = () => {
       const response = await createUserWithEmailAndPassword(auth, email, password);
       console.log(response);
       alert('Check your email!');
-      router.replace('../Home/Home_Page');
+      router.replace('./home');
     } catch (error: any) {
       console.log(error);
       alert('Sign up failed: ' + error.message)
