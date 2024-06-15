@@ -1,6 +1,6 @@
 import { View, Text, TextInput, ActivityIndicator, Button, KeyboardAvoidingView, Alert } from 'react-native';
 import { styles } from '../../styleSheets/Styles';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FIREBASE_AUTH } from '../../FireBaseConfig';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { useNavigation, useRouter } from 'expo-router';
@@ -14,29 +14,52 @@ const signin = () => {
   const auth = FIREBASE_AUTH;
 
   /**
+   * Check if user is logged in
+  */
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged(user => {
+      if (user) {
+        router.push({pathname: '../(drawer)/(screens)/home'});
+      }
+    })
+
+    return unsubscribe;
+  }, [])
+
+  /**
    * function when 'Login' Button is pressed
-   */
+  */
   const logIn = async () => {
 
     setLoading(true);
     
     try {
       const response = await signInWithEmailAndPassword(auth, email, password);
-      router.navigate('/home');
+      console.log('Logged in with:', response.user?.email);
+
     } catch (error: any) {
-      //console.log(error);
-      Alert.alert('Sign in failed: ' + error.message)
+      let msg = error.message;
+      if (msg.includes('(auth/invalid-email)')) {
+        Alert.alert('Invalid email', 'Re-enter a valid email');
+      } else if (msg.includes('(auth/invalid-credential)')) {
+        Alert.alert('Invalid credentials', 'Wrong credentials');
+      } else {
+        Alert.alert(msg);
+      }
+
     } finally { 
       setLoading(false);
-      this.textInput.clear();
     }
   }
 
+  /**
+   * UI Design
+  */
   return (
-    <View style={styles.container}>
+    <View className = "flex-1 items-center justify-center bg-primary">
       <KeyboardAvoidingView behavior="padding">
         <Text style={{fontWeight: "bold", textAlign: 'center', color: 'white', fontSize: 30, marginBottom: 50}}>
-          EmoteDaily
+          DailyEmote
         </Text>
 
         <TextInput 
@@ -50,8 +73,7 @@ const signin = () => {
           style={styles.textInput} 
           placeholder='Password' 
           onChangeText={(text) => setPassword(text)}
-          secureTextEntry={true} 
-          ref={input => { this.textInput = input }} />
+          secureTextEntry={true} />
 
         { loading ? (
           <ActivityIndicator size="large" color="#0000ff"/>
@@ -65,9 +87,9 @@ const signin = () => {
               <Text style={{color: 'white', fontSize: 17, textAlign: 'center'}}>
                 Don't have an account? {" "}
 
-                <Text style = {{textDecorationLine: 'underline', marginLeft: 50, color: '#FF0' }} 
+                <Text style = {{color: '#FF0'}} 
                     onPress={() => {router.navigate("/signup") }}>
-                  sign up
+                  Sign Up
                 </Text>
 
               </Text>
