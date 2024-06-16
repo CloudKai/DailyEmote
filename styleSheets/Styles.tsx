@@ -20,4 +20,10 @@ export const styles = StyleSheet.create({
     padding: 10,
     backgroundColor: '#fff',
   },
+
+  button: {
+    borderRadius: 20,
+    padding: 10,
+    elevation: 2
+  },
 });
