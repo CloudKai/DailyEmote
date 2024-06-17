@@ -3,40 +3,19 @@ import DateTimePicker, {
   DateTimePickerEvent,
 } from "@react-native-community/datetimepicker";
 import React, { useState } from "react";
-import { entryData, homeStyles } from "./home";
+import { entryData, homeStyles } from "../(screens)/home";
 import { router } from "expo-router";
 import { addDoc, collection } from "firebase/firestore";
 import { FIREBASE_DB } from "../../../FireBaseConfig";
 import { colors } from "../../../styleSheets/Styles";
 
-const create = () => {
+const editEntry = () => {
   const [title, setTitle] = useState("");
   const [textEntry, setTextEntry] = useState("");
   const [date, setDate] = useState(new Date());
   const [dateModal, setDateModal] = useState(false);
   const [loading, setLoading] = useState(true);
   const [entries, setEntries] = useState([] as entryData[]);
-
-  const addEntry = async () => {
-    try {
-      const entriesRef = collection(FIREBASE_DB, "entries");
-      const { year, month, day } = formatDate(date);
-      const document = await addDoc(entriesRef, {
-        title: title,
-        isHappy: false,
-        year: year,
-        month: month,
-        day: day,
-        textEntry: textEntry,
-      });
-      console.log("Document written with ID: ", document.id);
-      setTitle("");
-      setTextEntry("");
-      router.back();
-    } catch (e) {
-      console.error("Error adding document: ", e);
-    }
-  };
 
   const onDateChange = (event: DateTimePickerEvent, selectedDate?: Date) => {
     const currentDate = selectedDate || date;
@@ -133,7 +112,7 @@ const create = () => {
                 backgroundColor: colors.button, //Color: Light Blue
               },
             ]}
-            onPress={addEntry}
+            onPress={() => {}}
           >
             <Text style={homeStyles.text}>Add Entry</Text>
           </Pressable>
@@ -154,4 +133,4 @@ const create = () => {
   );
 };
 
-export default create;
+export default editEntry;

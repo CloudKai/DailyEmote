@@ -1,13 +1,25 @@
-import { StyleSheet, View, Text, Button, Image, TouchableOpacity, Pressable, Modal, ActivityIndicator, FlatList, TouchableWithoutFeedback, } from 'react-native'
-import { useNavigation, useRouter } from 'expo-router';
+import {
+  StyleSheet,
+  View,
+  Text,
+  Button,
+  Image,
+  TouchableOpacity,
+  Pressable,
+  Modal,
+  ActivityIndicator,
+  FlatList,
+  TouchableWithoutFeedback,
+} from "react-native";
+import { useNavigation, useRouter } from "expo-router";
 import { Calendar } from "react-native-calendars";
-import { FIREBASE_AUTH, FIREBASE_DB } from '../../../FireBaseConfig';
-import { styles, colors } from '../../../styleSheets/Styles';
-import { ProfileTab } from '../../../components/ProfileTab';
-import Entry from '../../../components/displayModalEntry';
-import React, { useState } from 'react';
-import { collection, getDocs } from 'firebase/firestore';
-import { ScrollView } from 'react-native-gesture-handler';
+import { FIREBASE_AUTH, FIREBASE_DB } from "../../../FireBaseConfig";
+import { styles, colors } from "../../../styleSheets/Styles";
+import { ProfileTab } from "../../../components/ProfileTab";
+import Entry from "../../../components/displayModalEntry";
+import React, { useState } from "react";
+import { collection, getDocs } from "firebase/firestore";
+import { ScrollView } from "react-native-gesture-handler";
 
 //each diary entry
 /*
@@ -21,14 +33,14 @@ import { ScrollView } from 'react-native-gesture-handler';
   5. textEntry
 */
 export type entryData = {
-  id: string,
-  title: string,
-  isHappy: boolean,
-  year: number,
-  month: number,
-  day: number,
-  textEntry: string,
-}
+  id: string;
+  title: string;
+  isHappy: boolean;
+  year: number;
+  month: number;
+  day: number;
+  textEntry: string;
+};
 
 const home = () => {
   const auth = FIREBASE_AUTH;
@@ -58,12 +70,16 @@ const home = () => {
     const newEntries: entryData[] = [];
     const { year, month, day } = splitDate(date);
     querySnapshot.forEach((doc) => {
-      console.log(doc.data().year, doc.data().month, doc.data().day,);
-      console.log(year, month, day,);
-      if (doc.data().year === year && doc.data().month === month && doc.data().day === day) {
+      console.log(doc.data().year, doc.data().month, doc.data().day);
+      console.log(year, month, day);
+      if (
+        doc.data().year === year &&
+        doc.data().month === month &&
+        doc.data().day === day
+      ) {
         newEntries.push({
-          id: doc.id, 
-          title: doc.data().title, 
+          id: doc.id,
+          title: doc.data().title,
           isHappy: doc.data().isHappy,
           year: doc.data().year,
           month: doc.data().month,
@@ -75,33 +91,42 @@ const home = () => {
     setEntries(newEntries); // Update state once with new entries
     console.log(entries);
     setLoading(false);
-  }
+  };
 
   return (
-    <View style = {[{
-      flex: 1,
-      backgroundColor: colors.background, //Color: Dark Blue
-    }]}>
+    <View
+      style={[
+        {
+          flex: 1,
+          backgroundColor: colors.background, //Color: Dark Blue
+        },
+      ]}
+    >
+      <ProfileTab name="Calender" />
 
-      <ProfileTab name = "Calender" />
-
-      <View style ={{
-        flex: 1,
-        justifyContent: 'center',
-        alignSelf: 'center',
-        width: "90%",
-      }}>
+      <View
+        style={{
+          flex: 1,
+          justifyContent: "center",
+          alignSelf: "center",
+          width: "90%",
+        }}
+      >
         {/* Calendar */}
         <Calendar
           onDayPress={handleDayPress}
           markedDates={{
-            [selectedDate]: { selected: true, marked: true, selectedColor: 'blue' },
+            [selectedDate]: {
+              selected: true,
+              marked: true,
+              selectedColor: "blue",
+            },
           }}
           hideExtraDays={true}
           theme={{
-            calendarBackground: colors.secondaryBackground, //Color: Dark Gray
+            calendarBackground: colors.background, //Color: Dark Gray
             textSectionTitleColor: colors.secondary, //Color: White Smoke
-            textSectionTitleDisabledColor: colors.tertiary, //Color: Dark Navy 
+            textSectionTitleDisabledColor: colors.tertiary, //Color: Dark Navy
             selectedDayBackgroundColor: colors.accent, //Color: Sky Blue
             selectedDayTextColor: colors.primary, //Color: White
             todayTextColor: colors.accent, //Color: Sky Blue
@@ -112,15 +137,15 @@ const home = () => {
             disabledArrowColor: colors.disabled, //Color: Gray
             monthTextColor: colors.secondary, //Color: Dark Navy
             indicatorColor: colors.accent, //Color: Sky Blue
-            textDayFontFamily: 'monospace',
-            textMonthFontFamily: 'monospace',
-            textDayHeaderFontFamily: 'monospace',
-            textDayFontWeight: '300',
-            textMonthFontWeight: 'bold',
-            textDayHeaderFontWeight: '300',
+            textDayFontFamily: "monospace",
+            textMonthFontFamily: "monospace",
+            textDayHeaderFontFamily: "monospace",
+            textDayFontWeight: "300",
+            textMonthFontWeight: "bold",
+            textDayHeaderFontWeight: "300",
             textDayFontSize: 16,
             textMonthFontSize: 16,
-            textDayHeaderFontSize: 16
+            textDayHeaderFontSize: 16,
           }}
           style={homeStyles.calendar}
         />
@@ -134,76 +159,99 @@ const home = () => {
             setEntries([]);
           }}
         >
-          <TouchableWithoutFeedback onPress={() => setModalVisible(!modalVisible)}>
-          <View 
-            style={[homeStyles.modalOverlay]} 
-            onStartShouldSetResponder={() => true}
+          <TouchableWithoutFeedback
+            onPress={() => setModalVisible(!modalVisible)}
           >
-            <TouchableWithoutFeedback onPress={() => console.log("cancer 1")}>
-              <View 
-                style={[homeStyles.modalView, {width: "90%", backgroundColor:colors.secondaryBackground}]}
-                // onStartShouldSetResponder={() => true}
-              >
-                
-                  
-                  <Text style={[homeStyles.headingText, {marginVertical: 15, color: 'white'}]}>Selected Date: {selectedDate}</Text>
-                  <View 
-                      style={[homeStyles.listEntries, {width: "90%", maxHeight: "80%"}]}
-                      onStartShouldSetResponder={() => true}
+            <View
+              style={[homeStyles.modalOverlay]}
+              onStartShouldSetResponder={() => true}
+            >
+              <TouchableWithoutFeedback onPress={() => console.log("cancer 1")}>
+                <View
+                  style={[
+                    homeStyles.modalView,
+                    {
+                      width: "90%",
+                      backgroundColor: colors.secondaryBackground,
+                    },
+                  ]}
+                  // onStartShouldSetResponder={() => true}
+                >
+                  <Text
+                    style={[
+                      homeStyles.headingText,
+                      { marginVertical: 15, color: "white" },
+                    ]}
+                  >
+                    Selected Date: {selectedDate}
+                  </Text>
+                  <View
+                    style={[
+                      homeStyles.listEntries,
+                      { width: "90%", maxHeight: "80%" },
+                    ]}
+                    onStartShouldSetResponder={() => true}
+                  >
+                    <TouchableWithoutFeedback
+                      onPress={() => console.log("cancer 2")}
                     >
-                  <TouchableWithoutFeedback onPress={() => console.log("cancer 2")}>
-                    
-                    {/* flatlist */}
-                    {loading ? (
-                      <ActivityIndicator size="large" color={colors.accent}/> //Color: Sky Blue (Accent)
-                    ) : (
-                      <FlatList
-                        data={entries}
-                        renderItem={({item}) => (
-                          <Entry item={item} reload={() => readDateEntry(selectedDate)}/>
-                        )}
-                        keyExtractor={item => item.id}
-                        scrollEnabled={true}
-                        contentContainerStyle={{ flexGrow: 1 }}
-                      />
-                    )} 
-                    
-                  </TouchableWithoutFeedback>
+                      {/* flatlist */}
+                      {loading ? (
+                        <ActivityIndicator size="large" color={colors.accent} /> //Color: Sky Blue (Accent)
+                      ) : (
+                        <FlatList
+                          data={entries}
+                          renderItem={({ item }) => (
+                            <Entry
+                              item={item}
+                              reload={() => readDateEntry(selectedDate)}
+                            />
+                          )}
+                          keyExtractor={(item) => item.id}
+                          scrollEnabled={true}
+                          contentContainerStyle={{ flexGrow: 1 }}
+                        />
+                      )}
+                    </TouchableWithoutFeedback>
                   </View>
                   <Pressable
                     style={[
-                      homeStyles.button, {
-                        backgroundColor: colors.button //Color: Light Blue
-                        }]}
+                      homeStyles.button,
+                      {
+                        backgroundColor: colors.button, //Color: Light Blue
+                      },
+                    ]}
                     onPress={() => setModalVisible(!modalVisible)}
                   >
-                    <Text style={[
-                      homeStyles.text, {
-                        color: colors.primary //Color: White
-                        }]}>
-                    Hide Modal
+                    <Text
+                      style={[
+                        homeStyles.text,
+                        {
+                          color: colors.primary, //Color: White
+                        },
+                      ]}
+                    >
+                      Hide Modal
                     </Text>
                   </Pressable>
-                
-                
-              </View>
-            </TouchableWithoutFeedback>
-          </View>
+                </View>
+              </TouchableWithoutFeedback>
+            </View>
           </TouchableWithoutFeedback>
         </Modal>
       </View>
     </View>
   );
-}
+};
 
 export default home;
 
 export const homeStyles = StyleSheet.create({
   modalOverlay: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0,0,0,0.5)',
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: colors.background, //Color: Dark Blue
   },
   modalView: {
     // maxHeight: '95%',
@@ -214,7 +262,7 @@ export const homeStyles = StyleSheet.create({
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
-      height: 2
+      height: 2,
     },
     shadowOpacity: 0.25,
     shadowRadius: 4,
@@ -231,7 +279,7 @@ export const homeStyles = StyleSheet.create({
   },
   headingText: {
     fontSize: 24,
-    fontWeight: '400',
+    fontWeight: "400",
   },
   listEntries: {
     width: "100%",
@@ -257,7 +305,8 @@ export const homeStyles = StyleSheet.create({
   },
 });
 
-{/* <FlatList
+{
+  /* <FlatList
   data={entries}
   renderItem={({item}) => (
     <Entry item={item} reload={() => readDateEntry(selectedDate)}/>
@@ -265,4 +314,5 @@ export const homeStyles = StyleSheet.create({
   keyExtractor={item => item.id}
   scrollEnabled={true}
   contentContainerStyle={{ flexGrow: 1 }}
-/> */}
+/> */
+}

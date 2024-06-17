@@ -6,15 +6,16 @@ import { FIREBASE_DB } from "../FireBaseConfig";
 import { doc, updateDoc, deleteDoc } from "firebase/firestore";
 import { entryData } from "../app/(drawer)/(screens)/home";
 import React from "react";
+import { router } from "expo-router";
 
 type EntryProps = {
   item: entryData
   reload: () => void
 }
 
-export default function DisplayEntry({ item, reload }: EntryProps) {
+export default function DisplayEntry({ item, reload }: EntryProps, props: any) {
   const [date, setDate] = useState("");
-  
+  const { navigation } = props;
   const viewEntryData = async () => {
     const date = item.day + "/" + item.month + "/" + item.year;
     setDate(date);
@@ -30,9 +31,21 @@ export default function DisplayEntry({ item, reload }: EntryProps) {
     viewEntryData();
   }, []);
 
+  const enableViewFull = () => {
+    router.push({
+      pathname: '../(others)/viewEntryFull',
+      params: {
+        id: item.id,
+        title: item.title,
+        textEntry: item.textEntry,
+        date: date,
+      },
+    });
+  }
+
   return (
     <View style={[entryStyles.entry]}>
-      <TouchableOpacity style={{flexDirection: "row", flex: 1}} onPress={() => {} }>
+      <TouchableOpacity style={{flexDirection: "row", flex: 1}} onPress={() => {enableViewFull()}}>
       <View style={{flexDirection: "column", flex: 1}}>
         <Text style={[
           entryStyles.text, {

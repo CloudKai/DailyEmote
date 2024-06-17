@@ -1,21 +1,21 @@
-import { View, Text } from 'react-native'
-import { ProfileTab } from '../../../components/ProfileTab';
-
+import { View, Text } from "react-native";
+import { ProfileTab } from "../../../components/ProfileTab";
 
 const data = () => {
   return (
-    <View style = {{
+    <View
+      style={{
         flex: 1,
-        backgroundColor: '#161622',
-      }}>
+        backgroundColor: "#161622",
+      }}
+    >
+      <ProfileTab name="Data" />
 
-        <ProfileTab name = 'Data' />
-
-        <View className = "flex-1 items-center justify-center bg-primary">
-            <Text style={{color: 'white'}}> Data Here! </Text>
-        </View>
+      <View className="flex-1 items-center justify-center bg-primary">
+        <Text style={{ color: "white" }}> Data Here! </Text>
+      </View>
     </View>
-  )
-}
+  );
+};
 
-export default data
+export default data;
