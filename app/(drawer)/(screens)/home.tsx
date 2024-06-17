@@ -61,6 +61,11 @@ const home = () => {
     return { year, month, day };
   };
 
+  const closeModal = () => {
+    setModalVisible(false);
+    setEntries([]);
+  }
+
   /**
    * Function to read all entries given a selectedDate
    */
@@ -155,18 +160,17 @@ const home = () => {
           transparent={true}
           visible={modalVisible}
           onRequestClose={() => {
-            setModalVisible(!modalVisible);
-            setEntries([]);
+            closeModal();
           }}
         >
           <TouchableWithoutFeedback
-            onPress={() => setModalVisible(!modalVisible)}
+            onPress={() => closeModal()}
           >
             <View
               style={[homeStyles.modalOverlay]}
               onStartShouldSetResponder={() => true}
             >
-              <TouchableWithoutFeedback onPress={() => console.log("cancer 1")}>
+              <TouchableWithoutFeedback onPress={() => {}}>
                 <View
                   style={[
                     homeStyles.modalView,
@@ -193,7 +197,7 @@ const home = () => {
                     onStartShouldSetResponder={() => true}
                   >
                     <TouchableWithoutFeedback
-                      onPress={() => console.log("cancer 2")}
+                      onPress={() => {}}
                     >
                       {/* flatlist */}
                       {loading ? (
@@ -205,6 +209,7 @@ const home = () => {
                             <Entry
                               item={item}
                               reload={() => readDateEntry(selectedDate)}
+                              closeModal={() => closeModal()}
                             />
                           )}
                           keyExtractor={(item) => item.id}
@@ -221,7 +226,7 @@ const home = () => {
                         backgroundColor: colors.button, //Color: Light Blue
                       },
                     ]}
-                    onPress={() => setModalVisible(!modalVisible)}
+                    onPress={() => closeModal()}
                   >
                     <Text
                       style={[

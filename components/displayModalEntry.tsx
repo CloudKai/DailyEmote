@@ -11,11 +11,11 @@ import { router } from "expo-router";
 type EntryProps = {
   item: entryData
   reload: () => void
+  closeModal: () => void
 }
 
-export default function DisplayEntry({ item, reload }: EntryProps, props: any) {
+export default function DisplayEntry({ item, reload, closeModal }: EntryProps) {
   const [date, setDate] = useState("");
-  const { navigation } = props;
   const viewEntryData = async () => {
     const date = item.day + "/" + item.month + "/" + item.year;
     setDate(date);
