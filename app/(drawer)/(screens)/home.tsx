@@ -101,10 +101,7 @@ const home = () => {
   return (
     <View
       style={[
-        {
-          flex: 1,
-          backgroundColor: colors.background, //Color: Dark Blue
-        },
+        styles.overlay
       ]}
     >
       <ProfileTab name="Calender" />
@@ -183,7 +180,7 @@ const home = () => {
                 >
                   <Text
                     style={[
-                      homeStyles.headingText,
+                      styles.headingText,
                       { marginVertical: 15, color: "white" },
                     ]}
                   >
@@ -221,7 +218,7 @@ const home = () => {
                   </View>
                   <Pressable
                     style={[
-                      homeStyles.button,
+                      styles.button,
                       {
                         backgroundColor: colors.button, //Color: Light Blue
                       },
@@ -230,7 +227,7 @@ const home = () => {
                   >
                     <Text
                       style={[
-                        homeStyles.text,
+                        styles.text,
                         {
                           color: colors.primary, //Color: White
                         },
@@ -272,20 +269,6 @@ export const homeStyles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 4,
   },
-  button: {
-    borderRadius: 20,
-    padding: 10,
-    elevation: 2,
-    marginVertical: 10,
-  },
-  text: {
-    fontWeight: "bold",
-    textAlign: "center",
-  },
-  headingText: {
-    fontSize: 24,
-    fontWeight: "400",
-  },
   listEntries: {
     width: "100%",
     flexGrow: 1,
@@ -309,15 +292,3 @@ export const homeStyles = StyleSheet.create({
     },
   },
 });
-
-{
-  /* <FlatList
-  data={entries}
-  renderItem={({item}) => (
-    <Entry item={item} reload={() => readDateEntry(selectedDate)}/>
-  )}
-  keyExtractor={item => item.id}
-  scrollEnabled={true}
-  contentContainerStyle={{ flexGrow: 1 }}
-/> */
-}

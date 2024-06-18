@@ -32,6 +32,7 @@ export default function DisplayEntry({ item, reload, closeModal }: EntryProps) {
   }, []);
 
   const enableViewFull = () => {
+    closeModal();
     router.push({
       pathname: '../(others)/viewEntryFull',
       params: {
@@ -59,7 +60,6 @@ export default function DisplayEntry({ item, reload, closeModal }: EntryProps) {
       </View>
       <View style={[entryStyles.icons, {flex: 0.3}]}>
         <Pressable onPress={() => {
-
           console.log("Edit Entry");
         }}>
           <AntDesign name="edit" size={24} color={colors.primary} />
@@ -90,8 +90,6 @@ const entryStyles = StyleSheet.create({
   },
   text: {
     marginLeft: 1,
-    // minWidth: "80%",
-    // maxWidth: "80%",
     marginRight: 10,
     fontSize: 17,
     fontWeight: '500',
