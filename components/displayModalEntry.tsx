@@ -15,10 +15,12 @@ type EntryProps = {
 }
 
 export default function DisplayEntry({ item, reload, closeModal }: EntryProps) {
-  const [date, setDate] = useState("");
+  const [dateString, setDateString] = useState("");
+  const [date, setDate] = useState(new Date(item.year, item.month, item.day));
+
   const viewEntryData = async () => {
     const date = item.day + "/" + item.month + "/" + item.year;
-    setDate(date);
+    setDateString(date);
   }
 
   const deleteEntry = async () => {
@@ -35,6 +37,19 @@ export default function DisplayEntry({ item, reload, closeModal }: EntryProps) {
     closeModal();
     router.push({
       pathname: '../(others)/viewEntryFull',
+      params: {
+        id: item.id,
+        title: item.title,
+        textEntry: item.textEntry,
+        date: date,
+      },
+    });
+  }
+
+  const editEntry = () => {
+    closeModal();
+    router.push({
+      pathname: '../(others)/editEntry',
       params: {
         id: item.id,
         title: item.title,

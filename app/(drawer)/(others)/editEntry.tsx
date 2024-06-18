@@ -5,7 +5,7 @@ import DateTimePicker, {
 import React, { useState } from "react";
 import { entryData, homeStyles } from "../(screens)/home";
 import { router, useLocalSearchParams } from "expo-router";
-import { addDoc, collection } from "firebase/firestore";
+import { addDoc, collection, doc, updateDoc } from "firebase/firestore";
 import { FIREBASE_DB } from "../../../FireBaseConfig";
 import { colors, styles } from "../../../styleSheets/Styles";
 
@@ -19,19 +19,13 @@ export default function create() {
   const [loading, setLoading] = useState(true);
   const [entries, setEntries] = useState([] as entryData[]);
 
-  const addEntry = async () => {
+  const editEntry = async () => {
     try {
-      const entriesRef = collection(FIREBASE_DB, "entries");
-      const { year, month, day } = formatDate(date);
-      const document = await addDoc(entriesRef, {
+      const entriesRef = doc(FIREBASE_DB, "entries", id);
+      await updateDoc(entriesRef, {
         title: title,
-        isHappy: false,
-        year: year,
-        month: month,
-        day: day,
         textEntry: textEntry,
       });
-      console.log("Document written with ID: ", document.id);
       setTitle("");
       setTextEntry("");
       router.back();
