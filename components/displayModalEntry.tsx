@@ -15,10 +15,12 @@ type EntryProps = {
 }
 
 export default function DisplayEntry({ item, reload, closeModal }: EntryProps) {
-  const [date, setDate] = useState("");
+  const [dateString, setDateString] = useState("");
+  const [date, setDate] = useState(new Date(item.year, item.month, item.day));
+
   const viewEntryData = async () => {
     const date = item.day + "/" + item.month + "/" + item.year;
-    setDate(date);
+    setDateString(date);
   }
 
   const deleteEntry = async () => {
@@ -32,8 +34,22 @@ export default function DisplayEntry({ item, reload, closeModal }: EntryProps) {
   }, []);
 
   const enableViewFull = () => {
+    closeModal();
     router.push({
       pathname: '../(others)/viewEntryFull',
+      params: {
+        id: item.id,
+        title: item.title,
+        textEntry: item.textEntry,
+        date: date,
+      },
+    });
+  }
+
+  const editEntry = () => {
+    closeModal();
+    router.push({
+      pathname: '../(others)/editEntry',
       params: {
         id: item.id,
         title: item.title,
@@ -59,7 +75,6 @@ export default function DisplayEntry({ item, reload, closeModal }: EntryProps) {
       </View>
       <View style={[entryStyles.icons, {flex: 0.3}]}>
         <Pressable onPress={() => {
-
           console.log("Edit Entry");
         }}>
           <AntDesign name="edit" size={24} color={colors.primary} />
@@ -90,8 +105,6 @@ const entryStyles = StyleSheet.create({
   },
   text: {
     marginLeft: 1,
-    // minWidth: "80%",
-    // maxWidth: "80%",
     marginRight: 10,
     fontSize: 17,
     fontWeight: '500',

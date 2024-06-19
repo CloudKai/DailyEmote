@@ -16,12 +16,12 @@ export const colors = {
 }
 
 export const styles = StyleSheet.create({
-  container: {
+  overlay: {
     flex: 1,
-    backgroundColor: '#0C0C1E',
+    backgroundColor: colors.background, //Color: Dark Blue
     alignItems: 'center',
     justifyContent: 'center',
-    padding: 0,
+    padding: 10,
   },
   textInput: {
     marginVertical: 4,
@@ -30,11 +30,27 @@ export const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 4,
     padding: 10,
-    backgroundColor: '#fff',
+    backgroundColor: colors.contrastBackground, //Color: Dark Gray
   },
   button: {
     borderRadius: 20,
     padding: 10,
-    elevation: 2
+    elevation: 2,
+    alignContent: 'center',
+    justifyContent: 'center',
+    marginVertical: 10,
   },
+  text: {
+    color: colors.primary, //Color: White
+    fontSize: 15,
+  },
+  headingText: {
+    fontSize: 24,
+    fontWeight: "400",
+  },
+  textBox: {
+    padding: 10,
+    marginVertical: 10,
+    backgroundColor: colors.secondaryBackground, //Color: Dark Gray
+  }
 });

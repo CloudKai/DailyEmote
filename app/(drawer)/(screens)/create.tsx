@@ -1,4 +1,4 @@
-import { View, Text, TextInput, Pressable, SafeAreaView } from "react-native";
+import { View, Text, TextInput, Pressable, SafeAreaView, TouchableOpacity } from "react-native";
 import DateTimePicker, {
   DateTimePickerEvent,
 } from "@react-native-community/datetimepicker";
@@ -7,7 +7,8 @@ import { entryData, homeStyles } from "./home";
 import { router } from "expo-router";
 import { addDoc, collection } from "firebase/firestore";
 import { FIREBASE_DB } from "../../../FireBaseConfig";
-import { colors } from "../../../styleSheets/Styles";
+import { colors, styles } from "../../../styleSheets/Styles";
+import { Ionicons } from "@expo/vector-icons";
 
 const create = () => {
   const [title, setTitle] = useState("");
@@ -57,100 +58,114 @@ const create = () => {
   };
 
   return (
-    <View
-      style={{
-        flex: 1,
-        backgroundColor: "#161622",
-      }}
+    <SafeAreaView
+      style={[
+        styles.overlay
+      ]}
     >
-      <SafeAreaView
-        style={[
-          {
-            flex: 1,
-            justifyContent: "center",
-            alignItems: "center",
-            margin: 30,
-            height: "100%",
-          },
-        ]}
+      <View
+        style={{
+          marginVertical: 20,
+          // borderColor: "red",
+          // borderWidth: 1,
+          flexDirection: "row",
+          position: 'relative',
+          alignItems: 'center',
+          justifyContent: 'center',
+          height: "10%",
+          width: '100%',
+        }}
       >
-        <Text
+        <TouchableOpacity
+          onPress={() => {router.back()}}
           style={[
-            homeStyles.headingText,
             {
-              color: colors.primary, //Color: White
-              marginVertical: 20,
+              position: "absolute",
+              left: 15,
+              top: -15,
             },
           ]}
         >
-          New Entry
-        </Text>
-        <TextInput
-          style={[homeStyles.inputBox, {}]}
-          placeholder="Title"
-          value={title}
-          onChangeText={(text) => setTitle(text)}
-          multiline={true}
-          numberOfLines={1}
-        />
-        {/* Date Select */}
-        {dateModal && (
-          <DateTimePicker
-            mode="date"
-            display="spinner"
-            value={date}
-            onChange={onDateChange}
-          />
-        )}
-        <Pressable
-          style={{ width: "100%" }}
-          onPress={() => {
-            setDateModal(true);
-            console.log("Opened date modal");
-          }}
+          <Ionicons name="arrow-back" size={24} color={colors.primary} />
+        </TouchableOpacity>
+        <View style={[{ 
+          flex: 3, 
+          alignItems: "center", 
+          justifyContent: "center",
+          }]}
         >
-          <TextInput
-            style={[homeStyles.inputBox, { color: colors.tertiary }]}
-            editable={false}
-          >
-            Date: {formatDate(date).year}-{formatDate(date).month}-
-            {formatDate(date).day}
-          </TextInput>
-        </Pressable>
-        <TextInput
-          style={[homeStyles.inputBox, { height: "40%" }]}
-          placeholder="Enter new entry"
-          value={textEntry}
-          onChangeText={(text) => setTextEntry(text)}
-          multiline={true}
-          numberOfLines={5}
-        />
-        <View style={{}}>
-          <Pressable
+          <Text
             style={[
-              homeStyles.button,
+              styles.headingText,
               {
-                backgroundColor: colors.button, //Color: Light Blue
+                color: colors.primary, //Color: White
+                marginVertical: 20,
               },
             ]}
-            onPress={addEntry}
           >
-            <Text style={homeStyles.text}>Add Entry</Text>
-          </Pressable>
-          <Pressable
-            style={[
-              homeStyles.button,
-              {
-                backgroundColor: colors.button, //Color: Light Blue
-              },
-            ]}
-            onPress={() => router.back()}
-          >
-            <Text style={homeStyles.text}>Back</Text>
-          </Pressable>
+            New Entry
+          </Text>
         </View>
-      </SafeAreaView>
-    </View>
+      </View>
+
+      <TextInput
+        style={[homeStyles.inputBox, {width: "80%"}]}
+        placeholder="Title"
+        value={title}
+        onChangeText={(text) => setTitle(text)}
+        multiline={true}
+        numberOfLines={1}
+      />
+      {/* Date Select */}
+      {dateModal && (
+        <DateTimePicker
+          mode="date"
+          display="spinner"
+          value={date}
+          onChange={onDateChange}
+        />
+      )}
+      <Pressable
+        style={{ width: "80%" }}
+        onPress={() => {
+          setDateModal(true);
+          console.log("Opened date modal");
+        }}
+      >
+        <TextInput
+          style={[homeStyles.inputBox, { color: colors.tertiary }]}
+          editable={false}
+        >
+          Date: {formatDate(date).year}-{formatDate(date).month}-
+          {formatDate(date).day}
+        </TextInput>
+      </Pressable>
+      <TextInput
+        style={[homeStyles.inputBox, { height: "40%", width: "80%" }]}
+        placeholder="Enter new entry"
+        value={textEntry}
+        onChangeText={(text) => setTextEntry(text)}
+        multiline={true}
+        numberOfLines={5}
+      />
+      <View style={{
+        flexDirection: "row",
+        justifyContent: "space-evenly",
+        width: "80%"
+      }}>
+        <Pressable
+          style={[
+            styles.button,
+            {
+              backgroundColor: colors.button, //Color: Light Blue
+            },
+          ]}
+          onPress={addEntry}
+        >
+          <Text style={styles.text}>Add Entry</Text>
+        </Pressable>
+      </View>
+    </SafeAreaView>
   );
 };
 

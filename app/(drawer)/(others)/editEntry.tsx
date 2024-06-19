@@ -4,18 +4,35 @@ import DateTimePicker, {
 } from "@react-native-community/datetimepicker";
 import React, { useState } from "react";
 import { entryData, homeStyles } from "../(screens)/home";
-import { router } from "expo-router";
-import { addDoc, collection } from "firebase/firestore";
+import { router, useLocalSearchParams } from "expo-router";
+import { addDoc, collection, doc, updateDoc } from "firebase/firestore";
 import { FIREBASE_DB } from "../../../FireBaseConfig";
-import { colors } from "../../../styleSheets/Styles";
+import { colors, styles } from "../../../styleSheets/Styles";
 
-const editEntry = () => {
-  const [title, setTitle] = useState("");
-  const [textEntry, setTextEntry] = useState("");
-  const [date, setDate] = useState(new Date());
+export default function create() {
+  const { id, titleView, textEntryView, dateView } = useLocalSearchParams();
+
+  const [title, setTitle] = useState(titleView);
+  const [textEntry, setTextEntry] = useState(textEntryView);
+  const [date, setDate] = useState(dateView);
   const [dateModal, setDateModal] = useState(false);
   const [loading, setLoading] = useState(true);
   const [entries, setEntries] = useState([] as entryData[]);
+
+  const editEntry = async () => {
+    try {
+      const entriesRef = doc(FIREBASE_DB, "entries", id);
+      await updateDoc(entriesRef, {
+        title: title,
+        textEntry: textEntry,
+      });
+      setTitle("");
+      setTextEntry("");
+      router.back();
+    } catch (e) {
+      console.error("Error adding document: ", e);
+    }
+  };
 
   const onDateChange = (event: DateTimePickerEvent, selectedDate?: Date) => {
     const currentDate = selectedDate || date;
@@ -36,101 +53,90 @@ const editEntry = () => {
   };
 
   return (
-    <View
-      style={{
-        flex: 1,
-        backgroundColor: "#161622",
-      }}
+    <SafeAreaView
+      style={[
+        styles.overlay
+      ]}
     >
-      <SafeAreaView
+      <Text
         style={[
+          styles.headingText,
           {
-            flex: 1,
-            justifyContent: "center",
-            alignItems: "center",
-            margin: 30,
-            height: "100%",
+            color: colors.primary, //Color: White
+            marginVertical: 20,
           },
         ]}
       >
-        <Text
+        New Entry
+      </Text>
+      <TextInput
+        style={[homeStyles.inputBox, {width: "80%"}]}
+        placeholder="Title"
+        value={title}
+        onChangeText={(text) => setTitle(text)}
+        multiline={true}
+        numberOfLines={1}
+      />
+      {/* Date Select */}
+      {dateModal && (
+        <DateTimePicker
+          mode="date"
+          display="spinner"
+          value={date}
+          onChange={onDateChange}
+        />
+      )}
+      <Pressable
+        style={{ width: "80%" }}
+        onPress={() => {
+          setDateModal(true);
+          console.log("Opened date modal");
+        }}
+      >
+        <TextInput
+          style={[homeStyles.inputBox, { color: colors.tertiary }]}
+          editable={false}
+        >
+          Date: {formatDate(date).year}-{formatDate(date).month}-
+          {formatDate(date).day}
+        </TextInput>
+      </Pressable>
+      <TextInput
+        style={[homeStyles.inputBox, { height: "40%", width: "80%" }]}
+        placeholder="Enter new entry"
+        value={textEntry}
+        onChangeText={(text) => setTextEntry(text)}
+        multiline={true}
+        numberOfLines={5}
+      />
+      <View style={{
+        flexDirection: "row",
+        justifyContent: "space-evenly",
+        width: "80%"
+      }}>
+        <Pressable
           style={[
-            homeStyles.headingText,
+            styles.button,
             {
-              color: colors.primary, //Color: White
-              marginVertical: 20,
+              backgroundColor: colors.button, //Color: Light Blue
             },
           ]}
+          onPress={addEntry}
         >
-          New Entry
-        </Text>
-        <TextInput
-          style={[homeStyles.inputBox, {}]}
-          placeholder="Title"
-          value={title}
-          onChangeText={(text) => setTitle(text)}
-          multiline={true}
-          numberOfLines={1}
-        />
-        {/* Date Select */}
-        {dateModal && (
-          <DateTimePicker
-            mode="date"
-            display="spinner"
-            value={date}
-            onChange={onDateChange}
-          />
-        )}
-        <Pressable
-          style={{ width: "100%" }}
-          onPress={() => {
-            setDateModal(true);
-            console.log("Opened date modal");
-          }}
-        >
-          <TextInput
-            style={[homeStyles.inputBox, { color: colors.tertiary }]}
-            editable={false}
-          >
-            Date: {formatDate(date).year}-{formatDate(date).month}-
-            {formatDate(date).day}
-          </TextInput>
+          <Text style={styles.text}>Add Entry</Text>
         </Pressable>
-        <TextInput
-          style={[homeStyles.inputBox, { height: "40%" }]}
-          placeholder="Enter new entry"
-          value={textEntry}
-          onChangeText={(text) => setTextEntry(text)}
-          multiline={true}
-          numberOfLines={5}
-        />
-        <View style={{}}>
-          <Pressable
-            style={[
-              homeStyles.button,
-              {
-                backgroundColor: colors.button, //Color: Light Blue
-              },
-            ]}
-            onPress={() => {}}
-          >
-            <Text style={homeStyles.text}>Add Entry</Text>
-          </Pressable>
-          <Pressable
-            style={[
-              homeStyles.button,
-              {
-                backgroundColor: colors.button, //Color: Light Blue
-              },
-            ]}
-            onPress={() => router.back()}
-          >
-            <Text style={homeStyles.text}>Back</Text>
-          </Pressable>
-        </View>
-      </SafeAreaView>
-    </View>
+        <Pressable
+          style={[
+            styles.button,
+            {
+              backgroundColor: colors.button, //Color: Light Blue
+            },
+          ]}
+          onPress={() => router.back()}
+        >
+          <Text style={styles.text}>Back</Text>
+        </Pressable>
+      </View>
+    </SafeAreaView>
   );
 };
-
-export default editEntry;
