@@ -10,7 +10,7 @@ export default function viewEntryFull() {
 
   const handleEditButton = () => {
     router.push({
-      pathname: '../(others)/editEntry',
+      pathname: 'editEntry',
       params: {
         id: id,
         title: title,
@@ -34,7 +34,10 @@ export default function viewEntryFull() {
           {date}
         </Text>
         </View>
-      <TouchableOpacity onPress={() => {handleEditButton}}>
+      <TouchableOpacity onPress={() => {
+        console.log("edit button pressed");
+        handleEditButton();
+      }}>
         <AntDesign name="edit" size={24} color={colors.primary} />
       </TouchableOpacity>
       </View>
