@@ -1,7 +1,6 @@
 import { View, Text, SafeAreaView, TouchableOpacity, StyleSheet } from "react-native";
 import React from "react";
 import { router, useLocalSearchParams } from "expo-router";
-import entryData from "../(screens)/home";
 import { colors, styles } from "../../../styleSheets/Styles";
 import { Ionicons, AntDesign } from "@expo/vector-icons";
 
