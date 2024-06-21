@@ -19,7 +19,7 @@ export default function DisplayEntry({ item, reload, closeModal }: EntryProps) {
   const [date, setDate] = useState(new Date(item.year, item.month, item.day));
 
   const viewEntryData = async () => {
-    const date = item.day + "/" + item.month + "/" + item.year;
+    const date = item.day + "-" + item.month + "-" + item.year;
     setDateString(date);
   }
 
@@ -41,7 +41,7 @@ export default function DisplayEntry({ item, reload, closeModal }: EntryProps) {
         id: item.id,
         title: item.title,
         textEntry: item.textEntry,
-        date: date,
+        date: dateString,
       },
     });
   }
@@ -54,7 +54,7 @@ export default function DisplayEntry({ item, reload, closeModal }: EntryProps) {
         id: item.id,
         title: item.title,
         textEntry: item.textEntry,
-        date: date,
+        date: dateString,
       },
     });
   }
