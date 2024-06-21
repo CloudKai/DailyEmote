@@ -75,6 +75,7 @@ export default function DisplayEntry({ item, reload, closeModal }: EntryProps) {
       </View>
       <View style={[entryStyles.icons, {flex: 0.3}]}>
         <Pressable onPress={() => {
+          editEntry();
           console.log("Edit Entry");
         }}>
           <AntDesign name="edit" size={24} color={colors.primary} />
@@ -82,7 +83,7 @@ export default function DisplayEntry({ item, reload, closeModal }: EntryProps) {
         <Pressable onPress={() => {
           deleteEntry();
           console.log("Entry Deleted");
-          }}>
+        }}>
           <AntDesign name="delete" size={24} color={colors.primary} />
         </Pressable>
       </View>
