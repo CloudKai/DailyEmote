@@ -9,18 +9,37 @@ import { addDoc, collection, doc, updateDoc } from "firebase/firestore";
 import { FIREBASE_DB } from "../../../FireBaseConfig";
 import { colors, styles } from "../../../styleSheets/Styles";
 
+type Params = {
+  id: string;
+  titleView: string;
+  textEntryView: string;
+  dateView: string;
+}
+
 export default function create() {
-  const { id, titleView, textEntryView, dateView } = useLocalSearchParams();
+  const { id, titleView, textEntryView, dateView } = useLocalSearchParams<Params>();
+
+  const useDate = () => {
+    if (dateView == undefined) {
+      return new Date();
+    } else {
+      const [year, month, day] = dateView.split("-");
+      return new Date(Number(year), Number(month), Number(day));
+    }
+  };
 
   const [title, setTitle] = useState(titleView);
   const [textEntry, setTextEntry] = useState(textEntryView);
-  const [date, setDate] = useState(dateView);
+  const [date, setDate] = useState<Date>(useDate);
   const [dateModal, setDateModal] = useState(false);
   const [loading, setLoading] = useState(true);
   const [entries, setEntries] = useState([] as entryData[]);
 
   const editEntry = async () => {
     try {
+      if (id == undefined){
+        throw new Error("id is undefined");
+      }
       const entriesRef = doc(FIREBASE_DB, "entries", id);
       await updateDoc(entriesRef, {
         title: title,
@@ -121,9 +140,9 @@ export default function create() {
               backgroundColor: colors.button, //Color: Light Blue
             },
           ]}
-          onPress={addEntry}
+          onPress={editEntry}
         >
-          <Text style={styles.text}>Add Entry</Text>
+          <Text style={styles.text}>Edit Entry</Text>
         </Pressable>
         <Pressable
           style={[
