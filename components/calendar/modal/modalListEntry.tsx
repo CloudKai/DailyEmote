@@ -3,7 +3,9 @@ import { colors, styles } from "../../../styleSheets/Styles";
 import { AntDesign } from '@expo/vector-icons';
 import React from "react";
 import { router } from "expo-router";
-import { deleteEntry, entryData } from "../../firestore/FireStoreHandler";
+import { deleteDoc, doc } from "firebase/firestore";
+import { FIREBASE_DB } from "../../../FireBaseConfig";
+import { entryData } from "../../../types/Types";
 
 type EntryProps = {
   item: entryData,
@@ -40,8 +42,9 @@ export default function DisplayEntry({ item, closeModal, reload }: EntryProps) {
     });
   };
 
-  const handleDeleteButton = () => {
-    deleteEntry(item);
+  const handleDeleteButton = async () => {
+    const entryRef = doc(FIREBASE_DB, "entries", item.id);
+    await deleteDoc(entryRef);
     reload();
   };
 

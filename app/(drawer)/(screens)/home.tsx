@@ -4,7 +4,6 @@ import { colors, styles } from "../../../styleSheets/Styles";
 import { useEffect, useState } from "react";
 import CalendarComponent from "../../../components/calendar/CalendarComponent";
 import ModalComponent from "../../../components/calendar/ModalComponent";
-import { readDateEntry, setLoading } from "../../../components/firestore/FireStoreHandler";
 
 const homeV2 = () => {
   const [selectedDate, setSelectedDate] = useState<string>("");
@@ -27,7 +26,7 @@ const homeV2 = () => {
 
   return (
     <View style={styles.overlay}>
-      <ProfileTab name="HomeV2" /> 
+      <ProfileTab name="Calendar" /> 
 
       <View style={homeV2_Styles.component_overlay}>
         <CalendarComponent selectedDate={selectedDate} setSelectedDate={setSelectedDate} openModal={openModal}/>
@@ -49,7 +48,6 @@ const homeV2 = () => {
             </View>
           </TouchableWithoutFeedback>
         </Modal>
-        <Button title="Test Button" onPress={testButton} />
       </View>
     </View>
   );
