@@ -16,7 +16,7 @@ import { Calendar } from "react-native-calendars";
 import { FIREBASE_AUTH, FIREBASE_DB } from "../../../FireBaseConfig";
 import { styles, colors } from "../../../styleSheets/Styles";
 import { ProfileTab } from "../../../components/ProfileTab";
-import Entry from "../../../components/displayModalEntry";
+import Entry from "../../../components/calendar/modal/modalListEntry";
 import React, { useState } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import { ScrollView } from "react-native-gesture-handler";
