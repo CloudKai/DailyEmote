@@ -1,21 +1,17 @@
 import { StyleSheet, SafeAreaView, Text, View, Pressable, Modal, Touchable, TouchableOpacity } from "react-native";
 import { colors, styles } from "../../../styleSheets/Styles";
 import { AntDesign } from '@expo/vector-icons';
-import { useEffect, useState } from "react";
-import { FIREBASE_DB } from "../../../FireBaseConfig";
-import { doc, updateDoc, deleteDoc } from "firebase/firestore";
-import { entryData } from "../../../app/(drawer)/(screens)/home";
 import React from "react";
 import { router } from "expo-router";
-import { deleteEntry } from "../../firestore/FireStoreHandler";
+import { deleteEntry, entryData } from "../../firestore/FireStoreHandler";
 
 type EntryProps = {
-  item: entryData
-  reload: () => void
-  closeModal: () => void
+  item: entryData,
+  closeModal: () => void,
+  reload: () => void,
 }
 
-export default function DisplayEntry({ item, reload, closeModal }: EntryProps) {
+export default function DisplayEntry({ item, closeModal, reload }: EntryProps) {
   const formatDate = () => `${item.day}-${item.month}-${item.year}`;
 
   const enableViewFull = () => {

@@ -64,13 +64,6 @@ const TabsLayout = () => {
               />
           }}
           />
-        <Tabs.Screen
-          name = "new_home"
-          options = {{
-              tabBarLabel: 'new_home',
-              headerShown: false,
-          }}
-          />
       </Tabs>
     </View>
   );

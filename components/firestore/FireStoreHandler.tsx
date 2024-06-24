@@ -35,9 +35,8 @@ const splitDate = (date: string) => {
  * Function to read all entries given a selectedDate
  */
 export const readDateEntry = async (date: string) => {
-  console.log("check " + date);
+  console.log("reading entries for: " + date);
   setLoading(true);
-
   try {
     const querySnapshot = await getDocs(collection(FIREBASE_DB, "entries"));
     const newEntries: entryData[] = [];

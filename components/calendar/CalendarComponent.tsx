@@ -4,8 +4,9 @@ import React from 'react'
 import { colors } from '../../styleSheets/Styles';
 
 type CalendarComponentProps = {
-  handleDayPress: (day: DateData) => void;
-  selectedDate: string;
+  selectedDate: string,
+  setSelectedDate: (date: string) => void,
+  openModal: () => void,
 };
 
 /**
@@ -13,7 +14,15 @@ type CalendarComponentProps = {
  * dates can be interacted with to open a modal that displays all entries from a given date.
  * 
  */
-export default function CalendarComponent( { handleDayPress, selectedDate }: CalendarComponentProps) {
+export default function CalendarComponent( { selectedDate, setSelectedDate, openModal }: CalendarComponentProps) {
+
+  const handleDayPress = async (day: DateData) => {
+    console.log("selectedDate " + day.dateString);
+    console.log("parameter " + selectedDate);
+    setSelectedDate(day.dateString);
+    console.log("parameter " + selectedDate);
+    openModal();   
+  };
   
   return (
     <View>
