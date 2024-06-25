@@ -2,11 +2,7 @@ import { View, Text, Modal, StyleSheet } from 'react-native'
 import React, { useState } from 'react'
 import { colors, styles } from '../../styleSheets/Styles';
 import ModalList from './modal/modalList';
-
-type ModalComponentProps = {
-  selectedDate: string,
-  closeModal: () => void,
-}
+import { ModalComponentProps } from '../../types/Types';
 
 export default function ModalComponent({ selectedDate, closeModal }: ModalComponentProps) {
   

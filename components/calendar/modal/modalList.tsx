@@ -2,26 +2,32 @@ import { View, StyleSheet, ActivityIndicator, FlatList } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { colors, styles } from '../../../styleSheets/Styles'
 import Entry from './modalListEntry'
-import { entryData } from '../../../types/Types'
+import { entryData, modalContentProps } from '../../../types/Types'
 import { collection, getDocs } from 'firebase/firestore'
 import { FIREBASE_DB } from '../../../FireBaseConfig'
 
-type modalContentProps = {
-  selectedDate: string,
-  closeModal: () => void,
-}
-
+/**
+   * Function to display all entries given a selectedDate.
+   * @param selectedDate - the date selected by the user
+   * @param closeModal - function to close the modal
+   * @returns loading circle if entries are being read, 
+   * otherwise a list of entries
+   */
 export default function modalList({ selectedDate, closeModal }: modalContentProps) {
   const [loading, setLoading] = useState<boolean>(false);
   const [entries, setEntries] = useState<entryData[]>([]);
 
+  /**
+   * splits date string into year, month, and day
+   */
   const splitDate = (date: string) => {
     const [year, month, day] = date.split("-");
     return { year, month, day };
   };
   
   /**
-   * Function to read all entries given a selectedDate
+   * Asynchronously reads entries from the database for a given date
+   * @param date - the date to read entries for
    */
   const readDateEntry = async (date: string) => {
     console.log("reading entries for: " + date);
@@ -51,7 +57,7 @@ export default function modalList({ selectedDate, closeModal }: modalContentProp
         }
       });
   
-      setEntries(newEntries); // Update state once with new entries
+      setEntries(newEntries); 
       console.log(newEntries);
     } catch (error) {
       console.error("Error reading entries: ", error);
@@ -60,11 +66,12 @@ export default function modalList({ selectedDate, closeModal }: modalContentProp
     }
   };
 
+  /**
+   * Function to load entries
+   */
   const loadEntries = async () => {
-    setLoading(true);
     await readDateEntry(selectedDate);
     console.log("ran readDateEntry");
-    await setLoading(false);
   };
 
   useEffect(() => {

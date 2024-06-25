@@ -2,12 +2,7 @@ import { View, Text, StyleSheet } from 'react-native'
 import { Calendar, DateData } from "react-native-calendars";
 import React from 'react'
 import { colors } from '../../styleSheets/Styles';
-
-type CalendarComponentProps = {
-  selectedDate: string,
-  setSelectedDate: (date: string) => void,
-  openModal: () => void,
-};
+import { CalendarComponentProps } from '../../types/Types';
 
 /**
  * component that displays a calendar, 

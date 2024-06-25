@@ -5,14 +5,14 @@ import { useEffect, useState } from "react";
 import CalendarComponent from "../../../components/calendar/CalendarComponent";
 import ModalComponent from "../../../components/calendar/ModalComponent";
 
+/**
+ * The `homeV2` function in TypeScript React sets up a calendar view with a modal that can be opened
+ * and closed.
+ * @returns A calendar view with a modal that can be opened and closed.
+ */
 const homeV2 = () => {
   const [selectedDate, setSelectedDate] = useState<string>("");
   const [modalVisible, setModalVisible] = useState<boolean>(false);
-
-  const testButton = () => {
-    console.log("Button pressed");
-    openModal();
-  };
 
   const openModal = () => {
     setModalVisible(true);
@@ -29,7 +29,11 @@ const homeV2 = () => {
       <ProfileTab name="Calendar" /> 
 
       <View style={homeV2_Styles.component_overlay}>
-        <CalendarComponent selectedDate={selectedDate} setSelectedDate={setSelectedDate} openModal={openModal}/>
+        <CalendarComponent 
+          selectedDate={selectedDate} 
+          setSelectedDate={setSelectedDate} 
+          openModal={openModal}
+        />
         {/* Modal */}
         <Modal
           animationType="slide"
