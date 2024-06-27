@@ -40,9 +40,20 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     marginVertical: 10,
   },
-  text: {
+  roundButton: {
+    height: 56,
+    width: 56,
+    borderRadius: 999,
+    backgroundColor: colors.button, //Color: Navy Blue
+    marginBottom: 26,
+  },
+  whiteText: {
     color: colors.primary, //Color: White
-    fontSize: 15,
+    fontSize: 20,
+  },
+  blackText: {
+    color: colors.secondary, //Color: Black
+    fontSize: 20,
   },
   headingText: {
     fontSize: 24,

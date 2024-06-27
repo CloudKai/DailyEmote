@@ -3,9 +3,16 @@ import React from "react";
 import { router, useLocalSearchParams } from "expo-router";
 import { colors, styles } from "../../../styleSheets/Styles";
 import { Ionicons, AntDesign } from "@expo/vector-icons";
+import HeaderComponent from "../../../components/viewEntry/HeaderComponent";
+import ViewEntryComponent from "../../../components/viewEntry/ViewEntryComponent";
 
 export default function viewEntryFull() {
   const { id, title, textEntry, date } = useLocalSearchParams();
+
+  if (typeof id != 'string' || typeof title != 'string' || typeof textEntry != 'string' || typeof date != 'string') {
+    //error
+    return null;
+  }
 
   const handleEditButton = () => {
     router.push({
@@ -19,65 +26,37 @@ export default function viewEntryFull() {
     });
   }
 
+  const goBack = () => {
+    router.back();
+  }
+
   return (
     <SafeAreaView style={[styles.overlay, {justifyContent: "flex-start",}]}>
-      <View style={viewEntryStyles.overview}>
-      <TouchableOpacity
-        onPress={() => router.back()}
-        style={viewEntryStyles.backbutton}
-      >
-        <Ionicons name="arrow-back" size={24} color={colors.primary} />
-      </TouchableOpacity>
-        <View style={viewEntryStyles.headerPosition}>
-        <Text style={[styles.headingText, viewEntryStyles.underline]}>
-          {date}
-        </Text>
-        </View>
-      <TouchableOpacity onPress={() => {
-        console.log("edit button pressed");
-        handleEditButton();
-      }}>
-        <AntDesign name="edit" size={24} color={colors.primary} />
-      </TouchableOpacity>
+      <View style={viewEntryStyles.headerContainer}>
+        <HeaderComponent goBack={goBack} goEdit={handleEditButton}/>
       </View>
-
-      <View style={[styles.textBox,{ marginVertical: 10, },]}>
-      <Text style={[styles.headingText,{ color: colors.primary, marginVertical: 10,},]}>
-        Title: {title}
-      </Text>
+      <View style={viewEntryStyles.viewTextContainer}>
+        <ViewEntryComponent title={title} textEntry={textEntry} date={date}/>
       </View>
-
-      <View>
-      <Text style={[styles.text,{ color: colors.primary, marginVertical: 10, },]}>
-        {textEntry}
-      </Text>
-      </View>
+      
     </SafeAreaView>
   );
 }
 
 const viewEntryStyles = StyleSheet.create({
-  overview: {
-    marginVertical: 20,
-    flexDirection: "row",
-    position: 'relative',
+  headerContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
     alignItems: 'center',
-    height: 50,
+    padding: 10,
+    width: '100%',
+    marginVertical: 15,
+  },
+  viewTextContainer: {
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 10,
     width: '100%',
   },
-  backbutton: {
-    position: "absolute",
-    left: 10,
-    top: 10,
-  },
-  headerPosition: {
-    flex: 1, 
-    alignItems: "center", 
-    justifyContent: "center",
-  },
-  underline: {
-    borderBottomColor: colors.primary,
-    borderBottomWidth: 2,
-    color: colors.primary,
-  }
 }) 

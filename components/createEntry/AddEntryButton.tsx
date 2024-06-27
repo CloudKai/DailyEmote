@@ -42,7 +42,7 @@ export default function AddEntryButton({ title, dateString, textEntry, resetAll 
         style={[styles.button, addEntryButtonStyles.button]}
         onPress={handleAddEntry}
       >
-        <Text style={styles.text}>Add Entry</Text>
+        <Text style={styles.blackText}>Add Entry</Text>
       </Pressable>
     </View>
   );
