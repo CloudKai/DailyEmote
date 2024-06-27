@@ -18,3 +18,29 @@ export type entryData = {
   day: number;
   textEntry: string;
 };
+
+//Props for CalendarComponent
+export type CalendarComponentProps = {
+  selectedDate: string,
+  setSelectedDate: (date: string) => void,
+  openModal: () => void,
+};
+
+//Props for modalList, modalContent
+export type modalContentProps = {
+  selectedDate: string,
+  closeModal: () => void,
+}
+
+//Props for modalListEntry
+export type EntryProps = {
+  item: entryData,
+  closeModal: () => void,
+  reload: () => void,
+}
+
+//Props for titleInput, textEntryInput
+export type textInputProps = {
+  text: string,
+  setText: (text: string) => void,
+}

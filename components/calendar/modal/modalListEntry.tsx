@@ -5,14 +5,15 @@ import React from "react";
 import { router } from "expo-router";
 import { deleteDoc, doc } from "firebase/firestore";
 import { FIREBASE_DB } from "../../../FireBaseConfig";
-import { entryData } from "../../../types/Types";
+import { EntryProps } from "../../../types/Types";
 
-type EntryProps = {
-  item: entryData,
-  closeModal: () => void,
-  reload: () => void,
-}
-
+/**
+ * Function to display an entry in a modal.
+ * @param item - the entry to display
+ * @param closeModal - function to close the modal
+ * @param reload - function to reload the entries
+ * @returns a view of the entry with an edit and delete button
+ */
 export default function DisplayEntry({ item, closeModal, reload }: EntryProps) {
   const formatDate = () => `${item.day}-${item.month}-${item.year}`;
 

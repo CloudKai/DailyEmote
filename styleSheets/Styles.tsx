@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native'
 
 export const colors = {
   primary: '#fff', // Color: White
-  secondary: '#FAFAFA', // Color: White Smoke
+  secondary: '#000', // Color: Black
   tertiary: '#0A0F44', // Color: Dark Navy
   accent: '#1976D2', //Color: Sky Blue
   background: '#161622', //Color: Dark Blue
@@ -40,9 +40,20 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     marginVertical: 10,
   },
-  text: {
+  roundButton: {
+    height: 56,
+    width: 56,
+    borderRadius: 999,
+    backgroundColor: colors.button, //Color: Navy Blue
+    marginBottom: 26,
+  },
+  whiteText: {
     color: colors.primary, //Color: White
-    fontSize: 15,
+    fontSize: 20,
+  },
+  blackText: {
+    color: colors.secondary, //Color: Black
+    fontSize: 20,
   },
   headingText: {
     fontSize: 24,

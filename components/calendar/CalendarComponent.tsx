@@ -2,12 +2,7 @@ import { View, Text, StyleSheet } from 'react-native'
 import { Calendar, DateData } from "react-native-calendars";
 import React from 'react'
 import { colors } from '../../styleSheets/Styles';
-
-type CalendarComponentProps = {
-  selectedDate: string,
-  setSelectedDate: (date: string) => void,
-  openModal: () => void,
-};
+import { CalendarComponentProps } from '../../types/Types';
 
 /**
  * component that displays a calendar, 
@@ -39,7 +34,7 @@ export default function CalendarComponent( { selectedDate, setSelectedDate, open
           hideExtraDays={true}
           theme={{
             calendarBackground: colors.background, //Color: Dark Gray
-            textSectionTitleColor: colors.secondary, //Color: White Smoke
+            textSectionTitleColor: colors.primary, //Color: White
             textSectionTitleDisabledColor: colors.tertiary, //Color: Dark Navy
             selectedDayBackgroundColor: colors.accent, //Color: Sky Blue
             selectedDayTextColor: colors.primary, //Color: White
@@ -49,7 +44,7 @@ export default function CalendarComponent( { selectedDate, setSelectedDate, open
             selectedDotColor: colors.primary, //Color: White
             arrowColor: colors.button, //Color: Light Blue
             disabledArrowColor: colors.disabled, //Color: Gray
-            monthTextColor: colors.secondary, //Color: Dark Navy
+            monthTextColor: colors.primary, //Color: White
             indicatorColor: colors.accent, //Color: Sky Blue
             textDayFontFamily: "monospace",
             textMonthFontFamily: "monospace",
