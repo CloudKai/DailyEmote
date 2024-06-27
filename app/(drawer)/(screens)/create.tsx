@@ -1,40 +1,79 @@
 import { View, Text, TextInput, Pressable, SafeAreaView, TouchableOpacity, StyleSheet } from "react-native";
-import DateTimePicker, {
-  DateTimePickerEvent,
-} from "@react-native-community/datetimepicker";
+
 import React, { useState } from "react";
 import { router } from "expo-router";
-import { addDoc, collection } from "firebase/firestore";
-import { FIREBASE_DB } from "../../../FireBaseConfig";
-import { colors, styles } from "../../../styleSheets/Styles";
-import { Ionicons } from "@expo/vector-icons";
-import { entryData } from "../../../types/Types";
+import { styles } from "../../../styleSheets/Styles";
 import HeaderComponent from "../../../components/createEntry/HeaderComponent";
+import TitleInput from "../../../components/createEntry/TitleInput";
+import DateInput from "../../../components/createEntry/DateInput";
+import EntryInput from "../../../components/createEntry/EntryInput";
+import AddEntryButton from "../../../components/createEntry/AddEntryButton";
 
 const create = () => {
   const [title, setTitle] = useState("");
   const [textEntry, setTextEntry] = useState("");
-  const [date, setDate] = useState(new Date());
-  const [dateModal, setDateModal] = useState(false);
-  const [loading, setLoading] = useState(true);
-  const [entries, setEntries] = useState([] as entryData[]);
+  const [dateString, setDateString] = useState(""); //Format: "YYYY-MM-DD"
+
+  const goBack = () => {
+    router.back();
+  };
+
+  const resetAll = () => {
+    setTitle("");
+    setTextEntry("");
+    setDateString("");
+    router.back();
+  };
 
   return (
-    <View style={styles.overlay}>
-      <HeaderComponent />
-      <View style={addEntryStyles.inputContainer}>
-
+    <SafeAreaView style={styles.overlay}>
+      <View style={addEntryStyles.headerContainer}>
+        <HeaderComponent goBack={goBack}/>
       </View>
-    </View>
+      <View style={addEntryStyles.inputContainer}>
+        <TitleInput text={title} setText={setTitle}/>
+      </View>
+      <View style={addEntryStyles.inputContainer}>
+        <DateInput text={dateString} setText={setDateString}/>
+      </View>
+      <View style={addEntryStyles.inputContainer}>
+        <EntryInput text={textEntry} setText={setTextEntry}/>
+      </View>
+      <View style={addEntryStyles.buttonContainer}>
+        <AddEntryButton 
+          title={title} 
+          dateString={dateString} 
+          textEntry={textEntry} 
+          resetAll={resetAll}
+        />
+      </View>
+
+    </SafeAreaView>
   );
 };
 
 export default create;
 
 const addEntryStyles = StyleSheet.create({
+  headerContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 10,
+    width: '100%',
+    marginVertical: 15,
+  },
   inputContainer: {
-    flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    padding: 1,
+    marginVertical: 0,
+    width: "100%",
+  },
+  buttonContainer: {
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 1,
+    width: "100%",
   },
 });

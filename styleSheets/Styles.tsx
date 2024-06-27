@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native'
 
 export const colors = {
   primary: '#fff', // Color: White
-  secondary: '#FAFAFA', // Color: White Smoke
+  secondary: '#000', // Color: Black
   tertiary: '#0A0F44', // Color: Dark Navy
   accent: '#1976D2', //Color: Sky Blue
   background: '#161622', //Color: Dark Blue

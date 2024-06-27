@@ -11,7 +11,7 @@ import ModalComponent from "../../../components/calendar/ModalComponent";
  * @returns A calendar view with a modal that can be opened and closed.
  */
 const homeV2 = () => {
-  const [selectedDate, setSelectedDate] = useState<string>("");
+  const [selectedDate, setSelectedDate] = useState<string>(""); //Format: "YYYY-MM-DD"
   const [modalVisible, setModalVisible] = useState<boolean>(false);
 
   const openModal = () => {

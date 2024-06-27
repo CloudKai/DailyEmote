@@ -4,39 +4,54 @@ import { colors } from '../../styleSheets/Styles';
 import { router } from 'expo-router';
 import { Ionicons } from "@expo/vector-icons";
 
-export default function HeaderComponent() {
+type HeaderProps = {
+  goBack: () => void;
+}
+
+export default function HeaderComponent({ goBack }: HeaderProps) {
   return (
-    <SafeAreaView style={headerStyles.headerContainer}>
+    <View style={headerStyles.headerContainer}>
       <TouchableOpacity 
-        onPress={() => router.back()} 
-        style={headerStyles.headerButton}
+        onPress={() => goBack()} 
+        style={headerStyles.backButton}
       >
         <Ionicons name="arrow-back" size={24} color={colors.primary} />
       </TouchableOpacity>
       <Text style={headerStyles.headerText}>New Entry</Text>
-    </SafeAreaView>
+    </View>
   )
 }
 
 const headerStyles = StyleSheet.create({
   headerContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     alignItems: 'center',
-    padding: 10
+    padding: 10,
+    width: '100%',
   },
   headerText: {
     color: colors.primary,
     fontSize: 20,
     fontWeight: 'bold',
-    flex: 3,
+    textAlign: 'center',
+    flex: 1,
   },
   headerButton: {
-    padding: 10,
-    flex: 1,
     position: 'absolute',
-    left: 15,
-    justifyContent: 'center',
-    alignItems: 'center',
-  }
+    left: 0,
+    padding: 15,
+  },
+  backButton:{
+    alignItems: "center",
+    justifyContent: "center",
+    height: 56,
+    width: 56,
+    borderRadius: 999,
+    backgroundColor: "#6082B6",
+    marginBottom: 26,
+    position: 'absolute',
+    left: 5,
+    zIndex: 1,
+  },
 });

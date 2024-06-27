@@ -26,13 +26,7 @@ export type CalendarComponentProps = {
   openModal: () => void,
 };
 
-//Props for ModalComponent
-export type ModalComponentProps = {
-  selectedDate: string,
-  closeModal: () => void,
-}
-
-//Props for modalList
+//Props for modalList, modalContent
 export type modalContentProps = {
   selectedDate: string,
   closeModal: () => void,
@@ -43,4 +37,10 @@ export type EntryProps = {
   item: entryData,
   closeModal: () => void,
   reload: () => void,
+}
+
+//Props for titleInput, textEntryInput
+export type textInputProps = {
+  text: string,
+  setText: (text: string) => void,
 }
