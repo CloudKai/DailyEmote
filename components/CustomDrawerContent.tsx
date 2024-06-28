@@ -4,6 +4,8 @@ import { useRouter } from 'expo-router';
 import { View, Text, Image } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Ionicons } from '@expo/vector-icons'
+import React from "react";
+import { colors } from "../styleSheets/Styles";
 
 
 export default function CustomDrawerContent(props: any) {
@@ -25,7 +27,7 @@ export default function CustomDrawerContent(props: any) {
                 
                 <View style = {{ paddingTop: 40 }}>
                     <Image
-                        source = {{ uri: 'https://t4.ftcdn.net/jpg/00/23/72/59/360_F_23725944_W2aSrg3Kqw3lOmU4IAn7iXV88Rnnfch1.jpg' }}
+                        source = {{ uri: auth?.currentUser?.photoURL!}}
                         style = {{ width: 100, height: 100, borderRadius: 100/2, alignSelf: 'center' }}
                     />
                 
@@ -65,8 +67,9 @@ export default function CustomDrawerContent(props: any) {
                     borderTopWidth: 1,
                     padding: 20,
                     paddingBottom: 20 + bottom,
+                    backgroundColor: colors.yellow
                 }}>
-                <Text> DailyEmote </Text>
+                <Text style = {{fontSize: 15}}> DailyEmote </Text>
             </View>
         </View>
     );

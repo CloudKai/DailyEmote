@@ -1,9 +1,10 @@
-import { View, Text, TextInput, ActivityIndicator, Button, KeyboardAvoidingView, Alert } from 'react-native';
+import { Image, View, Text, TextInput, ActivityIndicator, Button, KeyboardAvoidingView, Alert } from 'react-native';
 import { styles } from '../../styleSheets/Styles';
 import { useEffect, useState } from 'react';
 import { FIREBASE_AUTH } from '../../FireBaseConfig';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { useNavigation, useRouter } from 'expo-router';
+import React from 'react';
 
 const signin = () => {
   const [email, setEmail] = useState('');
@@ -58,9 +59,10 @@ const signin = () => {
   return (
     <View className = "flex-1 items-center justify-center bg-primary">
       <KeyboardAvoidingView behavior="padding">
-        <Text style={{fontWeight: "bold", textAlign: 'center', color: 'white', fontSize: 30, marginBottom: 50}}>
-          DailyEmote
-        </Text>
+        <Image 
+            source = { require('../../assets/AppIcon.png') }
+            style = {{ marginTop: -60, width: 300, height: 200, resizeMode: 'contain' }}
+        />
 
         <TextInput 
           value={email} 
