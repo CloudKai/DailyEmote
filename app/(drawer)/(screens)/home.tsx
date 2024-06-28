@@ -74,7 +74,7 @@ const home = () => {
       }
     });
     setEntries(newEntries); // Update state once with new entries
-    setData(newEntries);
+    setData(newEntries); // KME this line to set data for flatlist
     console.log(entries);
     setLoading(false);
   }
@@ -207,15 +207,15 @@ const home = () => {
       {/* End of Calendar */}
       
 
-      <View style = {{
-            flex: 2, 
+      <View style = {{  // KME for FlatList 
+            flex: 2,  
             backgroundColor: colors.background,
             alignSelf: 'center',
             marginTop: 20,
             paddingLeft: 7
           }}>
             
-          <FlatList
+          <FlatList     // KME for Cards to display 
             extraData={data}
             data = {data}
             horizontal
