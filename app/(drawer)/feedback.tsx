@@ -4,26 +4,26 @@ import { GiftedChat } from 'react-native-gifted-chat'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { FIREBASE_AUTH, FIREBASE_DB } from '../../FireBaseConfig'
 import { colors } from '../../styleSheets/Styles'
+import { router } from 'expo-router'
 import { addDoc, collection, onSnapshot, orderBy, query } from 'firebase/firestore'
-import BackButton from '../../components/BackButton'
 
 const feedback = () => {
     const [messages, setMessages] = useState<any[]>([])
-    // const [firstMessage, setfirstMessage] = useState<any[]>([])
+    const [firstMessage, setfirstMessage] = useState<any[]>([])
     const auth = FIREBASE_AUTH;
 
     useEffect(() => {
-      // setfirstMessage([
-      //   {
-      //     _id: 1,
-      //     text: 'Your Feedback will be greatly appreciated. Thank You!',
-      //     createdAt: new Date(),
-      //     user: {
-      //       _id: 2,
-      //       name: 'DailyEmote',
-      //     },
-      //   },
-      // ]);
+      setfirstMessage([
+        {
+          _id: 1,
+          text: 'Your Feedback will be greatly appreciated. Thank You!',
+          createdAt: new Date(),
+          user: {
+            _id: 2,
+            name: 'DailyEmote',
+          },
+        },
+      ]);
 
       const q = query(collection(FIREBASE_DB, 'chats'), orderBy('createdAt', 'desc'));
       const unsubscribe = onSnapshot(q, (snapshot) => setMessages(
@@ -51,7 +51,7 @@ const feedback = () => {
   
     return (
         <SafeAreaView style = {{ flex: 1, backgroundColor: colors.background }}>
-            <BackButton name = "Feedback Chat"/>
+            <Button title = 'Back' onPress={router.back}/>
 
             <GiftedChat
               placeholder='Enter your Feedback'

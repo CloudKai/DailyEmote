@@ -87,7 +87,7 @@ const signup = () => {
         <TextInput 
           value={avatar} 
           style={styles.textInput} 
-          placeholder='Enter your Image Url' 
+          placeholder='Enter your Image Url (Optional)' 
           onChangeText={(text) => setAvatar(text)}/>
 
         <TextInput 

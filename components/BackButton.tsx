@@ -1,12 +1,10 @@
-import { useRouter } from 'expo-router'
+import { router } from 'expo-router'
 import React from 'react'
 import { View, TouchableOpacity, Text, Dimensions } from 'react-native'
 import { MaterialIcons } from '@expo/vector-icons'
 import { colors } from '../styleSheets/Styles'
 
 function BackButton(props: any) {
-  const router = useRouter();
-  
   return (
     <View style = {{
       marginTop: 15,
@@ -24,7 +22,7 @@ function BackButton(props: any) {
         <MaterialIcons 
           name = 'keyboard-arrow-left'
           size = {30}
-          color= {colors.gray}
+          color = {colors.gray}
         /> 
       </TouchableOpacity>
 
