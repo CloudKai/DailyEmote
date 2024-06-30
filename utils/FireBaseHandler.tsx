@@ -1,4 +1,4 @@
-import { addDoc, collection, doc, getDocs, updateDoc } from "firebase/firestore";
+import { addDoc, collection, deleteDoc, doc, getDocs, updateDoc } from "firebase/firestore";
 import { FIREBASE_DB } from "../FireBaseConfig";
 import { Alert } from "react-native";
 
@@ -101,9 +101,6 @@ export const addEntry = async (title: string, dateString: string, textEntry: str
 }
 
 export const editEntry = async (id: string, title: string, dateString: string, textEntry: string) => {
-  if (title === "" || dateString === "" || textEntry === "") {
-    Alert.alert("Warning", "Please don't leave any fields empty");
-  }
   const [ year, month, day ] = dateString.split("-");
   try {
     const docRef = doc(FIREBASE_DB, "entries", id);
@@ -118,4 +115,9 @@ export const editEntry = async (id: string, title: string, dateString: string, t
   } catch (e) {
     console.error("Error adding document: ", e);
   }
+}
+
+export const deleteEntry = async (id: string) => {
+  const entryRef = doc(FIREBASE_DB, "entries", id);
+  await deleteDoc(entryRef);
 }

@@ -43,12 +43,13 @@ export const styles = StyleSheet.create({
     alignContent: 'center',
     justifyContent: 'center',
     marginVertical: 10,
+    backgroundColor: colors.skyBlue, //Color: Sky Blue
   },
   roundButton: {
     height: 56,
     width: 56,
     borderRadius: 999,
-    backgroundColor: colors.navy, //Color: Navy Blue
+    backgroundColor: colors.skyBlue, //Color: Navy Blue
     marginBottom: 26,
   },
   whiteText: {

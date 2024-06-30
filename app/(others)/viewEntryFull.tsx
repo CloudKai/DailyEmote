@@ -1,11 +1,12 @@
 import { View, Text, SafeAreaView, TouchableOpacity, StyleSheet } from "react-native";
-import React, { useEffect, useState } from "react";
-import { router, useLocalSearchParams } from "expo-router";
+import React, { useCallback, useEffect, useState } from "react";
+import { router, useFocusEffect, useLocalSearchParams } from "expo-router";
 import { colors, styles } from "../../styleSheets/Styles";
 import { Ionicons, AntDesign } from "@expo/vector-icons";
 import HeaderComponent from "../../components/viewEntry/HeaderComponent";
 import ViewEntryComponent from "../../components/viewEntry/ViewEntryComponent";
 import { readSingleEntry } from "../../utils/FireBaseHandler";
+import DeleteEntryButton from "../../components/viewEntry/DeleteEntryButton";
 
 export default function viewEntryFull() {
   const { id } = useLocalSearchParams();
@@ -22,7 +23,7 @@ export default function viewEntryFull() {
     readSingleEntry(id).then((data) => {
       setTitle(data.title);
       setTextEntry(data.textEntry);
-      setDate(data.day + "-" + data.month + "-" + data.year);
+      setDate(data.year + "-" + data.month + "-" + data.day);
     });
   }
 
@@ -44,6 +45,14 @@ export default function viewEntryFull() {
     console.log("View Entry Page loaded document: ", id)
   }, []);
 
+  useFocusEffect(
+    useCallback(() => {
+      loadEntry();
+      console.log("View Entry Page loaded document: ", id)
+    }, [])
+  );
+
+
   return (
     <SafeAreaView style={[styles.overlay, {justifyContent: "flex-start",}]}>
       <View style={viewEntryStyles.headerContainer}>
@@ -51,6 +60,9 @@ export default function viewEntryFull() {
       </View>
       <View style={viewEntryStyles.viewTextContainer}>
         <ViewEntryComponent title={title} textEntry={textEntry} date={date}/>
+      </View>
+      <View style={viewEntryStyles.buttonContainer}>
+        <DeleteEntryButton id={id} goBack={goBack}/>
       </View>
       
     </SafeAreaView>
@@ -73,4 +85,10 @@ const viewEntryStyles = StyleSheet.create({
     padding: 10,
     width: '100%',
   },
-}) 
+  buttonContainer: {
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 1,
+    width: "100%",
+  },
+});

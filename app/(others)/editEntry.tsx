@@ -48,18 +48,20 @@ export default function create() {
   }, []);
 
   return (
-    <SafeAreaView style={styles.overlay}>
+    <SafeAreaView style={[styles.overlay, {justifyContent: "flex-start"}]}>
       <View style={editEntryStyles.headerContainer}>
         <HeaderComponent goBack={goBack}/>
       </View>
-      <View style={editEntryStyles.inputContainer}>
-        <TitleInput text={title} setText={setTitle}/>
-      </View>
-      <View style={editEntryStyles.inputContainer}>
-        <DateInput text={date} setText={setDate}/>
-      </View>
-      <View style={editEntryStyles.inputContainer}>
-        <EntryInput text={textEntry} setText={setTextEntry}/>
+      <View style={{padding: 10, alignItems: "center"}}>
+        <View style={editEntryStyles.inputContainer}>
+          <DateInput text={date} setText={setDate}/>
+        </View>
+        <View style={editEntryStyles.inputContainer}>
+          <TitleInput text={title} setText={setTitle}/>
+        </View>
+        <View style={editEntryStyles.inputContainer}>
+          <EntryInput text={textEntry} setText={setTextEntry}/>
+        </View>
       </View>
       <View style={editEntryStyles.buttonContainer}>
         <EditEntryButton
@@ -86,8 +88,7 @@ const editEntryStyles = StyleSheet.create({
   inputContainer: {
     justifyContent: "center",
     alignItems: "center",
-    padding: 1,
-    marginVertical: 0,
+    padding: 10,
     width: "100%",
   },
   buttonContainer: {

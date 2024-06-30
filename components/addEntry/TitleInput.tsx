@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet, TextInput } from 'react-native'
 import React from 'react'
-import { colors } from '../../styleSheets/Styles';
+import { colors, styles } from '../../styleSheets/Styles';
 
 type textInputProps = {
   text: string;
@@ -10,6 +10,7 @@ type textInputProps = {
 export default function TitleInput({ text, setText }: textInputProps) {
   return (
     <View style={titleStyles.inputContainer}>
+      <Text style={[styles.whiteText]}>Title: </Text>
       <TextInput 
         style={[titleStyles.inputBox, titleStyles.text]}
         placeholder="Title"
@@ -27,13 +28,14 @@ const titleStyles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     width: "100%",
+    flexDirection: 'row',
   },
   inputBox: {
+    backgroundColor: colors.contrastBackground,
     padding: 10,
-    borderRadius: 4,
-    width: "90%",
-    marginVertical: 10,
-    backgroundColor: colors.contrastBackground, //Color: Dark Gray
+    margin: 10,
+    borderRadius: 10,
+    flex: 2,
   },
   text: {
     color: colors.black,

@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import DateTimePickerAndroid, {
   DateTimePickerEvent,
 } from "@react-native-community/datetimepicker";
-import { colors } from '../../styleSheets/Styles';
+import { colors, styles } from '../../styleSheets/Styles';
 
 type textInputProps = {
   text: string;
@@ -15,6 +15,17 @@ export default function DateInput({ text, setText }: textInputProps) {
   const [dateString, setDateString] = useState(text);
   const [date, setDate] = useState(new Date());
 
+  const formatDate = (date: Date) => {
+    const year: string = date.getFullYear().toString();
+    const month: string =
+      date.getMonth() + 1 < 10
+        ? "0" + (date.getMonth() + 1)
+        : (date.getMonth() + 1).toString();
+    const day: string =
+      date.getDate() < 10 ? "0" + date.getDate() : date.getDate().toString();
+    return year + "-" + month + "-" + day;
+  }
+
   const onDateChange = (event: DateTimePickerEvent, selectedDate?: Date) => {
     if (event.type === "dismissed") {
       setDateModal(!dateModal);
@@ -24,26 +35,15 @@ export default function DateInput({ text, setText }: textInputProps) {
       setDate(currentDate);
       setDateModal(!dateModal);
       console.log("Date selected: ", currentDate);
-      const year: string = currentDate.getFullYear().toString();
-      const month: string =
-        currentDate.getMonth() + 1 < 10
-          ? "0" + (date.getMonth() + 1)
-          : (currentDate.getMonth() + 1).toString();
-      const day: string =
-        currentDate.getDate() < 10 ? "0" + date.getDate() : date.getDate().toString();
-      setText(year + "-" + month + "-" + day);
+      setDateString(formatDate(currentDate));
+      setText(formatDate(currentDate));
       console.log("Date set: ", text);
     }
   }
 
   useEffect(() => {
-    if (dateString !== text) {
-      setDateString(text);
-      setDate(new Date(text));
-    } else {
-      setDateString(text);
-      setDate(new Date(text));
-    }
+    setDateString(text);
+    setDate(new Date(text));
   }, [text]);
 
   return (
@@ -57,6 +57,7 @@ export default function DateInput({ text, setText }: textInputProps) {
           onChange={onDateChange}
         />
       )}
+      <Text style={[styles.whiteText]}>Date: </Text>
       <Pressable
         style={dateStyles.pressable}
         onPress={() => {
@@ -68,7 +69,7 @@ export default function DateInput({ text, setText }: textInputProps) {
           style={dateStyles.text}
           editable={false}
         >
-          Date: {dateString}
+          {dateString}
         </TextInput>
       </Pressable>
     </View>
@@ -80,13 +81,14 @@ const dateStyles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     width: "100%",
+    flexDirection: "row",
   },
   pressable: {
+    backgroundColor: colors.contrastBackground,
     padding: 10,
-    borderRadius: 4,
-    width: "90%",
-    marginVertical: 10,
-    backgroundColor: colors.contrastBackground, //Color: Dark Gray
+    margin: 10,
+    borderRadius: 10,
+    flex: 2,
   },
   text: {
     color: colors.black,

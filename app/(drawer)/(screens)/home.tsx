@@ -1,8 +1,8 @@
 import { StyleSheet, View, Text, Button, Image, TouchableOpacity, Pressable, Modal, ActivityIndicator, FlatList, TouchableWithoutFeedback, } from 'react-native'
-import { router } from 'expo-router';
+import { router, useFocusEffect } from 'expo-router';
 import { styles, colors } from '../../../styleSheets/Styles';
 import { ProfileTab } from '../../../components/ProfileTab';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { ScrollView } from 'react-native-gesture-handler';
 import CalendarComponent from '../../../components/home/calendar/CalendarComponent';
 import CardListComponent from '../../../components/home/cardlist/CardListComponent';
@@ -36,6 +36,14 @@ const home = () => {
       loadEntries();
     }
   }, [selectedDate]);
+
+  useFocusEffect(
+    useCallback(() => {
+      if (selectedDate !== "") {
+        loadEntries();
+      }
+    }, [selectedDate])
+  );
 
   return (
     <View style={homeStyles.overlay}>

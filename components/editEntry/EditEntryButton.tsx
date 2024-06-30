@@ -22,10 +22,10 @@ export default function EditEntryButton({ id, title, dateString, textEntry, rese
   return (
     <View>
       <Pressable 
-        style={[styles.button, editEntryButtonStyles.button]}
+        style={[styles.button]}
         onPress={handleEditEntry}
       >
-        <Text style={styles.blackText}>Add Entry</Text>
+        <Text style={styles.blackText}>Save Entry</Text>
       </Pressable>
     </View>
   );

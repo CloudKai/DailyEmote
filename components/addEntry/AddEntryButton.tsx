@@ -17,14 +17,18 @@ export default function AddEntryButton({ title, dateString, textEntry, resetAll 
  
   const handleAddEntry = async () => {
     console.log("Add Entry Button Pressed");
-    addEntry(title, dateString, textEntry);
-    resetAll();
+    if (title === "" || dateString === "" || textEntry === "") {
+      Alert.alert("Warning", "Please don't leave any fields empty");
+    } else {
+      addEntry(title, dateString, textEntry);
+      resetAll();
+    }
   }
 
   return (
     <View>
       <Pressable 
-        style={[styles.button, addEntryButtonStyles.button]}
+        style={[styles.button]}
         onPress={handleAddEntry}
       >
         <Text style={styles.blackText}>Add Entry</Text>
