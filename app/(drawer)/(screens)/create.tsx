@@ -1,141 +1,79 @@
-import { View, Text, TextInput, Pressable, SafeAreaView } from 'react-native'
+import { View, Text, TextInput, Pressable, SafeAreaView, StyleSheet } from 'react-native'
 import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker';
 import React, { useState } from 'react'
-import { entryData, homeStyles } from './home';
 import { router } from 'expo-router';
 import { addDoc, collection } from 'firebase/firestore';
 import { FIREBASE_DB } from '../../../FireBaseConfig';
-import { colors } from '../../../styleSheets/Styles';
+import { colors, styles } from '../../../styleSheets/Styles';
+import HeaderComponent from '../../../components/addEntry/HeaderComponent';
+import TitleInput from '../../../components/addEntry/TitleInput';
+import DateInput from '../../../components/addEntry/DateInput';
+import EntryInput from '../../../components/addEntry/EntryInput';
+import AddEntryButton from '../../../components/addEntry/AddEntryButton';
 
-const create = () => {
+export default function create() {
   const [title, setTitle] = useState("");
   const [textEntry, setTextEntry] = useState("");
-  const [date, setDate] = useState(new Date());
-  const [dateModal, setDateModal] = useState(false);
-  const [loading, setLoading] = useState(true);
-  const [entries, setEntries] = useState([] as entryData[]);
+  const [dateString, setDateString] = useState(""); //Format: "YYYY-MM-DD"
 
-  const addEntry = async () => {
-    try {
-      const entriesRef = collection(FIREBASE_DB, "entries");
-      const { year, month, day } = formatDate(date);
-      const document = await addDoc(entriesRef, {
-        title: title,
-        isHappy: false,
-        year: year,
-        month: month,
-        day: day,
-        textEntry: textEntry,
-      });
-      console.log("Document written with ID: ", document.id);
-      setTitle("");
-      setTextEntry("");
-      router.back();
-    } catch (e) {
-      console.error("Error adding document: ", e);
-    }
-  }
+  const goBack = () => {
+    router.back();
+  };
 
-  const onDateChange = (event: DateTimePickerEvent, selectedDate?: Date) => {
-    const currentDate = selectedDate || date;
-    setDateModal(false);
-    setDate(currentDate);
-    console.log(currentDate.toDateString().split(" "));
-  };  
-
-  const formatDate = (date: Date) => {
-    const year: string = date.getFullYear().toString();
-    const month: string = (date.getMonth() + 1) < 10 
-      ? "0" + (date.getMonth() + 1) 
-      : (date.getMonth() + 1).toString();
-    const day: string = (date.getDate()) < 10 
-      ? "0" + (date.getDate()) 
-      : (date.getDate()).toString();
-    return { year, month, day };
-  }
+  const resetAll = () => {
+    setTitle("");
+    setTextEntry("");
+    setDateString("");
+    router.back();
+  };
 
   return (
-    <View style = {{
-      flex: 1,
-      backgroundColor: '#161622',
-    }}>
-      <SafeAreaView style={[
-        {
-          flex: 1,
-          justifyContent: 'center',
-          alignItems: 'center',
-          margin: 30,
-          height: "100%"
-        }]}>
-        <Text style={[
-          homeStyles.headingText, {
-            color: colors.primary, //Color: White
-            marginVertical: 20,
-          }]}>
-          New Entry
-        </Text>
-        <TextInput 
-          style={[homeStyles.inputBox, {}]} 
-          placeholder="Title" 
-          value={title}
-          onChangeText={(text) => setTitle(text)}
-          multiline={true}
-          numberOfLines={1}
+    <SafeAreaView style={styles.overlay}>
+      <View style={addEntryStyles.headerContainer}>
+        <HeaderComponent goBack={goBack}/>
+      </View>
+      <View style={addEntryStyles.inputContainer}>
+        <TitleInput text={title} setText={setTitle}/>
+      </View>
+      <View style={addEntryStyles.inputContainer}>
+        <DateInput text={dateString} setText={setDateString}/>
+      </View>
+      <View style={addEntryStyles.inputContainer}>
+        <EntryInput text={textEntry} setText={setTextEntry}/>
+      </View>
+      <View style={addEntryStyles.buttonContainer}>
+        <AddEntryButton 
+          title={title} 
+          dateString={dateString} 
+          textEntry={textEntry} 
+          resetAll={resetAll}
         />
-        {/* Date Select */}
-        {dateModal && (
-          <DateTimePicker
-            mode="date"
-            display="spinner"
-            value={date}
-            onChange={onDateChange}
-          />
-        )}
-        <Pressable 
-          style={{width: "100%",}}
-          onPress={() => {
-            setDateModal(true);
-            console.log("Opened date modal")
-          }}
-        >
-          <TextInput 
-            style={[homeStyles.inputBox, {color: colors.tertiary,}]}
-            editable={false}
-          >
-            Date: {formatDate(date).year}-{formatDate(date).month}-{formatDate(date).day}
-          </TextInput>
-        </Pressable>
-        <TextInput 
-          style={[homeStyles.inputBox, {height: "40%", }]} 
-          placeholder="Enter new entry" 
-          value={textEntry}
-          onChangeText={(text) => setTextEntry(text)}
-          multiline={true}
-          numberOfLines={5}
-        />
-        <View style={{}}>
-          <Pressable 
-            style={[
-              homeStyles.button, {
-                backgroundColor: colors.button //Color: Light Blue
-              }]}
-            onPress={addEntry}
-          >
-            <Text style={homeStyles.text}>Add Entry</Text>
-          </Pressable>
-          <Pressable
-            style={[
-              homeStyles.button, {
-                backgroundColor: colors.button //Color: Light Blue
-              }]}
-            onPress={() => router.back()}
-          >
-            <Text style={homeStyles.text}>Back</Text>
-          </Pressable>
-        </View>
-      </SafeAreaView>
-    </View>
-  )
+      </View>
+
+    </SafeAreaView>
+  );
 }
 
-export default create;
+const addEntryStyles = StyleSheet.create({
+  headerContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 10,
+    width: '100%',
+    marginVertical: 15,
+  },
+  inputContainer: {
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 1,
+    marginVertical: 0,
+    width: "100%",
+  },
+  buttonContainer: {
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 1,
+    width: "100%",
+  },
+});

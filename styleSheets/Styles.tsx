@@ -2,17 +2,16 @@ import { color } from '@rneui/base';
 import { StyleSheet } from 'react-native'
 
 export const colors = {
-  primary: '#fff', // Color: White
-  secondary: '#FAFAFA', // Color: White Smoke
-  tertiary: '#0A0F44', // Color: Dark Navy
-  accent: '#1976D2', //Color: Sky Blue
+  white: '#fff', // Color: White
+  black: '#000', // Color: Black
+  darkNavy: '#0A0F44', // Color: Dark Navy
+  skyBlue: '#1976D2', //Color: Sky Blue
   background: '#161622', //Color: Dark Blue
   secondaryBackground: '#212121', //Color: Dark Gray
   tertiaryBackground: '#303030', // Color: Charcoal
   contrastBackground: '#CFD8DC', //Color: Light Gray
-  button: "#6082B6", //Color: Navy Blue
+  navy: "#6082B6", //Color: Navy Blue
   border: '#2196F3', //Color: Light Blue
-  shadow: '#000', //Color: Black
   disabled: "#A9A9A9", //Color: Gray 
   red: '#EF0827',
   yellow: '#FCC70B',
@@ -21,26 +20,48 @@ export const colors = {
 }
 
 export const styles = StyleSheet.create({
-  container: {
+  overlay: {
     flex: 1,
-    backgroundColor: '#0C0C1E',
+    backgroundColor: colors.background, //Color: Dark Blue
     alignItems: 'center',
     justifyContent: 'center',
-    padding: 0,
+    padding: 10,
   },
   textInput: {
-    marginVertical: 5,
+    marginVertical: 4,
     height: 50,
     width: 300,
     borderWidth: 1,
     borderRadius: 4,
     padding: 10,
-    backgroundColor: '#fff',
+    backgroundColor: colors.contrastBackground, //Color: Dark Gray
   },
   button: {
     borderRadius: 20,
     padding: 10,
-    elevation: 2
+    elevation: 2,
+    alignContent: 'center',
+    justifyContent: 'center',
+    marginVertical: 10,
+  },
+  roundButton: {
+    height: 56,
+    width: 56,
+    borderRadius: 999,
+    backgroundColor: colors.navy, //Color: Navy Blue
+    marginBottom: 26,
+  },
+  whiteText: {
+    color: colors.white, //Color: White
+    fontSize: 20,
+  },
+  blackText: {
+    color: colors.black, //Color: Black
+    fontSize: 20,
+  },
+  headingText: {
+    fontSize: 24,
+    fontWeight: "400",
   },
   block: {
     backgroundColor: colors.contrastBackground,
