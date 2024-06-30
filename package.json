@@ -19,7 +19,6 @@
     "@react-navigation/stack": "^6.3.29",
     "@rneui/base": "^4.0.0-rc.7",
     "@rneui/themed": "^4.0.0-rc.8",
-    "expo": "~51.0.8",
     "expo-checkbox": "^3.0.0",
     "expo-image-picker": "~15.0.6",
     "expo-router": "^3.5.14",
@@ -50,6 +49,7 @@
     "@types/react": "~18.2.45",
     "@types/react-native-charts-wrapper": "^0.5.11",
     "@types/react-native-onboarding-swiper": "^1.1.9",
+    "expo": "^51.0.17",
     "tailwindcss": "^3.3.2",
     "typescript": "^5.1.3"
   },

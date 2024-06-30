@@ -34,7 +34,7 @@ const onboarding = () => {
                 containerStyles = {{ paddingHorizontal: 15 }}
                 pages={[
                     {
-                    backgroundColor: colors.accent,
+                    backgroundColor: colors.skyBlue,
                     image: (
                         <View style = {styles.lottie}>
                             <Lottie
