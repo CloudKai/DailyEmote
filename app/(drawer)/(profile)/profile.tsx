@@ -162,7 +162,7 @@ const name = () => {
                 <MaterialIcons
                   name = 'photo-camera'
                   size = {32}
-                  color = {colors.accent}
+                  color = {colors.skyBlue}
                 />
               </View>
             </TouchableOpacity>
@@ -294,9 +294,9 @@ const name = () => {
             />
 
             <Text style={{
-              color: 'white', 
+              color: colors.yellow, 
               alignSelf: 'center', 
-              paddingTop: 10
+              paddingTop: 10,
             }}>
               *Changing Email or Password requires a relogin
             </Text>

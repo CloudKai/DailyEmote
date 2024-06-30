@@ -35,6 +35,7 @@ const CardListStyles = StyleSheet.create({
     width: '100%', 
     backgroundColor: colors.background,
     alignSelf: 'center',
+    paddingTop: 10,
   },
 });
 
