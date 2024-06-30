@@ -1,4 +1,4 @@
-import { addDoc, collection, getDocs } from "firebase/firestore";
+import { addDoc, collection, doc, getDocs, updateDoc } from "firebase/firestore";
 import { FIREBASE_DB } from "../FireBaseConfig";
 import { Alert } from "react-native";
 
@@ -106,8 +106,14 @@ export const editEntry = async (id: string, title: string, dateString: string, t
   }
   const [ year, month, day ] = dateString.split("-");
   try {
-    const entriesRef = collection(FIREBASE_DB, "entries");
-    
+    const docRef = doc(FIREBASE_DB, "entries", id);
+    await updateDoc(docRef, {
+      title: title,
+      year: year,
+      month: month,
+      day: day,
+      textEntry: textEntry,
+    });
     console.log("Document updated with ID: ", id);
   } catch (e) {
     console.error("Error adding document: ", e);

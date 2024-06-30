@@ -27,7 +27,7 @@ export default function create() {
     readSingleEntry(id).then((data) => {
       setTitle(data.title);
       setTextEntry(data.textEntry);
-      setDate(data.day + "-" + data.month + "-" + data.year);
+      setDate(data.year + "-" + data.month + "-" + data.day);
     });
   }
 

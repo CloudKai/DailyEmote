@@ -1,9 +1,7 @@
-import { View, Text, Pressable, StyleSheet, Alert } from 'react-native'
+import { View, Text, Pressable, StyleSheet } from 'react-native'
 import React from 'react'
 import { colors, styles } from '../../styleSheets/Styles'
-import { addDoc, collection } from 'firebase/firestore';
-import { FIREBASE_DB } from '../../FireBaseConfig';
-import { router } from 'expo-router';
+import { editEntry } from '../../utils/FireBaseHandler';
 
 type EditEntryProps = {
   id: string;

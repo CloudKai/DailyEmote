@@ -1,5 +1,5 @@
 import { View, Text, Pressable, TextInput, StyleSheet } from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import DateTimePickerAndroid, {
   DateTimePickerEvent,
 } from "@react-native-community/datetimepicker";
@@ -12,6 +12,7 @@ type textInputProps = {
 
 export default function DateInput({ text, setText }: textInputProps) {  
   const [dateModal, setDateModal] = useState(false);
+  const [dateString, setDateString] = useState(text);
   const [date, setDate] = useState(new Date());
 
   const onDateChange = (event: DateTimePickerEvent, selectedDate?: Date) => {
@@ -19,7 +20,7 @@ export default function DateInput({ text, setText }: textInputProps) {
       setDateModal(!dateModal);
       return;
     } else if (event.type === "set") {
-      const currentDate = selectedDate || date;
+      const currentDate = selectedDate|| date;
       setDate(currentDate);
       setDateModal(!dateModal);
       console.log("Date selected: ", currentDate);
@@ -34,6 +35,16 @@ export default function DateInput({ text, setText }: textInputProps) {
       console.log("Date set: ", text);
     }
   }
+
+  useEffect(() => {
+    if (dateString !== text) {
+      setDateString(text);
+      setDate(new Date(text));
+    } else {
+      setDateString(text);
+      setDate(new Date(text));
+    }
+  }, [text]);
 
   return (
     <View style={dateStyles.dateContainer}>
@@ -57,7 +68,7 @@ export default function DateInput({ text, setText }: textInputProps) {
           style={dateStyles.text}
           editable={false}
         >
-          Date: {date.toDateString()}
+          Date: {dateString}
         </TextInput>
       </Pressable>
     </View>
