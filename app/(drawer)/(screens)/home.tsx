@@ -125,7 +125,3 @@ export const homeStyles = StyleSheet.create({
     alignItems: 'center',
   },
 });
-
-/*
-
-*/
