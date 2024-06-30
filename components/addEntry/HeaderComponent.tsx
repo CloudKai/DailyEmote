@@ -6,10 +6,9 @@ import { Ionicons } from "@expo/vector-icons";
 
 type HeaderProps = {
   goBack: () => void;
-  goEdit: () => void;
 }
 
-export default function HeaderComponent({ goBack, goEdit }: HeaderProps) {
+export default function HeaderComponent({ goBack }: HeaderProps) {
   return (
     <View style={headerStyles.headerContainer}>
       <TouchableOpacity 
@@ -18,13 +17,7 @@ export default function HeaderComponent({ goBack, goEdit }: HeaderProps) {
       >
         <Ionicons name="arrow-back" size={24} color={colors.white} />
       </TouchableOpacity>
-      <Text style={headerStyles.headerText}>View Entry</Text>
-      <TouchableOpacity
-        onPress={() => goEdit()}
-        style={[headerStyles.editButton, styles.button]}
-      >
-        <Ionicons name="create" size={24} color={colors.white} />
-      </TouchableOpacity>
+      <Text style={headerStyles.headerText}>Add Entry</Text>
     </View>
   )
 }
@@ -44,13 +37,10 @@ const headerStyles = StyleSheet.create({
     textAlign: 'center',
     flex: 1,
   },
-  editButton: {
-    alignItems: "center",
-    justifyContent: "center",
-    marginBottom: 26,
+  headerButton: {
     position: 'absolute',
-    right: 5,
-    zIndex: 1,
+    left: 0,
+    padding: 15,
   },
   backButton:{
     alignItems: "center",

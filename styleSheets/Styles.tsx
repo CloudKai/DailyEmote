@@ -1,18 +1,22 @@
+import { color } from '@rneui/base';
 import { StyleSheet } from 'react-native'
 
 export const colors = {
-  primary: '#fff', // Color: White
-  secondary: '#000', // Color: Black
-  tertiary: '#0A0F44', // Color: Dark Navy
-  accent: '#1976D2', //Color: Sky Blue
+  white: '#fff', // Color: White
+  black: '#000', // Color: Black
+  darkNavy: '#0A0F44', // Color: Dark Navy
+  skyBlue: '#1976D2', //Color: Sky Blue
   background: '#161622', //Color: Dark Blue
   secondaryBackground: '#212121', //Color: Dark Gray
   tertiaryBackground: '#303030', // Color: Charcoal
   contrastBackground: '#CFD8DC', //Color: Light Gray
-  button: "#6082B6", //Color: Navy Blue
+  navy: "#6082B6", //Color: Navy Blue
   border: '#2196F3', //Color: Light Blue
-  shadow: '#000', //Color: Black
   disabled: "#A9A9A9", //Color: Gray 
+  red: '#EF0827',
+  yellow: '#FCC70B',
+  green: '#4FEE57',
+  gray: '#6E6E73',
 }
 
 export const styles = StyleSheet.create({
@@ -39,29 +43,41 @@ export const styles = StyleSheet.create({
     alignContent: 'center',
     justifyContent: 'center',
     marginVertical: 10,
+    backgroundColor: colors.skyBlue, //Color: Sky Blue
   },
   roundButton: {
     height: 56,
     width: 56,
     borderRadius: 999,
-    backgroundColor: colors.button, //Color: Navy Blue
+    backgroundColor: colors.skyBlue, //Color: Navy Blue
     marginBottom: 26,
   },
   whiteText: {
-    color: colors.primary, //Color: White
+    color: colors.white, //Color: White
     fontSize: 20,
   },
   blackText: {
-    color: colors.secondary, //Color: Black
+    color: colors.black, //Color: Black
     fontSize: 20,
   },
   headingText: {
     fontSize: 24,
     fontWeight: "400",
   },
-  textBox: {
+  block: {
+    backgroundColor: colors.contrastBackground,
+    borderRadius: 10,
+    marginHorizontal: 14,
+    marginTop: 20,
+  },
+  item: {
+    flexDirection: 'row',
+    alignItems: 'center',
     padding: 10,
-    marginVertical: 10,
-    backgroundColor: colors.secondaryBackground, //Color: Dark Gray
-  }
+    gap: 10,
+  },
+  separator: {
+    height: StyleSheet.hairlineWidth,
+    backgroundColor: colors.gray,
+  },
 });

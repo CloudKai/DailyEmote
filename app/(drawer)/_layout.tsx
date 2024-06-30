@@ -2,6 +2,7 @@ import { Drawer } from 'expo-router/drawer'
 import { Ionicons } from '@expo/vector-icons'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import CustomDrawerContent from '../../components/CustomDrawerContent'
+import React from 'react'
 
 const drawerLayout = () => {
   return (
@@ -24,6 +25,22 @@ const drawerLayout = () => {
                     drawerIcon: ({ size, color }) => (
                         <Ionicons 
                             name = "home-outline" 
+                            size = {size} 
+                            color = {color} 
+                        />
+                    ),
+                }}
+            />
+
+            <Drawer.Screen
+                name = "(profile)"
+
+                options = {{
+                    drawerLabel: 'Profile',
+                    headerTitle: 'Profile',
+                    drawerIcon: ({ size, color }) => (
+                        <Ionicons 
+                            name = "person-circle-outline" 
                             size = {size} 
                             color = {color} 
                         />

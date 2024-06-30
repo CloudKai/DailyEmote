@@ -6,12 +6,14 @@ import { FIREBASE_AUTH, FIREBASE_DB } from '../../FireBaseConfig';
 import { createUserWithEmailAndPassword, sendEmailVerification, updateProfile } from 'firebase/auth';
 import { useRouter } from 'expo-router';
 import { doc, setDoc } from 'firebase/firestore';
+import React from 'react';
 
 
 const signup = () => {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [avatar, setAvatar] = useState('');
   const [loading, setLoading] = useState(false);
   const [isSelected, setSelection] = useState(false);
   const router = useRouter();
@@ -33,14 +35,18 @@ const signup = () => {
         //console.log('response.user :', response?.user);
         Alert.alert('Check your email!');
 
-        await sendEmailVerification(auth.currentUser!);
-        await updateProfile(auth.currentUser!, {displayName: username })
+        //await sendEmailVerification(auth.currentUser!);
+        await updateProfile(auth.currentUser!, {
+            displayName: username,
+            photoURL: avatar ? avatar : 'https://t4.ftcdn.net/jpg/00/23/72/59/360_F_23725944_W2aSrg3Kqw3lOmU4IAn7iXV88Rnnfch1.jpg'
+        })
 
         await setDoc(doc(FIREBASE_DB, "users", response?.user?.uid),{ 
             username,
             email,
             password,
-            userID: response?.user?.uid
+            userID: response?.user?.uid,
+            avatar,
         });
 
       } catch (error: any) {
@@ -79,6 +85,12 @@ const signup = () => {
           onChangeText={(text) => setUsername(text)}/>
 
         <TextInput 
+          value={avatar} 
+          style={styles.textInput} 
+          placeholder='Enter your Image Url' 
+          onChangeText={(text) => setAvatar(text)}/>
+
+        <TextInput 
           value={email} 
           style={styles.textInput} 
           placeholder='Enter Email' 
@@ -110,11 +122,11 @@ const signup = () => {
           <ActivityIndicator size="large" color="#0000ff"/>
         ) : (
           <>
-            <View style={{marginVertical: 5}}>
+            <View style={{ paddingTop: 10, marginVertical: 5 }}>
               <Button title="Sign Up" onPress={signUp}/>
             </View>
 
-            <View style={{marginVertical: 5}}>
+            <View style={{ marginVertical: 5 }}>
               <Button title="Back" onPress={() => router.navigate('/signin')}/>
               </View>
           </>

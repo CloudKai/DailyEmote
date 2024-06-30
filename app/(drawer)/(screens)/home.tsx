@@ -1,90 +1,127 @@
-import { View, Button, StyleSheet, Modal, TouchableWithoutFeedback } from "react-native";
-import { ProfileTab } from "../../../components/ProfileTab";
-import { colors, styles } from "../../../styleSheets/Styles";
-import { useEffect, useState } from "react";
-import CalendarComponent from "../../../components/calendar/CalendarComponent";
-import ModalComponent from "../../../components/calendar/ModalComponent";
+import { StyleSheet, View, Text, Button, Image, TouchableOpacity, Pressable, Modal, ActivityIndicator, FlatList, TouchableWithoutFeedback, } from 'react-native'
+import { router, useFocusEffect } from 'expo-router';
+import { styles, colors } from '../../../styleSheets/Styles';
+import { ProfileTab } from '../../../components/ProfileTab';
+import React, { useCallback, useEffect, useState } from 'react';
+import { ScrollView } from 'react-native-gesture-handler';
+import CalendarComponent from '../../../components/home/calendar/CalendarComponent';
+import CardListComponent from '../../../components/home/cardlist/CardListComponent';
+import { entryData, readDateEntry } from '../../../utils/FireBaseHandler';
 
-/**
- * The `homeV2` function in TypeScript React sets up a calendar view with a modal that can be opened
- * and closed.
- * @returns A calendar view with a modal that can be opened and closed.
- */
-const homeV2 = () => {
-  const [selectedDate, setSelectedDate] = useState<string>(""); //Format: "YYYY-MM-DD"
-  const [modalVisible, setModalVisible] = useState<boolean>(false);
+const home = () => {
+  const [selectedDate, setSelectedDate] = useState<string>("");
+  const [loading, setLoading] = useState(true);
+  const [entries, setEntries] = useState([] as entryData[]);
 
-  const openModal = () => {
-    setModalVisible(true);
-    console.log("Modal opened");
+  const loadEntries = async () => {
+    setLoading(true);
+    console.log("Loading entries for date: " + selectedDate)
+    readDateEntry(selectedDate).then((data) => {
+      setEntries(data);
+      setLoading(false);
+    });
   };
 
-  const closeModal = () => {
-    setModalVisible(false);
-    console.log("Modal closed");
-  };
+  const gotoViewEntry = (entryID: string) => {
+    router.push({
+      pathname: '../../(others)/viewEntryFull',
+      params: {
+        id: entryID,
+      }
+    });
+  }
+
+  useEffect(() => {
+    if (selectedDate !== "") {
+      loadEntries();
+    }
+  }, [selectedDate]);
+
+  useFocusEffect(
+    useCallback(() => {
+      if (selectedDate !== "") {
+        loadEntries();
+      }
+    }, [selectedDate])
+  );
 
   return (
-    <View style={styles.overlay}>
+    <View style={homeStyles.overlay}>
       <ProfileTab name="Calendar" /> 
 
-      <View style={homeV2_Styles.component_overlay}>
-        <CalendarComponent 
-          selectedDate={selectedDate} 
-          setSelectedDate={setSelectedDate} 
-          openModal={openModal}
-        />
-        {/* Modal */}
-        <Modal
-          animationType="slide"
-          transparent={true}
-          visible={modalVisible}
-          onRequestClose={() => {
-            console.log("Back Button pressed");
-            closeModal();
-          }}
-        >
-          <TouchableWithoutFeedback onPress={closeModal}>
-            <View style={homeV2_Styles.modalOverlay}>
-              <TouchableWithoutFeedback>
-                  <ModalComponent selectedDate={selectedDate} closeModal={closeModal}/>
-              </TouchableWithoutFeedback>
-            </View>
-          </TouchableWithoutFeedback>
-        </Modal>
+      <View style={homeStyles.scrollOverlay}>
+        <ScrollView style={{flex: 1}}>
+          <View style={{flex: 1, paddingBottom: 10}}>
+          {/* <Text>Calendar Component</Text> */}
+          <CalendarComponent 
+            selectedDate={selectedDate} 
+            setSelectedDate={setSelectedDate} 
+            loadEntries={loadEntries}
+          />
+          {/* <Text>End of Calendar Component</Text> */}
+          
+          </View>
+          {/* Display entries */}     
+          <View style={{flex: 1}}>
+            { selectedDate === "" ? (
+              <View style={homeStyles.text}>
+                <Text style={homeStyles.headingText}>
+                  Select a date to view entries
+                </Text>
+              </View>
+            ) : (
+              loading ? (
+                <View>
+                  <ActivityIndicator size="large" color={colors.skyBlue} />
+                </View>
+              ) : (
+                <View style={homeStyles.cardList}>
+                  <CardListComponent data={entries} gotoViewEntry={gotoViewEntry} />
+                </View>
+              )
+            )}
+          </View>
+        </ScrollView>
       </View>
+      
     </View>
   );
-};
+  
+}
 
-export default homeV2;
+export default home;
 
-const homeV2_Styles = StyleSheet.create({
+export const homeStyles = StyleSheet.create({
+  overlay: {
+    flex: 1,
+    backgroundColor: colors.background, //Color: Dark Blue
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 10,
+  },
+  scrollOverlay: {
+    flex: 1,
+    width: '100%',
+    padding: 10,
+  },
   component_overlay: {
-    flex: 1,
-    justifyContent: "center",
+    width: "100%",
+    justifyContent: "flex-start",
+    alignContent: "center",
     alignSelf: "center",
-    width: "90%",
+    flexDirection: "column",
   },
-  modalOverlay: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "rgba(0, 0, 0, 0.5)", // Semi-transparent background
+  headingText: {
+    color: colors.white, //Color: White
+    fontSize: 20,
+    textAlign: "center",
+    marginVertical: 20,
   },
-  modalView: {
-    width: "80%",
-    backgroundColor: "white",
-    borderRadius: 20,
-    padding: 20,
-    alignItems: "center",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
+  cardList: {
+    backgroundColor: colors.background, //Color: Dark Blue
+    alignSelf: 'center',
+  },
+  text: {
+    alignItems: 'center',
   },
 });

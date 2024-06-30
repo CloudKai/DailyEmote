@@ -1,6 +1,6 @@
-import { View, Text } from "react-native";
-import { ProfileTab } from "../../../components/ProfileTab";
-import { styles } from "../../../styleSheets/Styles";
+import { View, Text } from 'react-native'
+import { ProfileTab } from '../../../components/ProfileTab';
+import React from 'react';
 
 const data = () => {
   return (

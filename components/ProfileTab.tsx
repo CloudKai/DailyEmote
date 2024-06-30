@@ -1,9 +1,17 @@
 import { View, Text, Image, TouchableOpacity } from "react-native";
 import { DrawerActions } from '@react-navigation/native';
+import { FIREBASE_AUTH } from '../FireBaseConfig';
 import { useNavigation } from 'expo-router';
+import React, { useEffect, useState } from "react";
 
 export const ProfileTab = (props: any) => {
+    const auth = FIREBASE_AUTH;
     const navigation = useNavigation();
+    const [selectedImage, setSelectedImage] = useState(auth?.currentUser?.photoURL!);
+    
+    useEffect(()=> {
+      setSelectedImage(props.icon ? props.icon : auth?.currentUser?.photoURL!);
+    }, [])
 
     const onToggleDrawer =  () => {
         navigation.dispatch(DrawerActions.openDrawer());
@@ -26,10 +34,10 @@ export const ProfileTab = (props: any) => {
     
             <TouchableOpacity onPress={onToggleDrawer}>
               <Image
-                source = {{ uri: 'https://t4.ftcdn.net/jpg/00/23/72/59/360_F_23725944_W2aSrg3Kqw3lOmU4IAn7iXV88Rnnfch1.jpg' }}
+                source = {{ uri: selectedImage }}
                 style = {{ 
                   width: 55, 
-                  height: 55, 
+                  height: 55,
                   borderRadius: 55/2,
                   marginRight: 20,
                 }}/>
