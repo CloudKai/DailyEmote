@@ -1,7 +1,7 @@
 1. Clone the repository to your local machine:
-   '''
+   ```
    git clone git@github.com:CloudKai/DailyEmote.git <Your local folder>
-   '''
+   ```
 2. Install all required dependencies for the project
    '''
    npm install
