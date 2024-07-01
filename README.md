@@ -10,5 +10,8 @@
    ```
    npx expo start
    ```
-4. (Open project via mobile device) Download Expo Go from the Google Play Store and scan the QR code generated in the terminal to open the app. 
-5. (Open project via virtual device emulator) Open the virtual device, then press ‘a’ in the terminal with the QR code, the app should open on the virtual device
+4. (Open project via mobile device) Download [Expo Go](https://expo.dev/go) from the Google Play Store/App store
+5. Scan the QR code generated in the terminal to open the app. 
+6. (Open project via virtual device emulator) Download [Android Studio](https://developer.android.com/studio) on the appropriate platform.
+7. Follow the instructions from [Expo documentation](https://docs.expo.dev/get-started/set-up-your-environment/?platform=android&device=simulated&mode=development-build&buildEnv=local) to set up Android Studio.
+8. After setting up Android Studio, open a virtual device, then press ‘a’ in the terminal, the app should open on the virtual device
