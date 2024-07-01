@@ -1,13 +1,14 @@
 import React from 'react'
 import { Stack } from 'expo-router'
 
-const othersLayout = () => {
+const viewEntryLayout = () => {
   return (
-    <Stack>
+    <Stack initialRouteName='home'>
+      <Stack.Screen name = "home" options={{ headerShown: false }} />
       <Stack.Screen name = "viewEntryFull" options={{ headerShown: false }} />
       <Stack.Screen name = "editEntry" options={{ headerShown: false }} />
     </Stack>
   )
 }
 
-export default othersLayout;
+export default viewEntryLayout;

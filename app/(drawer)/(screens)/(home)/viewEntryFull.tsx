@@ -1,12 +1,11 @@
-import { View, Text, SafeAreaView, TouchableOpacity, StyleSheet } from "react-native";
+import { View, SafeAreaView, TouchableOpacity, StyleSheet } from "react-native";
 import React, { useCallback, useEffect, useState } from "react";
 import { router, useFocusEffect, useLocalSearchParams } from "expo-router";
-import { colors, styles } from "../../styleSheets/Styles";
-import { Ionicons, AntDesign } from "@expo/vector-icons";
-import HeaderComponent from "../../components/viewEntry/HeaderComponent";
-import ViewEntryComponent from "../../components/viewEntry/ViewEntryComponent";
-import { readSingleEntry } from "../../utils/FireBaseHandler";
-import DeleteEntryButton from "../../components/viewEntry/DeleteEntryButton";
+import { colors, styles } from "../../../../styleSheets/Styles";
+import HeaderComponent from "../../../../components/viewEntry/HeaderComponent";
+import ViewEntryComponent from "../../../../components/viewEntry/ViewEntryComponent";
+import { readSingleEntry } from "../../../../utils/FireBaseHandler";
+import DeleteEntryButton from "../../../../components/viewEntry/DeleteEntryButton";
 
 export default function viewEntryFull() {
   const { id } = useLocalSearchParams();
@@ -54,17 +53,17 @@ export default function viewEntryFull() {
 
 
   return (
-    <SafeAreaView style={[styles.overlay, {justifyContent: "flex-start",}]}>
+    <SafeAreaView style={[styles.overlay, { justifyContent: "flex-start", }]}>
       <View style={viewEntryStyles.headerContainer}>
-        <HeaderComponent goBack={goBack} goEdit={handleEditButton}/>
+        <HeaderComponent goBack={goBack} goEdit={handleEditButton} />
       </View>
       <View style={viewEntryStyles.viewTextContainer}>
-        <ViewEntryComponent title={title} textEntry={textEntry} date={date}/>
+        <ViewEntryComponent title={title} textEntry={textEntry} date={date} />
       </View>
       <View style={viewEntryStyles.buttonContainer}>
-        <DeleteEntryButton id={id} goBack={goBack}/>
+        <DeleteEntryButton id={id} goBack={goBack} />
       </View>
-      
+
     </SafeAreaView>
   );
 }

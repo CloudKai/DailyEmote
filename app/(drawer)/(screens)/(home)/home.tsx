@@ -1,12 +1,12 @@
 import { StyleSheet, View, Text, Button, Image, TouchableOpacity, Pressable, Modal, ActivityIndicator, FlatList, TouchableWithoutFeedback, } from 'react-native'
 import { router, useFocusEffect } from 'expo-router';
-import { styles, colors } from '../../../styleSheets/Styles';
-import { ProfileTab } from '../../../components/ProfileTab';
+import { styles, colors } from '../../../../styleSheets/Styles';
+import { ProfileTab } from '../../../../components/ProfileTab';
 import React, { useCallback, useEffect, useState } from 'react';
 import { ScrollView } from 'react-native-gesture-handler';
-import CalendarComponent from '../../../components/home/calendar/CalendarComponent';
-import CardListComponent from '../../../components/home/cardlist/CardListComponent';
-import { entryData, readDateEntry } from '../../../utils/FireBaseHandler';
+import CalendarComponent from '../../../../components/home/calendar/CalendarComponent';
+import CardListComponent from '../../../../components/home/cardlist/CardListComponent';
+import { entryData, readDateEntry } from '../../../../utils/FireBaseHandler';
 
 const home = () => {
   const [selectedDate, setSelectedDate] = useState<string>("");
@@ -24,7 +24,7 @@ const home = () => {
 
   const gotoViewEntry = (entryID: string) => {
     router.push({
-      pathname: '../../(others)/viewEntryFull',
+      pathname: './viewEntryFull',
       params: {
         id: entryID,
       }

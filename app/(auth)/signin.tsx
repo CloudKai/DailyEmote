@@ -20,7 +20,7 @@ const signin = () => {
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(user => {
       if (user) {
-        router.push({pathname: '../(drawer)/(screens)/home'});
+        router.replace({pathname: '../(drawer)/(screens)/(home)/home'});
       }
     })
 
@@ -50,6 +50,8 @@ const signin = () => {
 
     } finally { 
       setLoading(false);
+      setEmail('');
+      setPassword('');
     }
   }
 
@@ -68,14 +70,18 @@ const signin = () => {
           value={email} 
           style={styles.textInput} 
           placeholder='Email' 
-          onChangeText={(text) => setEmail(text)}/>
+          onChangeText={(text) => setEmail(text)}
+          autoCorrect={false} 
+        />
 
         <TextInput
           value={password} 
           style={styles.textInput} 
           placeholder='Password' 
           onChangeText={(text) => setPassword(text)}
-          secureTextEntry={true} />
+          secureTextEntry={true} 
+          autoCorrect={false} 
+        />
 
         { loading ? (
           <ActivityIndicator size="large" color="#0000ff"/>
@@ -90,7 +96,7 @@ const signin = () => {
                 Don't have an account? {" "}
 
                 <Text style = {{color: '#FF0'}} 
-                    onPress={() => {router.navigate("/signup") }}>
+                    onPress={() => {router.replace("/signup") }}>
                   Sign Up
                 </Text>
 

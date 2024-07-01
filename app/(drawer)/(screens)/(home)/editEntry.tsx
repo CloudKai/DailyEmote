@@ -1,16 +1,13 @@
 import { View, SafeAreaView, StyleSheet } from "react-native";
-import DateTimePicker, {
-  DateTimePickerEvent,
-} from "@react-native-community/datetimepicker";
 import React, { useEffect, useState } from "react";
 import { router, useLocalSearchParams } from "expo-router";
-import { readSingleEntry } from "../../utils/FireBaseHandler";
-import { styles } from "../../styleSheets/Styles";
-import HeaderComponent from "../../components/editEntry/HeaderComponent";
-import TitleInput from "../../components/editEntry/TitleInput";
-import DateInput from "../../components/editEntry/DateInput";
-import EntryInput from "../../components/editEntry/EntryInput";
-import EditEntryButton from "../../components/editEntry/EditEntryButton";
+import { readSingleEntry } from "../../../../utils/FireBaseHandler";
+import { styles } from "../../../../styleSheets/Styles";
+import HeaderComponent from "../../../../components/editEntry/HeaderComponent";
+import TitleInput from "../../../../components/editEntry/TitleInput";
+import DateInput from "../../../../components/editEntry/DateInput";
+import EntryInput from "../../../../components/editEntry/EntryInput";
+import EditEntryButton from "../../../../components/editEntry/EditEntryButton";
 
 export default function create() {
   const { id } = useLocalSearchParams();
@@ -48,27 +45,27 @@ export default function create() {
   }, []);
 
   return (
-    <SafeAreaView style={[styles.overlay, {justifyContent: "flex-start"}]}>
+    <SafeAreaView style={[styles.overlay, { justifyContent: "flex-start" }]}>
       <View style={editEntryStyles.headerContainer}>
-        <HeaderComponent goBack={goBack}/>
+        <HeaderComponent goBack={goBack} />
       </View>
-      <View style={{padding: 10, alignItems: "center"}}>
-        <View style={editEntryStyles.inputContainer}>
-          <DateInput text={date} setText={setDate}/>
-        </View>
-        <View style={editEntryStyles.inputContainer}>
-          <TitleInput text={title} setText={setTitle}/>
-        </View>
-        <View style={editEntryStyles.inputContainer}>
-          <EntryInput text={textEntry} setText={setTextEntry}/>
-        </View>
+      {/* <View style={{ padding: 10, alignItems: "center" }}> */}
+      <View style={editEntryStyles.inputContainer}>
+        <DateInput text={date} setText={setDate} />
       </View>
+      <View style={editEntryStyles.inputContainer}>
+        <TitleInput text={title} setText={setTitle} />
+      </View>
+      <View style={editEntryStyles.inputContainer}>
+        <EntryInput text={textEntry} setText={setTextEntry} />
+      </View>
+      {/* </View> */}
       <View style={editEntryStyles.buttonContainer}>
         <EditEntryButton
           id={id}
-          title={title} 
-          dateString={date} 
-          textEntry={textEntry} 
+          title={title}
+          dateString={date}
+          textEntry={textEntry}
           resetAll={resetAll}
         />
       </View>

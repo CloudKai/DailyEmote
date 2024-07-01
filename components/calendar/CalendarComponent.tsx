@@ -34,18 +34,18 @@ export default function CalendarComponent( { selectedDate, setSelectedDate, open
           hideExtraDays={true}
           theme={{
             calendarBackground: colors.background, //Color: Dark Gray
-            textSectionTitleColor: colors.primary, //Color: White
-            textSectionTitleDisabledColor: colors.tertiary, //Color: Dark Navy
-            selectedDayBackgroundColor: colors.accent, //Color: Sky Blue
-            selectedDayTextColor: colors.primary, //Color: White
-            todayTextColor: colors.accent, //Color: Sky Blue
-            dayTextColor: colors.primary, //Color: White
+            textSectionTitleColor: colors.white, //Color: White
+            textSectionTitleDisabledColor: colors.darkNavy, //Color: Dark Navy
+            selectedDayBackgroundColor: colors.skyBlue, //Color: Sky Blue
+            selectedDayTextColor: colors.white, //Color: White
+            todayTextColor: colors.skyBlue, //Color: Sky Blue
+            dayTextColor: colors.white, //Color: White
             textDisabledColor: colors.disabled, //Color: Gray
-            selectedDotColor: colors.primary, //Color: White
-            arrowColor: colors.button, //Color: Light Blue
+            selectedDotColor: colors.white, //Color: White
+            arrowColor: colors.border, //Color: Light Blue
             disabledArrowColor: colors.disabled, //Color: Gray
-            monthTextColor: colors.primary, //Color: White
-            indicatorColor: colors.accent, //Color: Sky Blue
+            monthTextColor: colors.white, //Color: White
+            indicatorColor: colors.skyBlue, //Color: Sky Blue
             textDayFontFamily: "monospace",
             textMonthFontFamily: "monospace",
             textDayHeaderFontFamily: "monospace",
@@ -66,7 +66,7 @@ const calendarStyles = StyleSheet.create({
   calendar: {
     width: "100%",
     height: "77%",
-    shadowColor: colors.shadow,
+    shadowColor: colors.black,
     shadowOffset: {
       width: 0,
       height: 2,
