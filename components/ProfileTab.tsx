@@ -7,11 +7,6 @@ import React, { useEffect, useState } from "react";
 export const ProfileTab = (props: any) => {
     const auth = FIREBASE_AUTH;
     const navigation = useNavigation();
-    const [selectedImage, setSelectedImage] = useState(auth?.currentUser?.photoURL!);
-    
-    useEffect(()=> {
-      setSelectedImage(props.icon ? props.icon : auth?.currentUser?.photoURL!);
-    }, [])
 
     const onToggleDrawer =  () => {
         navigation.dispatch(DrawerActions.openDrawer());
@@ -34,7 +29,7 @@ export const ProfileTab = (props: any) => {
     
             <TouchableOpacity onPress={onToggleDrawer}>
               <Image
-                source = {{ uri: selectedImage }}
+                source = {{ uri: auth?.currentUser?.photoURL! }}
                 style = {{ 
                   width: 55, 
                   height: 55,
