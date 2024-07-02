@@ -1,21 +1,29 @@
 To test the program:
 
-1. Clone the repository to your local machine:
+1. **Requires Andriod Emulators either via Mobile Device or Virtual Device Emulator!**
+
+   (Andriod Device)<br />
+   1. Download [Expo Go](https://expo.dev/go) from the Google Play Store<br />
+   
+   (Virtual Device Emulator)<br />
+   1. Download [Android Studio](https://developer.android.com/studio) on the appropriate platform.<br />
+   2. Follow the instructions from [Expo documentation](https://docs.expo.dev/get-started/set-up-your-environment/?platform=android&device=simulated&mode=development-build&buildEnv=local) to set up Android Studio.<br />
+
+2. Clone the repository to your local machine:
    ```
    git clone git@github.com:CloudKai/DailyEmote.git <Your local folder>
    ```
-2. Install all required dependencies for the project
+3. Install all required dependencies for the project
    ```
    npm install expo
    ```
-3. Once all modules are installed, run the project, the project will be hosted on the network via expo
+4. Once all modules are installed, run the project, the project will be hosted on the network via expo
    ```
-   npx expo start
+   npx expo start -c
    ```
-4. **Andriod** emulators either via mobile device or virtual device emulator!
-   (Open project via **Andriod** device) Download [Expo Go](https://expo.dev/go) from the Google Play Store
+   
+   (Open project via **Andriod** Device)<br />
    Scan the QR code generated in the terminal to open the app.
 
-   (Open project via virtual device emulator) Download [Android Studio](https://developer.android.com/studio) on the appropriate platform.
-   Follow the instructions from [Expo documentation](https://docs.expo.dev/get-started/set-up-your-environment/?platform=android&device=simulated&mode=development-build&buildEnv=local) to set up Android Studio.
+   (Open project via Virtual Device Emulator)<br />
    After setting up Android Studio, open a virtual device, then press ‘a’ in the terminal, the app should open on the virtual device.
