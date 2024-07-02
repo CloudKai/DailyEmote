@@ -40,7 +40,9 @@ const signInPage = () => {
     } catch (error: any) {
       let msg = error.message;
       if (msg.includes('(auth/invalid-email)')) {
-        Alert.alert('Invalid email', 'Re-enter a valid email');
+        Alert.alert('Invalid Email', 'Enter a valid email');
+      } else if (msg.includes('(auth/missing-password)')) {
+        Alert.alert('Empty Password Fields', 'Enter your password');
       } else if (msg.includes('(auth/invalid-credential)')) {
         Alert.alert('Invalid credentials', 'Wrong credentials');
       } else {

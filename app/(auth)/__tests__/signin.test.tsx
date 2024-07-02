@@ -4,9 +4,10 @@ import '@testing-library/jest-dom';
 import { FIREBASE_AUTH } from '../../../FireBaseConfig';
 import { signInWithEmailAndPassword, signOut, onAuthStateChanged, initializeAuth, getIdToken } from 'firebase/auth';
 import { render, fireEvent, waitFor } from '@testing-library/react-native';
+import { Alert } from 'react-native';
 //Install these 2 dependancies then install expo again to work
-//WASTE MY TIME!
 
+jest.spyOn(Alert, 'alert');
 
 it('Check all elements are present', () => {
   const page = render(<SignInPage />);
@@ -26,7 +27,49 @@ it('Check all elements are present', () => {
 })
 
 
-it('Sign in Successfully', async() => {
+it('Show all errors when sign in failed', async () => {
+  const page = render(<SignInPage />);
+
+  const loginButton = page.getByTestId("loginButton");
+  const emailTextInput = page.getByTestId("emailTextBox");
+  const pwdTextInput = page.getByTestId("pwdTextBox");
+
+  //Empty Fields
+  fireEvent.changeText(emailTextInput, "");
+  fireEvent.changeText(pwdTextInput, "");
+  await fireEvent.press(loginButton);
+  expect(Alert.alert).toHaveBeenCalledWith('Invalid Email', 'Enter a valid email');
+  // fireEvent.press(Alert.prompt[0]);
+
+  //Invalid Email
+  fireEvent.changeText(emailTextInput, "kai");
+  fireEvent.changeText(pwdTextInput, "");
+  await fireEvent.press(loginButton);
+  expect(Alert.alert).toHaveBeenCalledWith('Invalid Email', 'Enter a valid email');
+  fireEvent.press(Alert.alert[0][2][0]);
+
+  //Valid Email but Empty Pwd Fields
+  fireEvent.changeText(emailTextInput, "kai@gmail.com");
+  fireEvent.changeText(pwdTextInput, "");
+  await fireEvent.press(loginButton);
+  expect(Alert.alert).toHaveBeenCalledWith('Empty Password Fields', 'Enter your password');
+  fireEvent.press(Alert.alert[0][2][0]);
+
+  //Valid Email but Invalid Pwd 
+  fireEvent.changeText(emailTextInput, "kai@gmail.com");
+  fireEvent.changeText(pwdTextInput, "123"); //Incorrect Password for email
+  await fireEvent.press(loginButton);
+  expect(Alert.alert).toHaveBeenCalledWith('Invalid credentials', 'Wrong credentials');
+
+})
+
+
+it('Able to go to sign up page', () => {
+  const page = render(<SignInPage />);
+
+})
+
+it('Sign in Successfully', async () => {
   const page = render(<SignInPage />);
 
   const loginButton = page.getByTestId("loginButton");
@@ -45,17 +88,4 @@ it('Sign in Successfully', async() => {
 
   // expect(page).toMatchSnapshot();
 })
-
-
-it('Show error when sign in failed', async () => {
-  const page = render(<SignInPage />);
-
-})
-
-
-it('Able to go to sign up page', () => {
-  const page = render(<SignInPage />);
-
-})
-
 
