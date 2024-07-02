@@ -1,17 +1,28 @@
-1. Clone the repository to your local machine:
+To test the program:
+
+1. **Requires Andriod Emulators either via Mobile Device or Virtual Device Emulator!**
+
+   (Andriod Device)<br />
+   Download [Expo Go](https://expo.dev/go) from the Google Play Store<br />
+   
+   (Virtual Device Emulator)<br />
+   Follow the instructions  on the appropriate platform from [Expo documentation](https://docs.expo.dev/get-started/set-up-your-environment/?platform=android&device=simulated&mode=development-build&buildEnv=local) to set up [Android Studio](https://developer.android.com/studio).<br />
+
+2. Clone the repository to your local machine:
    ```
    git clone git@github.com:CloudKai/DailyEmote.git <Your local folder>
    ```
-2. Install all required dependencies for the project
+3. Install expo if you have not done so:
    ```
-   npm install
+   npm install expo
    ```
-3. Once all modules are installed, run the project, the project will be hosted on the network via expo
+4. Once expo is installed, run the project with:
    ```
-   npx expo start
+   npx expo start -c
    ```
-4. (Open project via mobile device) Download [Expo Go](https://expo.dev/go) from the Google Play Store/App store
-5. Scan the QR code generated in the terminal to open the app. 
-6. (Open project via virtual device emulator) Download [Android Studio](https://developer.android.com/studio) on the appropriate platform.
-7. Follow the instructions from [Expo documentation](https://docs.expo.dev/get-started/set-up-your-environment/?platform=android&device=simulated&mode=development-build&buildEnv=local) to set up Android Studio.
-8. After setting up Android Studio, open a virtual device, then press ‘a’ in the terminal, the app should open on the virtual device
+   
+   (Open project via **Andriod** Device)<br />
+   Scan the QR code generated in the terminal to open the app.
+
+   (Open project via Virtual Device Emulator)<br />
+   After setting up Android Studio, press ‘a’ in the terminal, the app will open in the virtual device.
