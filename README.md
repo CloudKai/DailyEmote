@@ -13,11 +13,11 @@ To test the program:
    ```
    git clone git@github.com:CloudKai/DailyEmote.git <Your local folder>
    ```
-3. Install all required dependencies for the project
+3. Install expo if you have not done so:
    ```
    npm install expo
    ```
-4. Once all modules are installed, run the project, the project will be hosted on the network via expo
+4. Once expo is installed, run the project with:
    ```
    npx expo start -c
    ```
@@ -26,4 +26,4 @@ To test the program:
    Scan the QR code generated in the terminal to open the app.
 
    (Open project via Virtual Device Emulator)<br />
-   After setting up Android Studio, open a virtual device, then press ‘a’ in the terminal, the app should open on the virtual device.
+   After setting up Android Studio, press ‘a’ in the terminal, the app will open in the virtual device.
