@@ -6,8 +6,8 @@ import { FIREBASE_AUTH } from '../../../FireBaseConfig';
 import { signInWithEmailAndPassword, signOut, onAuthStateChanged, initializeAuth, getIdToken } from 'firebase/auth';
 import { render, fireEvent, waitFor } from '@testing-library/react-native';
 import { Alert } from 'react-native';
+import { router } from 'expo-router';
 //Install these 2 dependancies then install expo again to work
-
 
 jest.spyOn(Alert, 'alert');
 
@@ -65,11 +65,17 @@ it('Check all elements are present', () => {
 
 // })
 
+jest.spyOn(router, "navigate");
 
-it('Able to go to sign up page', () => {
+it('Able to go to sign up page', async () => {
   const page = render(<SignInPage />);
 
+  const signUpButton = page.getByTestId("signUpButton");
+  await fireEvent.press(signUpButton);
+
+  expect(router.navigate).toHaveBeenCalledWith("/signup");
 })
+
 
 it('Sign in Successfully', async () => {
   const page = render(<SignInPage />);

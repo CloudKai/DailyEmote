@@ -6,11 +6,10 @@ import { signInWithEmailAndPassword } from 'firebase/auth';
 import { useNavigation, useRouter } from 'expo-router';
 import React from 'react';
 
-const signin = () => {
+const signInPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
-  const navigation = useNavigation();
   const router = useRouter();
   const auth = FIREBASE_AUTH;
 
@@ -20,7 +19,7 @@ const signin = () => {
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(user => {
       if (user) {
-        router.replace({pathname: '../(drawer)/(screens)/(home)/home'});
+        router.push({pathname: '../(drawer)/(screens)/home'});
       }
     })
 
@@ -50,8 +49,6 @@ const signin = () => {
 
     } finally { 
       setLoading(false);
-      setEmail('');
-      setPassword('');
     }
   }
 
@@ -62,51 +59,67 @@ const signin = () => {
     <View className = "flex-1 items-center justify-center bg-primary">
       <KeyboardAvoidingView behavior="padding">
         <Image 
-            source = { require('../../assets/AppIcon.png') }
-            style = {{ marginTop: -60, width: 300, height: 200, resizeMode: 'contain' }}
+          testID = 'logo'
+          accessibilityRole="image"
+          source = { require('../../assets/AppIcon.png') }
+          style = {{ 
+            marginTop: -60, 
+            width: 300, 
+            height: 200, 
+            resizeMode: 'contain' 
+          }}
         />
 
         <TextInput 
+          testID = 'emailTextBox'
           value={email} 
           style={styles.textInput} 
           placeholder='Email' 
-          onChangeText={(text) => setEmail(text)}
-          autoCorrect={false} 
-        />
+          onChangeText={(text) => setEmail(text)}/>
 
         <TextInput
+          testID = 'pwdTextBox'
           value={password} 
           style={styles.textInput} 
           placeholder='Password' 
           onChangeText={(text) => setPassword(text)}
-          secureTextEntry={true} 
-          autoCorrect={false} 
-        />
+          secureTextEntry={true} />
 
         { loading ? (
           <ActivityIndicator size="large" color="#0000ff"/>
         ) : (
-          <>
+          <View>
             <View style={{marginVertical: 15}}>
-              <Button  title="Login" onPress={logIn}/>
+              <Button 
+                testID = "loginButton" 
+                title="Login" 
+                onPress={logIn}
+              />
             </View>
 
             <View style={{marginVertical: -5}}>
-              <Text style={{color: 'white', fontSize: 17, textAlign: 'center'}}>
+              <Text style={{
+                color: 'white', 
+                fontSize: 17, 
+                textAlign: 'center'
+              }}>
                 Don't have an account? {" "}
 
-                <Text style = {{color: '#FF0'}} 
-                    onPress={() => {router.replace("/signup") }}>
+                <Text 
+                  testID = "signUpButton"
+                  style = {{color: '#FF0'}}  
+                  onPress={() => {router.navigate("/signup") }}
+                >
                   Sign Up
                 </Text>
 
               </Text>
             </View>
-          </>
+          </View>
         )}
       </KeyboardAvoidingView>
     </View>
   );
 };
 
-export default signin;
+export default signInPage;
