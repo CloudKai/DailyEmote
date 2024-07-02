@@ -82,7 +82,7 @@ export default function modalList({ selectedDate, closeModal }: modalContentProp
     <View style={modalListStyles.listEntries}>
       {loading ? (
         console.log("Loading"),
-        <ActivityIndicator size="large" color={colors.accent} />
+        <ActivityIndicator size="large" color={colors.skyBlue} />
       ) : (
         console.log(entries),
         <FlatList

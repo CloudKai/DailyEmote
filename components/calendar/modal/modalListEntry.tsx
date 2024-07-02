@@ -60,10 +60,10 @@ export default function DisplayEntry({ item, closeModal, reload }: EntryProps) {
         </View>
         <View style={[entryStyles.icons, { flex: 0.3 }]}>
           <Pressable onPress={editEntry}>
-            <AntDesign name="edit" size={24} color={colors.primary} />
+            <AntDesign name="edit" size={24} color={colors.white} />
           </Pressable>
           <Pressable onPress={handleDeleteButton}>
-            <AntDesign name="delete" size={24} color={colors.primary} />
+            <AntDesign name="delete" size={24} color={colors.white} />
           </Pressable>
         </View>
       </TouchableOpacity>
@@ -87,7 +87,7 @@ const entryStyles = StyleSheet.create({
     marginRight: 10,
     fontSize: 17,
     fontWeight: '500',
-    color: colors.primary, //Color: White
+    color: colors.white, //Color: White
   },
   icons: {
     flex: 1,

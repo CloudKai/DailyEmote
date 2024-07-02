@@ -20,13 +20,13 @@ const mainSetting = () => {
       name: 'Privacy',
       icon: 'lock-closed',
       backgroundColor: '#33A5D1',
-      route: './privacy',
+      route: '../(profile)/profile',
     },
     {
       name: 'Notifications',
       icon: 'notifications',
       backgroundColor: colors.red,
-      route: './notification',
+      route: '../(profile)/profile',
     },
 
   ];
@@ -36,7 +36,7 @@ const mainSetting = () => {
       name: 'Help',
       icon: 'information',
       backgroundColor: colors.green,
-      route: './help',
+      route: '../(profile)/profile',
     },
     {
       name: 'Feedback',

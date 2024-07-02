@@ -7,7 +7,6 @@ const settingLayout = () => {
       <Stack.Screen name = "mainSetting" options={{ headerShown: false }} />
       <Stack.Screen name = "notification" options={{ headerShown: false }} />
       <Stack.Screen name = "privacy" options={{ headerShown: false }} />
-      <Stack.Screen name = "help" options={{ headerShown: false }} />
     </Stack>
   )
 }
