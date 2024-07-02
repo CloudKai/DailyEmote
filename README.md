@@ -6,13 +6,14 @@ To test the program:
    Download [Expo Go](https://expo.dev/go) from the Google Play Store<br />
    
    (Virtual Device Emulator)<br />
-   Follow the instructions  on the appropriate platform from [Expo documentation](https://docs.expo.dev/get-started/set-up-your-environment/?platform=android&device=simulated&mode=development-build&buildEnv=local) to set up [Android Studio](https://developer.android.com/studio).<br />
+   Follow the instructions  on the appropriate platform from [Expo documentation](https://docs.expo.dev/get-started/set-up-your-environment/?platform=android&device=simulated&mode=development-build&buildEnv=local) to set up [Android Studio](https://developer.android.com/studio).<br />**(Avoid doing Running your app on an Android Emulator)**<br />
 
 2. Clone the repository to your local machine:
    ```
    git clone git@github.com:CloudKai/DailyEmote.git <Your local folder>
+   git checkout AppDeployment
    ```
-3. Install expo if you have not done so:
+3. Install expo:
    ```
    npm install expo
    ```
