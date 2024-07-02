@@ -14,10 +14,13 @@ To test the program:
 3. Clone the repository to your local machine:
    ```
    git clone git@github.com:CloudKai/DailyEmote.git <Your local folder>
+   [move to <Your local folder>)]
+   git checkout AppDeployment 
+   or
+   Download the zip file from AppDeployment branch
    ```
-4. Go to <Your local folder> and Install expo:
-   ```
-   git checkout AppDeployment
+4. Install expo:
+   ```   
    npm install expo
    ```
 5. Once expo is installed, run the project with:
@@ -29,3 +32,5 @@ To test the program:
    
    (Open project via Virtual Device Emulator)<br />
    After setting up Android Studio, press ‘a’ in the terminal, the app will open in the virtual device.
+
+   Wait for the app to be installed completely. Thank You!
