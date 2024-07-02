@@ -4,7 +4,7 @@
    ```
 2. Install all required dependencies for the project
    ```
-   npm install
+   npm install expo
    ```
 3. Once all modules are installed, run the project, the project will be hosted on the network via expo
    ```
