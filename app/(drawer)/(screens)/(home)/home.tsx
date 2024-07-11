@@ -20,6 +20,7 @@ const home = () => {
 
   const loadEntries = async () => {
     setLoading(true);
+    setEntries([]);
     console.log("Loading entries for date: " + selectedDate)
     readDateEntry(selectedDate, userid).then((data) => {
       setEntries(data);
@@ -36,17 +37,19 @@ const home = () => {
     });
   }
 
-  useEffect(() => {
-    if (selectedDate !== "") {
-      loadEntries();
-    }
-  }, [selectedDate]);
+  // useEffect(() => {
+  //   if (selectedDate !== "") {
+  //     console.log("useEffect");
+  //     loadEntries();
+  //   }
+  // }, [selectedDate]);
 
   /**
    * When the screen is focused, load entries
    */
   useFocusEffect(
     useCallback(() => {
+      console.log("useFocusEffect")
       loadEntries();
     }, [selectedDate])
   );

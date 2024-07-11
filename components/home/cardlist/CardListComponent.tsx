@@ -13,19 +13,11 @@ type CardListProps = {
 export default function CardListComponent( { data, gotoViewEntry }: CardListProps) {
   return (
     <View style={CardListStyles.container}>
-      <FlatList  
-          extraData={data}
-          data = {data}
-          horizontal
-          persistentScrollbar = {true}
-          showsHorizontalScrollIndicator = {false}
-          keyExtractor={i => i.id}
-          renderItem={({item}) => {
-            return (
-              <CardComponent item={item} gotoViewEntry={gotoViewEntry}/>
-            )
-          }}
-      />
+      {data.map((item) => {
+        return (
+          <CardComponent key={item.id} item={item} gotoViewEntry={gotoViewEntry} />
+        )
+      })}
     </View>
   )
 }
@@ -42,7 +34,7 @@ const CardListStyles = StyleSheet.create({
 /* mapped list function
 {data.map((item) => {
   return (
-    <CardComponent key={item.id} item={item} />
+    <CardComponent item={item} gotoViewEntry={gotoViewEntry} />
   )
 })}
 */

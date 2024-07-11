@@ -36,8 +36,8 @@ export const readDateEntry = async (date: string, userid: string) => {
   const newEntries: entryData[] = [];
   const { year, month, day } = splitDate(date);
   querySnapshot.forEach((doc) => {
-    console.log(doc.data().year, doc.data().month, doc.data().day,);
-    console.log(year, month, day,);
+    console.log(doc.data().year, doc.data().month, doc.data().day, doc.data().userid);
+    console.log(year, month, day, userid);
     if (doc.data().year === year && doc.data().month === month && doc.data().day === day && doc.data().userid === userid) {
       newEntries.push({
         userid: doc.data().userid,

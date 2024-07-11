@@ -20,7 +20,6 @@ export default function CalendarComponent( { selectedDate, setSelectedDate, load
   const handleDayPress = async (day: DateData) => {
     console.log("selectedDate " + day.dateString);
     setSelectedDate(day.dateString);
-    loadEntries();
   };
   
   return (
