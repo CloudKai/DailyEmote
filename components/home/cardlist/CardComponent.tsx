@@ -10,9 +10,7 @@ type CardProps = {
 
 export default function CardComponent({ item, gotoViewEntry }: CardProps) {
   return (
-    <View style={{
-      width: 300,
-    }}>
+    <View>
       <TouchableOpacity onPress={() => { gotoViewEntry(item.id) }}>
         <Card containerStyle={{ height: 262 }}>
           <Card.Title

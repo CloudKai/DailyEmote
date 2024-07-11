@@ -30,11 +30,3 @@ const CardListStyles = StyleSheet.create({
     paddingTop: 10,
   },
 });
-
-/* mapped list function
-{data.map((item) => {
-  return (
-    <CardComponent item={item} gotoViewEntry={gotoViewEntry} />
-  )
-})}
-*/

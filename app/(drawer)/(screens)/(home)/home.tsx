@@ -127,6 +127,7 @@ export const homeStyles = StyleSheet.create({
   cardList: {
     backgroundColor: colors.background, //Color: Dark Blue
     alignSelf: 'center',
+    width: '100%',
   },
   text: {
     alignItems: 'center',
