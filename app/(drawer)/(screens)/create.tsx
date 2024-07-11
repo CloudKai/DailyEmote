@@ -11,6 +11,10 @@ import DateInput from '../../../components/addEntry/DateInput';
 import EntryInput from '../../../components/addEntry/EntryInput';
 import AddEntryButton from '../../../components/addEntry/AddEntryButton';
 
+/**
+ * Create entry screen of the app
+ * Contains the form to create a new entry
+ */
 export default function create() {
   const [title, setTitle] = useState("");
   const [textEntry, setTextEntry] = useState("");

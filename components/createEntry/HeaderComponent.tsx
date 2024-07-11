@@ -15,7 +15,7 @@ export default function HeaderComponent({ goBack }: HeaderProps) {
         onPress={() => goBack()} 
         style={headerStyles.backButton}
       >
-        <Ionicons name="arrow-back" size={24} color={colors.primary} />
+        <Ionicons name="arrow-back" size={24} color={colors.white} />
       </TouchableOpacity>
       <Text style={headerStyles.headerText}>New Entry</Text>
     </View>
@@ -31,7 +31,7 @@ const headerStyles = StyleSheet.create({
     width: '100%',
   },
   headerText: {
-    color: colors.primary,
+    color: colors.white,
     fontSize: 20,
     fontWeight: 'bold',
     textAlign: 'center',
