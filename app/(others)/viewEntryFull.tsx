@@ -1,11 +1,12 @@
 import { View, SafeAreaView, TouchableOpacity, StyleSheet } from "react-native";
 import React, { useCallback, useEffect, useState } from "react";
 import { router, useFocusEffect, useLocalSearchParams } from "expo-router";
-import { colors, styles } from "../../../../styleSheets/Styles";
-import HeaderComponent from "../../../../components/viewEntry/HeaderComponent";
-import ViewEntryComponent from "../../../../components/viewEntry/ViewEntryComponent";
-import { readSingleEntry } from "../../../../utils/FireBaseHandler";
-import DeleteEntryButton from "../../../../components/viewEntry/DeleteEntryButton";
+import { colors, styles } from "../../styleSheets/Styles";
+import ViewEntryComponent from "../../components/viewEntry/ViewEntryComponent";
+import { readSingleEntry } from "../../utils/FireBaseHandler";
+import DeleteEntryButton from "../../components/viewEntry/DeleteEntryButton";
+import HeaderComponent from "../../components/HeaderComponent";
+import { Ionicons } from "@expo/vector-icons";
 
 export default function viewEntryFull() {
   const { id } = useLocalSearchParams();
@@ -31,6 +32,7 @@ export default function viewEntryFull() {
       pathname: './editEntry',
       params: {
         id: id,
+        dateString: date,
       },
     });
   }
@@ -38,11 +40,6 @@ export default function viewEntryFull() {
   const goBack = () => {
     router.back();
   }
-
-  useEffect(() => {
-    loadEntry();
-    console.log("View Entry Page loaded document: ", id)
-  }, []);
 
   useFocusEffect(
     useCallback(() => {
@@ -55,7 +52,13 @@ export default function viewEntryFull() {
   return (
     <SafeAreaView style={[styles.overlay, { justifyContent: "flex-start", }]}>
       <View style={viewEntryStyles.headerContainer}>
-        <HeaderComponent goBack={goBack} goEdit={handleEditButton} />
+        <HeaderComponent title={"View Entry"} goBack={goBack} />
+        <TouchableOpacity
+          onPress={handleEditButton}
+          style={viewEntryStyles.editButton}
+        >
+          <Ionicons name="create" size={24} color={colors.white} />
+        </TouchableOpacity>
       </View>
       <View style={viewEntryStyles.viewTextContainer}>
         <ViewEntryComponent title={title} textEntry={textEntry} date={date} />
@@ -90,4 +93,12 @@ const viewEntryStyles = StyleSheet.create({
     padding: 1,
     width: "100%",
   },
+  editButton: {
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: 26,
+    position: 'absolute',
+    right: 5,
+    zIndex: 1,
+  }
 });

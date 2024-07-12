@@ -23,10 +23,31 @@ export type entryData = {
   textEntry: string,
 }
 
-const splitDate = (date: string) => {
+/**
+ * Splits the date string into year, month, and day
+ * @param date in format "YYYY-MM-DD"
+ * @returns an object with year, month, and day 
+ */
+export const splitDate = (date: string) => {
   const [year, month, day] = date.split("-");
   return { year, month, day };
 };
+
+/**
+ * Formats the date produced by the date picker to "YYYY-MM-DD"
+ * @param date as a Date object
+ * @returns string in form "YYYY-MM-DD"
+ */
+export const formatDate = (date: Date) => {
+  const year: string = date.getFullYear().toString();
+  const month: string =
+    date.getMonth() + 1 < 10
+      ? "0" + (date.getMonth() + 1)
+      : (date.getMonth() + 1).toString();
+  const day: string =
+    date.getDate() < 10 ? "0" + date.getDate() : date.getDate().toString();
+  return year + "-" + month + "-" + day;
+}
 
 /**
  * Function to read all entries given a selectedDate
@@ -92,9 +113,6 @@ export const readSingleEntry = async (id: string) => {
  * Receives a title, dateString, and textEntry from user input
  */
 export const addEntry = async (title: string, dateString: string, textEntry: string) => {
-  if (title === "" || dateString === "" || textEntry === "") {
-    Alert.alert("Warning", "Please don't leave any fields empty");
-  }
   const [ year, month, day ] = dateString.split("-");
   try {
     const entriesRef = collection(FIREBASE_DB, "entries");

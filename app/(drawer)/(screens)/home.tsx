@@ -1,12 +1,12 @@
-import { StyleSheet, View, Text, Button, Image, TouchableOpacity, Pressable, Modal, ActivityIndicator, FlatList, TouchableWithoutFeedback, } from 'react-native'
+import { View, Text, ActivityIndicator} from 'react-native'
 import { router, useFocusEffect } from 'expo-router';
-import { styles, colors } from '../../../../styleSheets/Styles';
-import { ProfileTab } from '../../../../components/ProfileTab';
+import { colors } from '../../../styleSheets/Styles';
+import { ProfileTab } from '../../../components/ProfileTab';
 import React, { useCallback, useEffect, useState } from 'react';
 import { ScrollView } from 'react-native-gesture-handler';
-import CalendarComponent from '../../../../components/home/calendar/CalendarComponent';
-import CardListComponent from '../../../../components/home/cardlist/CardListComponent';
-import { entryData, getUser, readDateEntry } from '../../../../utils/FireBaseHandler';
+import CalendarComponent from '../../../components/home/calendar/CalendarComponent';
+import CardListComponent from '../../../components/home/cardlist/CardListComponent';
+import { entryData, getUser, readDateEntry } from '../../../utils/FireBaseHandler';
 
 /**
  * Home screen of the app
@@ -30,19 +30,12 @@ const home = () => {
 
   const gotoViewEntry = (entryID: string) => {
     router.push({
-      pathname: './viewEntryFull',
+      pathname: '../../(others)/viewEntryFull',
       params: {
         id: entryID,
       }
     });
   }
-
-  // useEffect(() => {
-  //   if (selectedDate !== "") {
-  //     console.log("useEffect");
-  //     loadEntries();
-  //   }
-  // }, [selectedDate]);
 
   /**
    * When the screen is focused, load entries
@@ -55,10 +48,20 @@ const home = () => {
   );
 
   return (
-    <View style={homeStyles.overlay}>
+    <View style={{
+      flex: 1,
+      backgroundColor: colors.background, //Color: Dark Blue
+      alignItems: 'center',
+      justifyContent: 'center',
+      padding: 10,
+    }}>
       <ProfileTab name="Calendar" /> 
 
-      <View style={homeStyles.scrollOverlay}>
+      <View style={{
+        flex: 1,
+        width: '100%',
+        padding: 10,
+      }}>
         <ScrollView style={{flex: 1}}>
           <View style={{flex: 1, paddingBottom: 10}}>
           <CalendarComponent 
@@ -71,8 +74,15 @@ const home = () => {
           {/* Display entries */}     
           <View style={{flex: 1}}>
             { selectedDate === "" ? (
-              <View style={homeStyles.text}>
-                <Text style={homeStyles.headingText}>
+              <View style={{
+                alignItems: 'center',
+              }}>
+                <Text style={{
+                  color: colors.white, //Color: White
+                  fontSize: 20,
+                  textAlign: "center",
+                  marginVertical: 20,
+                }}>
                   Select a date to view entries
                 </Text>
               </View>
@@ -82,7 +92,11 @@ const home = () => {
                   <ActivityIndicator size="large" color={colors.skyBlue} />
                 </View>
               ) : (
-                <View style={homeStyles.cardList}>
+                <View style={{
+                  backgroundColor: colors.background, //Color: Dark Blue
+                  alignSelf: 'center',
+                  width: '100%',
+                }}>
                   <CardListComponent data={entries} gotoViewEntry={gotoViewEntry} />
                 </View>
               )
@@ -97,39 +111,3 @@ const home = () => {
 }
 
 export default home;
-
-export const homeStyles = StyleSheet.create({
-  overlay: {
-    flex: 1,
-    backgroundColor: colors.background, //Color: Dark Blue
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: 10,
-  },
-  scrollOverlay: {
-    flex: 1,
-    width: '100%',
-    padding: 10,
-  },
-  component_overlay: {
-    width: "100%",
-    justifyContent: "flex-start",
-    alignContent: "center",
-    alignSelf: "center",
-    flexDirection: "column",
-  },
-  headingText: {
-    color: colors.white, //Color: White
-    fontSize: 20,
-    textAlign: "center",
-    marginVertical: 20,
-  },
-  cardList: {
-    backgroundColor: colors.background, //Color: Dark Blue
-    alignSelf: 'center',
-    width: '100%',
-  },
-  text: {
-    alignItems: 'center',
-  },
-});

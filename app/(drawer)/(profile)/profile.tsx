@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react'
 import { FIREBASE_AUTH, FIREBASE_DB } from '../../../FireBaseConfig';
 import { colors, styles } from '../../../styleSheets/Styles';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import BackButton from '../../../components/BackButton';
 import { MaterialIcons } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
 import { EmailAuthCredential, EmailAuthProvider, reauthenticateWithCredential, updateEmail, updatePassword, updateProfile } from 'firebase/auth';
@@ -12,6 +11,7 @@ import { TextInput } from 'react-native-gesture-handler';
 import { Ionicons } from '@expo/vector-icons'
 import { Button } from '@rneui/base';
 import { router } from 'expo-router';
+import HeaderComponent from '../../../components/HeaderComponent';
 
 
 const name = () => {
@@ -132,7 +132,7 @@ const name = () => {
         backgroundColor: colors.background,
         paddingHorizontal: 10,
       }}>
-        <BackButton name = "Edit Profile"/>
+        <HeaderComponent title={"Edit Profile"} goBack={() => router.back()} />
 
         <ScrollView>
           <View style = {{

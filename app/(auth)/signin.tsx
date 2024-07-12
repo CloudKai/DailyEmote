@@ -19,7 +19,7 @@ const signInPage = () => {
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(user => {
       if (user) {
-        router.push({pathname: '../(drawer)/(screens)/home'});
+        router.replace({pathname: '../(drawer)/(screens)/home'});
       }
     })
 

@@ -1,13 +1,18 @@
 import { View, Text, StyleSheet, TextInput } from 'react-native'
 import React from 'react'
-import { colors } from '../../styleSheets/Styles';
-import { textInputProps } from '../../types/Types';
+import { colors, styles } from '../../styleSheets/Styles';
+
+type textInputProps = {
+  text: string;
+  setText: (text: string) => void;
+}
 
 export default function TitleInput({ text, setText }: textInputProps) {
   return (
     <View style={titleStyles.inputContainer}>
+      <Text style={[styles.whiteText]}>Title: </Text>
       <TextInput 
-        style={[titleStyles.inputBox, titleStyles.text]}
+        style={[titleStyles.inputBox, titleStyles.placeholderText]}
         placeholder="Title"
         value={text}
         onChangeText={(text) => setText(text)}
@@ -23,16 +28,17 @@ const titleStyles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     width: "100%",
+    flexDirection: 'row',
   },
   inputBox: {
+    backgroundColor: colors.contrastBackground,
     padding: 10,
-    borderRadius: 4,
-    width: "90%",
-    marginVertical: 10,
-    backgroundColor: colors.contrastBackground, //Color: Dark Gray
+    margin: 10,
+    borderRadius: 10,
+    flex: 2,
   },
-  text: {
-    color: colors.secondary,
+  placeholderText: {
+    color: colors.black,
     fontSize: 20,
   }
 });

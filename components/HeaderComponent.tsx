@@ -1,23 +1,28 @@
 import { View, Text, SafeAreaView, StyleSheet, TouchableOpacity } from 'react-native'
 import React from 'react'
-import { colors, styles } from '../../styleSheets/Styles';
 import { router } from 'expo-router';
-import { Ionicons } from "@expo/vector-icons";
+import { MaterialIcons } from "@expo/vector-icons";
+import { colors } from '../styleSheets/Styles';
 
 type HeaderProps = {
+  title: string;
   goBack: () => void;
 }
 
-export default function HeaderComponent({ goBack }: HeaderProps) {
+export default function HeaderComponent({ title, goBack }: HeaderProps) {
   return (
     <View style={headerStyles.headerContainer}>
       <TouchableOpacity 
         onPress={() => goBack()} 
-        style={[headerStyles.backButton, styles.button]}
+        style={headerStyles.backButton}
       >
-        <Ionicons name="arrow-back" size={24} color={colors.white} />
+        <MaterialIcons 
+          name="keyboard-arrow-left" 
+          size={24} 
+          color={colors.gray} 
+        />
       </TouchableOpacity>
-      <Text style={headerStyles.headerText}>Edit Entry</Text>
+      <Text style={headerStyles.headerText}>{title}</Text>
     </View>
   );
 }
@@ -31,7 +36,7 @@ const headerStyles = StyleSheet.create({
     width: '100%',
   },
   headerText: {
-    color: colors.white,
+    color: colors.gray,
     fontSize: 20,
     fontWeight: 'bold',
     textAlign: 'center',
