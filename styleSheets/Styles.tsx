@@ -53,6 +53,10 @@ export const styles = StyleSheet.create({
     color: colors.black, //Color: Black
     fontSize: 20,
   },
+  headingText: {
+    fontSize: 24,
+    fontWeight: "400",
+  },
   block: {
     backgroundColor: colors.contrastBackground,
     borderRadius: 10,

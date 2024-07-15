@@ -9,18 +9,11 @@ import DescriptionInput from "../../components/entry/DescriptionInput";
 import TitleInput from "../../components/entry/TitleInput";
 import HeaderComponent from "../../components/HeaderComponent";
 
-/**
- * Receives the entry id and date from the previous screen, allows the user to edit the entry
- * Before saving the entry, will prompt user with alert if there are empty fields
- * Before returning to the previous screen, will prompt user with alert if there are unsaved changes
- * Uploads changes to the database
- * @returns Edit Entry Screen
- */
 export default function editEntryScreen() {
   const { id, dateString } = useLocalSearchParams();
 
   /**
-   * checks if id and date is a string
+   * checks if id is a string
    */
   if (typeof id != 'string' || typeof dateString != 'string') {
     //error
@@ -30,7 +23,7 @@ export default function editEntryScreen() {
   const [title, setTitle] = useState("");
   const [textEntry, setTextEntry] = useState("");
   const [date, setDate] = useState(formatDate(new Date(dateString))); //Format: "YYYY-MM-DD"
-  const [loading, setLoading] = useState(true); //Loading state (Maybe remove it later)
+  const [loading, setLoading] = useState(true); //Loading state
 
   /**
    * Function that handles loading the entry data onto the screen
@@ -72,10 +65,6 @@ export default function editEntryScreen() {
     router.back();
   };
 
-  /**
-   * When the screen is loaded, load the entry data
-   * (Loading state consider removing it later)
-   */
   useEffect(() => {
     if (title === "" && textEntry === "" && date === "") {
       setLoading(true);
@@ -95,29 +84,30 @@ export default function editEntryScreen() {
       padding: 10,
       justifyContent: "flex-start",
     }}>
-      {/* Header */}
       <View style={editEntryStyles.headerContainer}>
         <HeaderComponent title={"Edit Entry"} goBack={goBack}/>
       </View>
-      {/*Entry data input fields*/}
+
       <View style={{padding: 10, alignItems: "center"}}>
-        {/* Date Input */}
+
         <View style={editEntryStyles.inputContainer}>
           <DateInput text={date} setText={setDate}/>
         </View>
-        {/* Title Input */}
+
         <View style={editEntryStyles.inputContainer}>
           <TitleInput text={title} setText={setTitle}/>
         </View>
-        {/* Description Input */}
+
         <View style={editEntryStyles.inputContainer}>
           <DescriptionInput text={textEntry} setText={setTextEntry}/>
         </View>
+
       </View>
-      {/* Edit Entry Button */}
+
       <View style={editEntryStyles.buttonContainer}>
         <ConfirmButton handlePress={handleEditEntry} title="Edit Entry"/>
       </View>
+
     </SafeAreaView>
   );
 };
