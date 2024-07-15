@@ -20,7 +20,6 @@ export default function CalendarComponent( { selectedDate, setSelectedDate, load
   const handleDayPress = async (day: DateData) => {
     console.log("selectedDate " + day.dateString);
     setSelectedDate(day.dateString);
-    loadEntries();
   };
   
   return (
@@ -46,7 +45,7 @@ export default function CalendarComponent( { selectedDate, setSelectedDate, load
             dayTextColor: colors.white, //Color: White
             textDisabledColor: colors.disabled, //Color: Gray
             selectedDotColor: colors.white, //Color: White
-            arrowColor: colors.navy, //Color: Light Blue
+            arrowColor: colors.button, //Color: Light Blue
             disabledArrowColor: colors.disabled, //Color: Gray
             monthTextColor: colors.white, //Color: White
             indicatorColor: colors.skyBlue, //Color: Sky Blue

@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react'
 import { FIREBASE_AUTH, FIREBASE_DB } from '../../../FireBaseConfig';
 import { colors, styles } from '../../../styleSheets/Styles';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import BackButton from '../../../components/BackButton';
 import { MaterialIcons } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
 import { EmailAuthCredential, EmailAuthProvider, reauthenticateWithCredential, updateEmail, updatePassword, updateProfile } from 'firebase/auth';
@@ -12,12 +11,12 @@ import { TextInput } from 'react-native-gesture-handler';
 import { Ionicons } from '@expo/vector-icons'
 import { Button } from '@rneui/base';
 import { router } from 'expo-router';
+import HeaderComponent from '../../../components/HeaderComponent';
+
 
 const name = () => {
   const auth = FIREBASE_AUTH;
   const user = auth.currentUser;
-
-
 
   const [passwordVisibility, setPasswordVisibility] = useState(true);  
   const [rightIcon, setRightIcon] = useState('eye-outline');  
@@ -43,12 +42,13 @@ const name = () => {
     const docSnap = await getDoc(docRef)
 
     if (docSnap.exists()) {
-      // console.log("Document data:", docSnap.data());
+      console.log("Document data:", docSnap.data());
       setUserImage(docSnap.get('avatar'));
       setUserName(docSnap.get('username'));
       setUserEmail(docSnap.get('email'));
-      setUserPassword(docSnap.get('password'));
-      setUserOldPassword(docSnap.get('password'));
+      const password = docSnap.get('password')
+      setUserPassword(password);
+      setUserOldPassword(password);
     } else {
       // docSnap.data() will be undefined in this case
       console.log("No such document!");
@@ -132,7 +132,7 @@ const name = () => {
         backgroundColor: colors.background,
         paddingHorizontal: 10,
       }}>
-        <BackButton name = "Edit Profile"/>
+        <HeaderComponent title={"Edit Profile"} goBack={() => router.back()} />
 
         <ScrollView>
           <View style = {{
@@ -143,7 +143,7 @@ const name = () => {
               onPress={handleImageSelection}
             >
               <Image
-                source = {{ uri: userImage }}
+                source = {{ uri: userImage == null ? auth.currentUser?.photoURL : userImage  }}
                 style = {{
                   height: 170,
                   width: 170,

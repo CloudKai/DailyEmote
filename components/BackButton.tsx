@@ -4,7 +4,7 @@ import { View, TouchableOpacity, Text, Dimensions } from 'react-native'
 import { MaterialIcons } from '@expo/vector-icons'
 import { colors } from '../styleSheets/Styles'
 
-function BackButton(props: any) {
+export function BackButton({ name }: { name: string }) {
   const router = useRouter();
   
   return (
@@ -19,6 +19,7 @@ function BackButton(props: any) {
         style = {{
           position: 'absolute',
           left: 0,
+          zIndex: 1,
         }}
       >
         <MaterialIcons 
@@ -33,10 +34,8 @@ function BackButton(props: any) {
         color: colors.gray,
         fontWeight: 'bold'
       }}> 
-        {props.name} 
+        {name} 
       </Text>
     </View>
   )
 }
-
-export default BackButton
