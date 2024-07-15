@@ -27,6 +27,31 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     padding: 10,
   },
+  textInput: {
+    marginVertical: 4,
+    height: 50,
+    width: 300,
+    borderWidth: 1,
+    borderRadius: 4,
+    padding: 10,
+    backgroundColor: colors.contrastBackground, //Color: Dark Gray
+  },
+  button: {
+    borderRadius: 20,
+    padding: 10,
+    elevation: 2,
+    alignContent: 'center',
+    justifyContent: 'center',
+    marginVertical: 10,
+    backgroundColor: colors.skyBlue, //Color: Sky Blue
+  },
+  roundButton: {
+    height: 56,
+    width: 56,
+    borderRadius: 999,
+    backgroundColor: colors.skyBlue, //Color: Navy Blue
+    marginBottom: 26,
+  },
   whiteText: {
     color: colors.white, //Color: White
     fontSize: 20,
@@ -34,6 +59,10 @@ export const styles = StyleSheet.create({
   blackText: {
     color: colors.black, //Color: Black
     fontSize: 20,
+  },
+  headingText: {
+    fontSize: 24,
+    fontWeight: "400",
   },
   block: {
     backgroundColor: colors.contrastBackground,
