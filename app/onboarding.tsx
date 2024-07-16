@@ -6,8 +6,6 @@ import Lottie from 'lottie-react-native';
 import { colors } from '../styleSheets/Styles';
 import { setItem } from '../utils/asyncStorage';
 
-const {width, height} = Dimensions.get('window');
-
 const onboarding = () => {
     const router = useRouter();
 
@@ -53,12 +51,12 @@ const onboarding = () => {
                             <View style = {styles.lottie}>
                                 <Lottie
                                     style = {{ flex: 1 }} 
-                                    source = {require('../assets/animations/Welcome.json')} autoPlay loop 
+                                    source = {require('../assets/animations/Productivity.json')} autoPlay loop 
                                 />
                             </View>
                         ),
                         title: 'Record Events',
-                        subtitle: 'Record your events like never before',
+                        subtitle: 'Record your events like never before and See Improvements!',
                     },
                     
                     {
@@ -67,12 +65,12 @@ const onboarding = () => {
                             <View style = {styles.lottie}>
                                 <Lottie
                                     style = {{ flex: 1 }} 
-                                    source = {require('../assets/animations/Welcome.json')} autoPlay loop 
+                                    source = {require('../assets/animations/SignUp.json')} autoPlay loop 
                                 />
                             </View>
                         ),
                         title: 'Get Started',
-                        subtitle: 'Start Now',
+                        subtitle: 'Sign Up Now and Get Started Today!',
                     },
                 ]}
             />

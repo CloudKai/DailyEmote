@@ -10,7 +10,7 @@ export const colors = {
   secondaryBackground: '#212121', //Color: Dark Gray
   tertiaryBackground: '#303030', // Color: Charcoal
   contrastBackground: '#CFD8DC', //Color: Light Gray
-  navy: "#6082B6", //Color: Navy Blue
+  button: "#6082B6", //Color: Navy Blue
   border: '#2196F3', //Color: Light Blue
   disabled: "#A9A9A9", //Color: Gray 
   red: '#EF0827',

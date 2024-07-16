@@ -1,55 +1,75 @@
-import { View, Text, TextInput, Pressable, SafeAreaView, StyleSheet } from 'react-native'
+import { View, Text, TextInput, Pressable, SafeAreaView, StyleSheet, Alert } from 'react-native'
 import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker';
 import React, { useState } from 'react'
 import { router } from 'expo-router';
 import { addDoc, collection } from 'firebase/firestore';
 import { FIREBASE_DB } from '../../../FireBaseConfig';
 import { colors, styles } from '../../../styleSheets/Styles';
-import HeaderComponent from '../../../components/addEntry/HeaderComponent';
-import TitleInput from '../../../components/addEntry/TitleInput';
-import DateInput from '../../../components/addEntry/DateInput';
-import EntryInput from '../../../components/addEntry/EntryInput';
-import AddEntryButton from '../../../components/addEntry/AddEntryButton';
+import { addEntry, formatDate } from '../../../utils/FireBaseHandler';
+import ConfirmButton from '../../../components/ConfirmButton';
+import DateInput from '../../../components/entry/DateInput';
+import DescriptionInput from '../../../components/entry/DescriptionInput';
+import TitleInput from '../../../components/entry/TitleInput';
+import { BackButton } from '../../../components/BackButton';
+import HeaderComponent from '../../../components/HeaderComponent';
 
+/**
+ * Create entry screen of the app
+ * Contains the form to create a new entry
+ */
 export default function create() {
+
   const [title, setTitle] = useState("");
   const [textEntry, setTextEntry] = useState("");
-  const [dateString, setDateString] = useState(""); //Format: "YYYY-MM-DD"
+  const [dateString, setDateString] = useState(formatDate(new Date())); //Format: "YYYY-MM-DD"
+
+  /**
+   * Function to handle when the add entry button is pressed
+   */
+  const handleAddEntry = () => {
+    console.log("Add Entry Button Pressed");
+    if (title === "" || dateString === "" || textEntry === "") {
+      Alert.alert("Please don't leave any fields empty");
+    }
+    else {
+      addEntry(title, dateString, textEntry);
+    }
+  }
 
   const goBack = () => {
     router.back();
   };
 
-  const resetAll = () => {
-    setTitle("");
-    setTextEntry("");
-    setDateString("");
-    router.back();
-  };
-
   return (
-    <SafeAreaView style={[styles.overlay, {justifyContent: "flex-start"}]}>
+    <SafeAreaView style={{
+      flex: 1,
+      backgroundColor: colors.background, //Color: Dark Blue
+      alignItems: 'center',
+      padding: 10,
+      justifyContent: "flex-start",
+    }}>
       <View style={addEntryStyles.headerContainer}>
-        <HeaderComponent goBack={goBack}/>
+        <HeaderComponent title="Create Entry" goBack={goBack}/>
       </View>
+
       <View style={{padding: 10, alignItems: "center"}}>
+
         <View style={addEntryStyles.inputContainer}>
           <DateInput text={dateString} setText={setDateString}/>
         </View>
+
         <View style={addEntryStyles.inputContainer}>
           <TitleInput text={title} setText={setTitle}/>
         </View>
+
         <View style={addEntryStyles.inputContainer}>
-          <EntryInput text={textEntry} setText={setTextEntry}/>
+          <DescriptionInput text={textEntry} setText={setTextEntry}/>
         </View>
+
       </View>
+
       <View style={addEntryStyles.buttonContainer}>
-        <AddEntryButton 
-          title={title} 
-          dateString={dateString} 
-          textEntry={textEntry} 
-          resetAll={resetAll}
-        />
+        <ConfirmButton handlePress={handleAddEntry} title="Add Entry"/>
       </View>
 
     </SafeAreaView>
@@ -69,7 +89,9 @@ const addEntryStyles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     padding: 10,
-    width: "100%",
+    flexDirection: "row",
+    borderColor: 'red',
+    borderWidth: 0,
   },
   buttonContainer: {
     justifyContent: "center",

@@ -3,11 +3,11 @@ import { styles, colors } from '../../../styleSheets/Styles';
 import { Ionicons } from '@expo/vector-icons'
 import { View, ScrollView, Text, FlatList, Button } from 'react-native';
 import React from 'react';
-import { router } from 'expo-router';
-import { Header } from '@rneui/base';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { useRouter } from 'expo-router';
 
 const mainSetting = () => {
+  const router = useRouter();
 
   const items = [
     {

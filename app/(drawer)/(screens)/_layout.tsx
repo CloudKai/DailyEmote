@@ -16,7 +16,7 @@ const TabsLayout = () => {
       }}>
 
       <Tabs.Screen
-        name = "(home)"
+        name = "home"
         options = {{
           tabBarLabel: 'Home',
           headerShown: false,

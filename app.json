@@ -5,10 +5,10 @@
     "scheme": "diaryApp",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/AppIcon.png",
-    "userInterfaceStyle": "light",
+    "icon": "./assets/icon.png", 
+    "userInterfaceStyle": "automatic",
     "splash": {
-      "image": "./assets/AppIcon.png",
+      "image": "./assets/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -30,6 +30,15 @@
     ],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "dca0c6dd-7f9b-436e-8a07-17d963900f46"
+      }
+    },
+    "owner": "wzhua.02"
   }
 }

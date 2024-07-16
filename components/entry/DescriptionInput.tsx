@@ -7,12 +7,12 @@ export type textInputProps = {
   setText: (text: string) => void,
 }
 
-export default function EntryInput({ text, setText }: textInputProps) {
+export default function DescriptionInput({ text, setText }: textInputProps) {
   return (
     <View style={entryInputStyles.inputContainer}>
       <Text style={[styles.whiteText]}>Description: </Text>
       <TextInput 
-        style={[entryInputStyles.inputBox, entryInputStyles.text]}
+        style={[entryInputStyles.inputBox, entryInputStyles.placeholderText]}
         placeholder="Enter how you are feeling here"
         value={text}
         onChangeText={(text) => setText(text)}
@@ -25,9 +25,10 @@ export default function EntryInput({ text, setText }: textInputProps) {
 
 const entryInputStyles = StyleSheet.create({
   inputContainer: {
-    justifyContent: "center",
+    justifyContent: "flex-start",
     alignItems: "center",
-    width: "100%",
+    flex: 1,
+    height: 300,
   },
   inputBox: {
     padding: 10,
@@ -35,10 +36,10 @@ const entryInputStyles = StyleSheet.create({
     width: "100%",
     marginVertical: 10,
     backgroundColor: colors.contrastBackground, //Color: Dark Gray
-    height: 300,
+    flex: 1,
     alignSelf: 'center',
   },
-  text: {
+  placeholderText: {
     color: colors.black,
     fontSize: 20,
   }
