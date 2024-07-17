@@ -27,24 +27,6 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     padding: 10,
   },
-  textInput: {
-    marginVertical: 4,
-    height: 50,
-    width: 300,
-    borderWidth: 1,
-    borderRadius: 4,
-    padding: 10,
-    backgroundColor: colors.contrastBackground, //Color: Dark Gray
-  },
-  button: {
-    borderRadius: 20,
-    padding: 10,
-    elevation: 2,
-    alignContent: 'center',
-    justifyContent: 'center',
-    marginVertical: 10,
-    backgroundColor: colors.skyBlue, //Color: Sky Blue
-  },
   whiteText: {
     color: colors.white, //Color: White
     fontSize: 20,
