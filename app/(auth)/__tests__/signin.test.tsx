@@ -3,8 +3,23 @@ import { render, fireEvent, waitFor } from '@testing-library/react-native';
 import SignInPage from '../signin';
 import { FIREBASE_AUTH } from '../../../FireBaseConfig';
 import { signInWithEmailAndPassword } from 'firebase/auth';
+import { useRouter } from 'expo-router';
+
+jest.mock('expo-router', () => ({
+  useRouter: jest.fn(),
+}));
 
 describe('SignInPage', () => {
+  let mockUseRouter: any;
+
+  beforeEach(() => {
+    mockUseRouter = {
+      navigate: jest.fn(),
+      replace: jest.fn(),
+    };
+    (useRouter as jest.Mock).mockReturnValue(mockUseRouter);
+  });
+
   beforeEach(() => {
     (FIREBASE_AUTH.onAuthStateChanged as jest.Mock).mockImplementation((callback) => callback(null));
   });
@@ -63,6 +78,6 @@ describe('SignInPage', () => {
 
     fireEvent.press(signUpButton);
 
-    expect(useRouter().navigate).toHaveBeenCalledWith('/signup');
+    expect(mockUseRouter.navigate).toHaveBeenCalledWith('/signup');
   });
 });
