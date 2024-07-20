@@ -19,19 +19,14 @@ const signupPage = () => {
   const router = useRouter();
   const auth = FIREBASE_AUTH;
 
-  const checkImageURL = ((URL: string) => {
-    fetch(URL)
-      .then((res) => {
-        if (res.status == 404) {
-          return false;
-        } else {
-          return true;
-        }
-      })
-      .catch((err) => {
+  const checkImageURL = async (URL: string): Promise<boolean> => {
+    try {
+        const res = await fetch(URL);
+        return res.status !== 404;
+    } catch (err) {
         return false;
-      })
-  })
+    }
+};
 
   /**
    * function when 'Sign Up' Button is pressed
@@ -51,8 +46,8 @@ const signupPage = () => {
         //await sendEmailVerification(auth.currentUser!);
         // Alert.alert('Check your email!');
 
-
-        const userImage = checkImageURL(avatar) ? avatar : "https://t4.ftcdn.net/jpg/00/23/72/59/360_F_23725944_W2aSrg3Kqw3lOmU4IAn7iXV88Rnnfch1.jpg";
+        const isValidImage = await checkImageURL(avatar);
+        const userImage = isValidImage ? avatar : "https://t4.ftcdn.net/jpg/00/23/72/59/360_F_23725944_W2aSrg3Kqw3lOmU4IAn7iXV88Rnnfch1.jpg";
         await updateProfile(auth.currentUser!, {
           displayName: username,
           photoURL: userImage,
@@ -136,10 +131,11 @@ const signupPage = () => {
             Terms and Conditions
           </Text>
         </View>
+        
         {loading ? (
-          <ActivityIndicator size="large" color="#0000ff" />
+          <ActivityIndicator testID="loadingIndicator" size="large" color="#0000ff" />
         ) : (
-          <>
+          <View>
             <View style={{ paddingTop: 10, marginVertical: 5 }}>
               <Button title="Sign Up" onPress={signUp} />
             </View>
@@ -147,9 +143,8 @@ const signupPage = () => {
             <View style={{ marginVertical: 5 }}>
               <Button title="Back" onPress={() => router.navigate('/signin')} />
             </View>
-          </>
+          </View>
         )}
-
       </KeyboardAvoidingView>
     </View>
   );
