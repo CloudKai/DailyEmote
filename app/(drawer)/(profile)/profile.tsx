@@ -1,4 +1,4 @@
-import { TouchableOpacity, Image, ScrollView, View, Text } from 'react-native'
+import { TouchableOpacity, Image, ScrollView, View, Text, Button } from 'react-native'
 import React, { useEffect, useRef, useState } from 'react'
 import { FIREBASE_AUTH, FIREBASE_DB } from '../../../FireBaseConfig';
 import { colors, styles } from '../../../styleSheets/Styles';
@@ -9,7 +9,6 @@ import { EmailAuthCredential, EmailAuthProvider, reauthenticateWithCredential, u
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { TextInput } from 'react-native-gesture-handler';
 import { Ionicons } from '@expo/vector-icons'
-import { Button } from '@rneui/base';
 import { router } from 'expo-router';
 import HeaderComponent from '../../../components/HeaderComponent';
 
@@ -291,12 +290,13 @@ const Profile = () => {
 
             </View>
 
-            <Button 
-              title={'Update Info'} 
-              onPress={handleUpdate}
-              style = {styles.button}
-            />
-
+            <View style = {styles.button}>
+              <Button 
+                title={'Update Info'} 
+                onPress={handleUpdate}
+              />
+            </View>
+            
             <Text style={{
               color: colors.yellow, 
               alignSelf: 'center', 
