@@ -1,5 +1,5 @@
 import { TouchableOpacity, Image, ScrollView, View, Text } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { FIREBASE_AUTH, FIREBASE_DB } from '../../../FireBaseConfig';
 import { colors, styles } from '../../../styleSheets/Styles';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -14,12 +14,14 @@ import { router } from 'expo-router';
 import HeaderComponent from '../../../components/HeaderComponent';
 
 
-const name = () => {
+const Profile = () => {
   const auth = FIREBASE_AUTH;
   const user = auth.currentUser;
+  const textInputRef = useRef<TextInput>(null);
 
   const [passwordVisibility, setPasswordVisibility] = useState(true);  
-  const [rightIcon, setRightIcon] = useState('eye-outline');  
+  type IconName = 'eye-outline' | 'eye-off-outline'; 
+  const [rightIcon, setRightIcon] = useState<IconName>('eye-outline');  
 
   const handlePasswordVisibility = () => {  
     if (rightIcon === 'eye-outline') {  
@@ -73,7 +75,9 @@ const name = () => {
       avatar: userImage,
     });
 
-    this.textInput.clear()
+    if (textInputRef.current) {
+      textInputRef.current.clear();
+    }
 
     if (userPassword != userOldPassword || user?.email! != userEmail){
       try {
@@ -275,7 +279,7 @@ const name = () => {
               }}>
                 <TextInput
                   style = {{ color: 'white'}}
-                  ref = {input => this.textInput = input}
+                  ref = {textInputRef}
                   placeholder = 'Enter Image URL'
                   placeholderTextColor = "#fff" 
                   onChangeText = {(value: any) => checkImageURL(value)}
@@ -308,4 +312,4 @@ const name = () => {
   
 }
 
-export default name
+export default Profile;
