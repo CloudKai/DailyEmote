@@ -25,7 +25,7 @@ const data = () => {
     const dateOfFri = formatDate(new Date(date.setDate(dateOfMonday.getDate() + 4)));
     const dateOfSat = formatDate(new Date(date.setDate(dateOfMonday.getDate() + 5)));
     const dateOfSun = formatDate(new Date(date.setDate(dateOfMonday.getDate() + 6)));
-    console.log(dateOfMon, dateOfTues, dateOfWed, dateOfThur, dateOfFri, dateOfSat, dateOfSun);
+    // console.log(dateOfMon, dateOfTues, dateOfWed, dateOfThur, dateOfFri, dateOfSat, dateOfSun);
     return [dateOfMon, dateOfTues, dateOfWed, dateOfThur, dateOfFri, dateOfSat, dateOfSun];
   }
 
@@ -35,7 +35,7 @@ const data = () => {
 
   const loadData = async () => {
     const weekData = await readNoOfDateEntry(getWeek(), userid);
-    console.log(weekData);
+    // console.log(weekData);
     return [
       { value: weekData[0], label: 'M' },
       { value: weekData[1], label: 'T' },
@@ -71,7 +71,7 @@ const data = () => {
     })()
   }, [viewDate]);
 
-  //Soon
+  //Soon change color also 
   const pieData = [
     { value: 15, color: '#00AA00', label: 'Happy', focused: true, },
     { value: 13, color: '#EDED00', label: 'Neutral' },
