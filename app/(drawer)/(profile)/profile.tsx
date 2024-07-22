@@ -11,6 +11,7 @@ import { TextInput } from 'react-native-gesture-handler';
 import { Ionicons } from '@expo/vector-icons'
 import { router } from 'expo-router';
 import HeaderComponent from '../../../components/HeaderComponent';
+import ConfirmButton from '../../../components/ConfirmButton';
 
 
 const Profile = () => {
@@ -256,6 +257,7 @@ const Profile = () => {
                     size={25} 
                     color={'#fff'} 
                     style = {{paddingRight: 10}}
+                    testID = 'toggle-password-visibility'
                   />
                 </TouchableOpacity>
               </View>
@@ -290,12 +292,7 @@ const Profile = () => {
 
             </View>
 
-            <View style = {styles.button}>
-              <Button 
-                title={'Update Info'} 
-                onPress={handleUpdate}
-              />
-            </View>
+            <ConfirmButton title='Update Info' handlePress={handleUpdate} />
             
             <Text style={{
               color: colors.yellow, 

@@ -9,6 +9,14 @@ jest.mock('expo-router', () => ({
   useRouter: jest.fn(),
 }));
 
+jest.mock('firebase/auth', () => {
+  const originalModule = jest.requireActual('firebase/auth');
+  return {
+    ...originalModule,
+    signInWithEmailAndPassword: jest.fn(),
+  };
+});
+
 describe('SignInPage', () => {
   let mockUseRouter: any;
 
@@ -36,6 +44,13 @@ describe('SignInPage', () => {
   });
 
   it('shows an activity indicator when loading', async () => {
+    const mockSignInWithEmailAndPassword = signInWithEmailAndPassword as jest.Mock;
+    mockSignInWithEmailAndPassword.mockImplementation(() => {
+      return new Promise((resolve) => {
+        setTimeout(() => resolve({ user: { email: 'test@example.com' } }), 1000);
+      });
+    });
+
     const { getByTestId, getByPlaceholderText, getByText } = render(<SignInPage />);
     const emailInput = getByPlaceholderText('Email');
     const passwordInput = getByPlaceholderText('Password');

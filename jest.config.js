@@ -5,7 +5,7 @@ module.exports = {
   },
   setupFilesAfterEnv: [
     '@testing-library/jest-native/extend-expect',
-    './jest.setup.js'
+    './jest.setup.js',
   ],
   testPathIgnorePatterns: [
     '/node_modules/',
@@ -47,7 +47,7 @@ module.exports = {
     '|firebase))',
   ],
   globals: {
-    '__DEV__': true
+    '__DEV__': true,
   },
   moduleNameMapper: {
     '\\.svg': '<rootDir>/__mocks__/svgMock.js',

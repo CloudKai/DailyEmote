@@ -1,8 +1,20 @@
 import React from 'react';
 import { render, fireEvent, waitFor, act } from '@testing-library/react-native';
 import Profile from '../profile';
-import { getDoc, updateDoc, doc, collection } from 'firebase/firestore';
-import { getAuth } from 'firebase/auth';
+import { getDoc, updateDoc, doc } from 'firebase/firestore';
+import { getAuth, reauthenticateWithCredential, updateEmail, updatePassword } from 'firebase/auth';
+import { FIREBASE_AUTH } from '../../../../FireBaseConfig';
+
+// Define the mocked user type
+type MockedUser = {
+  uid: string;
+  email: string;
+  photoURL: string;
+  displayName: string;
+  updateProfile: jest.Mock<Promise<void>>;
+  signOut: jest.Mock<Promise<void>>;
+  getIdToken: jest.Mock<Promise<string>>;
+};
 
 describe('Profile Screen', () => {
   const auth = getAuth();
@@ -32,7 +44,7 @@ describe('Profile Screen', () => {
     const updateButton = getByText('Update Info');
     const nameInput = getByDisplayValue('Test User');
     const emailInput = getByDisplayValue('test@example.com');
-    const passwordInput = getByPlaceholderText('Password');
+    const passwordInput = getByDisplayValue('password123');
     const imageUrlInput = getByPlaceholderText('Enter Image URL');
 
     fireEvent.changeText(nameInput, 'Updated User');
@@ -55,7 +67,7 @@ describe('Profile Screen', () => {
       throw new Error('No current user');
     }
 
-    expect(mockUpdateDoc).toHaveBeenCalledWith(expect.anything(), {
+    expect(updateDoc).toHaveBeenCalledWith(expect.anything(), {
       username: 'Updated User',
       email: 'updated@example.com',
       password: 'newpassword123',
@@ -72,7 +84,7 @@ describe('Profile Screen', () => {
     // Wait for useEffect to finish
     await waitFor(() => getByText('Edit Profile'));
 
-    const passwordInput = getByPlaceholderText('Password');
+    const passwordInput = getByDisplayValue('password123');
     const toggleVisibilityButton = getByTestId('toggle-password-visibility');
 
     expect(passwordInput.props.secureTextEntry).toBeTruthy();

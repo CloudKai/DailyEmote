@@ -23,7 +23,7 @@ export default function ConfirmButton({ handlePress, title }: ConfirmButtonProps
         }}
         onPress={handlePress}
       >
-        <Text style={styles.blackText}>{title}</Text>
+        <Text style={[styles.whiteText, {alignSelf: "center"}]}>{title}</Text>
       </Pressable>
     </View>
   );

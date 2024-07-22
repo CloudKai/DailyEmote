@@ -9,6 +9,26 @@ jest.mock('expo-router', () => ({
   useRouter: jest.fn(),
 }));
 
+jest.mock('firebase/auth', () => {
+  const originalModule = jest.requireActual('firebase/auth');
+  return {
+    ...originalModule,
+    createUserWithEmailAndPassword: jest.fn(),
+    updateProfile: jest.fn(),
+  };
+});
+
+jest.mock('firebase/firestore', () => {
+  const originalModule = jest.requireActual('firebase/firestore');
+  return {
+    ...originalModule,
+    setDoc: jest.fn(),
+    doc: jest.fn((_, path) => ({
+      id: path,
+    })),
+  };
+});
+
 describe('SignupPage', () => {
   let mockUseRouter: any;
 
