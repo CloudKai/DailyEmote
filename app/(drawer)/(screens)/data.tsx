@@ -6,6 +6,8 @@ import { BarChart, LineChart, PieChart, PopulationPyramid } from "react-native-g
 import { ScrollView } from 'react-native-gesture-handler';
 import { formatDate, getUser, readNoOfDateEntry } from '../../../utils/FireBaseHandler';
 import { Button } from '@rneui/base';
+import { Ionicons } from '@expo/vector-icons'
+
 
 // https://gifted-charts.web.app/
 
@@ -31,7 +33,7 @@ const data = () => {
 
   const [barData, setBarData] = useState<any>([]);
   const [avgBarData, setAvgBarData] = useState(0);
-  const [nextVisible, setNextVisible] = useState(true);
+  const [nextVisible, setNextVisible] = useState(false);
 
   const loadData = async () => {
     const weekData = await readNoOfDateEntry(getWeek(), userid);
@@ -49,13 +51,13 @@ const data = () => {
 
   const prevWeek = async (date: number) => {
     setViewDate(date - 7);
-    setNextVisible(false);
+    setNextVisible(true);
   }
 
   const nextWeek = async (date: number) => {
     setViewDate(date + 7);
     if (new Date().getDate() <= date + 7) {
-      setNextVisible(true);
+      setNextVisible(false);
     }
   }
 
@@ -80,14 +82,14 @@ const data = () => {
 
   //Soon
   const lineData = [
-    { value: 1},
-    { value: 2},
-    { value: 3},
-    { value: 10},
-    { value: 3},
-    { value: 1},
-    { value: 7},
-    { value: 15},
+    { value: 1 },
+    { value: 2 },
+    { value: 3 },
+    { value: 10 },
+    { value: 3 },
+    { value: 1 },
+    { value: 7 },
+    { value: 15 },
   ];
 
 
@@ -110,26 +112,34 @@ const data = () => {
         }}>
 
           {/* To change to ionicon button */}
-          <Button
-            title={"Prev Week"}
+          <TouchableOpacity
             onPress={() => prevWeek(viewDate)}
-          />
+          >
+            <Ionicons
+              name="chevron-back-outline"
+              size={30}
+              color={"white"}
+            />
+          </TouchableOpacity>
 
           <Text style={{
             fontSize: 30,
             color: 'white',
-            padding: 10,
             alignSelf: 'center'
           }} >
             Weekly Recorded Data
           </Text>
 
           {/* To change to ionicon button */}
-          <Button
-            title={"Next Week"}
-            onPress={() => nextWeek(viewDate)}
-            disabled={nextVisible}
-          />
+          <TouchableOpacity
+            onPress={nextVisible ? () => nextWeek(viewDate) : () => null }
+          >
+            <Ionicons
+              name="chevron-forward-outline"
+              size={30}
+              color={nextVisible ? "white" : "black"}
+            />
+          </TouchableOpacity>
         </View>
 
         {/* Start of Bar Chart */}
@@ -227,13 +237,13 @@ const data = () => {
               innerCircleColor={colors.background}
               centerLabelComponent={() => {
                 return (
-                  <View style={{justifyContent: 'center', alignItems: 'center'}}>
+                  <View style={{ justifyContent: 'center', alignItems: 'center' }}>
                     <Text
-                      style={{fontSize: 22, color: 'white', fontWeight: 'bold'}}>
-                      45% 
+                      style={{ fontSize: 22, color: 'white', fontWeight: 'bold' }}>
+                      45%
                       {/* Caculate the % */}
                     </Text>
-                    <Text style={{fontSize: 14, color: 'white'}}>Happiness</Text>
+                    <Text style={{ fontSize: 14, color: 'white' }}>Happiness</Text>
                   </View>
                 );
               }}

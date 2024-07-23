@@ -13,10 +13,9 @@ type dateInputProps = {
 
 const currDate = new Date();
 
-export default function DateInput({ text, setText }: dateInputProps) {  
+export default function DateInput({ text, setText }: dateInputProps) {
   const [dateModal, setDateModal] = useState(false);
   const [date, setDate] = useState(new Date(text));
-  
 
   /**
    * handles the date change event
@@ -28,7 +27,7 @@ export default function DateInput({ text, setText }: dateInputProps) {
       setDateModal(!dateModal);
     } else if (event.type === "set") {
       var currentDate = selectedDate || date;
-      if(currentDate > currDate) {
+      if (currentDate > currDate) {
         setDate(currDate);
         currentDate = currDate;
       } else {
@@ -37,7 +36,7 @@ export default function DateInput({ text, setText }: dateInputProps) {
       setDateModal(!dateModal);
       console.log("Date selected: ", currentDate);
       const text = formatDate(currentDate);
-        setText(text);
+      setText(text);
       console.log("Date set: ", text);
     }
   }

@@ -17,7 +17,7 @@ export type entryData = {
   userid: string,
   id: string,
   title: string,
-  isHappy: boolean,
+  mood: string,
   year: number,
   month: number,
   day: number,
@@ -65,7 +65,7 @@ export const readDateEntry = async (date: string, userid: string) => {
         userid: doc.data().userid,
         id: doc.id, 
         title: doc.data().title, 
-        isHappy: doc.data().isHappy,
+        mood: doc.data().mood,
         year: doc.data().year,
         month: doc.data().month,
         day: doc.data().day,
@@ -86,7 +86,7 @@ export const readSingleEntry = async (id: string) => {
     userid: "",
     id: "",
     title: "",
-    isHappy: false,
+    mood: "",
     year: 0,
     month: 0,
     day: 0,
@@ -99,7 +99,7 @@ export const readSingleEntry = async (id: string) => {
         id: doc.id, 
         title: doc.data().title, 
         year: doc.data().year,
-        isHappy: doc.data().isHappy,
+        mood: doc.data().mood,
         month: doc.data().month,
         day: doc.data().day,
         textEntry: doc.data().textEntry,
@@ -113,7 +113,7 @@ export const readSingleEntry = async (id: string) => {
  * Function to add an entry to the database
  * Receives a title, dateString, and textEntry from user input
  */
-export const addEntry = async (title: string, dateString: string, textEntry: string) => {
+export const addEntry = async (title: string, dateString: string, textEntry: string, mood: string) => {
   const [ year, month, day ] = dateString.split("-");
   try {
     const entriesRef = collection(FIREBASE_DB, "entries");
@@ -123,6 +123,7 @@ export const addEntry = async (title: string, dateString: string, textEntry: str
       month: month,
       day: day,
       textEntry: textEntry,
+      mood: mood,
       userid: FIREBASE_AUTH.currentUser?.uid,
     });
     console.log("Document written with ID: ", document.id);
@@ -135,7 +136,7 @@ export const addEntry = async (title: string, dateString: string, textEntry: str
  * Function to edit an entry in the database
  * Receives an id, title, dateString, and textEntry from user input
  */
-export const editEntry = async (id: string, title: string, dateString: string, textEntry: string) => {
+export const editEntry = async (id: string, title: string, dateString: string, textEntry: string, mood: string) => {
   const [ year, month, day ] = dateString.split("-");
   try {
     const docRef = doc(FIREBASE_DB, "entries", id);
@@ -144,6 +145,7 @@ export const editEntry = async (id: string, title: string, dateString: string, t
       year: year,
       month: month,
       day: day,
+      mood: mood,
       textEntry: textEntry,
     });
     console.log("Document updated with ID: ", id);
@@ -182,7 +184,7 @@ export const readNoOfDateEntry = async (dateString: any, userid: string) => {
   const querySnapshot = await getDocs(collection(FIREBASE_DB, "entries"));
   let i = 0;
   const weeklyData: number[] = [];
-  dateString.forEach((element) => {
+  dateString.forEach((element: string) => {
     const { year, month, day } = splitDate(element);
     querySnapshot.forEach((doc) => {
       if (doc.data().year === year && doc.data().month === month && doc.data().day === day && doc.data().userid === userid) {

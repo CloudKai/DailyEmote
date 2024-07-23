@@ -9,8 +9,6 @@ import DateInput from '../../../components/entry/DateInput';
 import DescriptionInput from '../../../components/entry/DescriptionInput';
 import TitleInput from '../../../components/entry/TitleInput';
 import HeaderComponent from '../../../components/HeaderComponent';
-import { red } from 'react-native-reanimated/lib/typescript/reanimated2/Colors';
-import { color } from '@rneui/base';
 
 /**
  * Create entry screen of the app
@@ -18,10 +16,10 @@ import { color } from '@rneui/base';
  */
 export default function create() {
 
-  const currDate = formatDate(new Date());
+  
   const [title, setTitle] = useState("");
   const [textEntry, setTextEntry] = useState("");
-  const [dateString, setDateString] = useState(currDate); //Format: "YYYY-MM-DD"
+  const [dateString, setDateString] = useState(formatDate(new Date())); //Format: "YYYY-MM-DD"
   const [mood, setMood] = useState("Happy");
   
   /**
@@ -33,7 +31,7 @@ export default function create() {
       Alert.alert("Please don't leave any fields empty");
     }
     else {
-      addEntry(title, dateString, textEntry);
+      addEntry(title, dateString, textEntry, mood);
     }
   }
 
@@ -60,7 +58,7 @@ export default function create() {
       <View style={{ padding: 10, alignItems: "center" }}>
 
         <View style={addEntryStyles.inputContainer}>
-          <DateInput text={dateString > currDate ? currDate : dateString} setText={setDateString} />
+          <DateInput text={dateString} setText={setDateString} />
         </View>
 
         <View style={addEntryStyles.inputContainer}>
