@@ -4,13 +4,17 @@ import { FIREBASE_AUTH } from '../FireBaseConfig';
 import { useNavigation } from 'expo-router';
 import React from "react";
 
-export const ProfileTab = (props: any) => {
+type ProfileProps = {
+  name: string
+}
+
+export const ProfileTab = ({ name }: ProfileProps) => {
     const auth = FIREBASE_AUTH;
     const navigation = useNavigation();
 
     const onToggleDrawer =  () => {
-        navigation.dispatch(DrawerActions.openDrawer());
-      };
+      navigation.dispatch(DrawerActions.openDrawer());
+    };
 
     return (
         <View style = {{
@@ -24,7 +28,7 @@ export const ProfileTab = (props: any) => {
               fontSize: 30,
               flex: 1,
             }}> 
-               {props.name}
+               {name}
             </Text>
     
             <TouchableOpacity onPress={onToggleDrawer}>

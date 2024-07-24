@@ -7,7 +7,17 @@ jest.mock('expo-router', () => ({
   useRouter: () => ({
     navigate: jest.fn(),
     replace: jest.fn(),
+    push: jest.fn(),
   }),
+  useFocusEffect: jest.fn((cb) => cb()),
+}));
+
+// Mock react-navigation/native
+jest.mock('@react-navigation/native', () => ({
+  ...jest.requireActual('@react-navigation/native'),
+  DrawerActions: {
+    openDrawer: jest.fn(),
+  },
 }));
 
 // Mock firebase/auth
@@ -21,7 +31,7 @@ jest.mock('firebase/auth', () => {
         email: 'test@example.com',
         photoURL: 'http://test.com/photo.jpg',
         displayName: 'Test User',
-        updateProfile: jest.fn().mockResolvedValue(undefined),  // Ensure this is mocked
+        updateProfile: jest.fn().mockResolvedValue(undefined),  
         signOut: jest.fn().mockResolvedValue(undefined),
         getIdToken: jest.fn().mockResolvedValue('fake-id-token'),
       },
@@ -31,8 +41,9 @@ jest.mock('firebase/auth', () => {
       reauthenticateWithCredential: jest.fn().mockResolvedValue(undefined),
       updateEmail: jest.fn().mockResolvedValue(undefined),
       updatePassword: jest.fn().mockResolvedValue(undefined),
-      connectAuthEmulator: jest.fn(), // Mock connectAuthEmulator if needed
+      connectAuthEmulator: jest.fn(), 
     }),
+    connectAuthEmulator: jest.fn(), 
   };
 });
 
@@ -86,4 +97,35 @@ jest.mock('./FireBaseConfig', () => ({
     connectAuthEmulator: jest.fn(), // Ensure this is mocked
   },
   FIREBASE_DB: {},
+}));
+
+// Mock ProfileTab
+jest.mock('./components/ProfileTab', () => {
+  const { View, Text, TouchableOpacity, Image } = jest.requireActual('react-native');
+  return ({ name }) => (
+    <View>
+      <Text>{name}</Text>
+      <TouchableOpacity>
+        <Image source={{ uri: 'http://test.com/photo.jpg' }} />
+      </TouchableOpacity>
+    </View>
+  );
+});
+
+// Mock CalendarComponent
+jest.mock('./components/home/calendar/CalendarComponent', () => {
+  const { View } = jest.requireActual('react-native');
+  return (props) => <View testID={props.testID} />;
+});
+
+// Mock CardListComponent
+jest.mock('./components/home/cardlist/CardListComponent', () => {
+  const { View } = jest.requireActual('react-native');
+  return (props) => <View testID={props.testID} />;
+});
+
+// Mock FireBaseHandler
+jest.mock('./utils/FireBaseHandler', () => ({
+  getUser: jest.fn().mockReturnValue('test-user-id'),
+  readDateEntry: jest.fn(),
 }));

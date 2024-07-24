@@ -8,6 +8,7 @@ export type CalendarComponentProps = {
   selectedDate: string,
   setSelectedDate: (date: string) => void,
   loadEntries: () => void,
+  testID?: string; // Optional testID prop
 };
 
 /**
@@ -15,7 +16,7 @@ export type CalendarComponentProps = {
  * dates can be interacted with to open a modal that displays all entries from a given date.
  * 
  */
-export default function CalendarComponent( { selectedDate, setSelectedDate, loadEntries }: CalendarComponentProps) {
+export default function CalendarComponent( { selectedDate, setSelectedDate, loadEntries, testID }: CalendarComponentProps) {
 
   const handleDayPress = async (day: DateData) => {
     console.log("selectedDate " + day.dateString);
