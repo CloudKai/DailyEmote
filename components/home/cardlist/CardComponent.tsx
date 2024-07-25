@@ -42,7 +42,7 @@ export default function CardComponent({ item, gotoViewEntry }: CardProps) {
               <MaterialCommunityIcons
                 name="emoticon-neutral-outline"
                 size={20}
-                color={"yellow"}
+                color={"#9B870C"}
               />
             ) : (
               <MaterialCommunityIcons

@@ -1,6 +1,6 @@
 import { Stack } from 'expo-router';
-import React from 'react';
 import 'expo-dev-client';
+import React = require('react');
 
 const MainLayout = () => {
 

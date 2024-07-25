@@ -108,7 +108,8 @@ const data = () => {
           flex: 1,
           flexDirection: 'row',
           justifyContent: 'space-evenly',
-          alignItems: 'center'
+          alignItems: 'center',
+          alignContent: 'center'
         }}>
 
           {/* To change to ionicon button */}

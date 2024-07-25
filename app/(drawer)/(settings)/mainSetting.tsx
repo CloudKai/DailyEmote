@@ -11,22 +11,16 @@ const mainSetting = () => {
 
   const items = [
     {
-      name: 'Account',
-      icon: 'key',
-      backgroundColor: colors.gray,
-      route: '../(profile)/profile',
-    },
-    {
       name: 'Privacy',
       icon: 'lock-closed',
       backgroundColor: '#33A5D1',
-      route: '../(profile)/profile',
+      route: '/privacy',
     },
     {
       name: 'Notifications',
       icon: 'notifications',
       backgroundColor: colors.red,
-      route: '../(profile)/profile',
+      route: '/notification',
     },
 
   ];
@@ -36,13 +30,7 @@ const mainSetting = () => {
       name: 'Help',
       icon: 'information',
       backgroundColor: colors.green,
-      route: '../(profile)/profile',
-    },
-    {
-      name: 'Feedback',
-      icon: 'chatbox-ellipses',
-      backgroundColor: colors.green,
-      route: '../feedback',
+      route: '/help',
     },
   ];
 
