@@ -63,8 +63,8 @@ export const readDateEntry = async (date: string, userid: string) => {
     if (doc.data().year === year && doc.data().month === month && doc.data().day === day && doc.data().userid === userid) {
       newEntries.push({
         userid: doc.data().userid,
-        id: doc.id, 
-        title: doc.data().title, 
+        id: doc.id,
+        title: doc.data().title,
         mood: doc.data().mood,
         year: doc.data().year,
         month: doc.data().month,
@@ -96,8 +96,8 @@ export const readSingleEntry = async (id: string) => {
     if (doc.id === id) {
       entry = {
         userid: doc.data().userid,
-        id: doc.id, 
-        title: doc.data().title, 
+        id: doc.id,
+        title: doc.data().title,
         year: doc.data().year,
         mood: doc.data().mood,
         month: doc.data().month,
@@ -114,7 +114,7 @@ export const readSingleEntry = async (id: string) => {
  * Receives a title, dateString, and textEntry from user input
  */
 export const addEntry = async (title: string, dateString: string, textEntry: string, mood: string) => {
-  const [ year, month, day ] = dateString.split("-");
+  const [year, month, day] = dateString.split("-");
   try {
     const entriesRef = collection(FIREBASE_DB, "entries");
     const document = await addDoc(entriesRef, {
@@ -137,7 +137,7 @@ export const addEntry = async (title: string, dateString: string, textEntry: str
  * Receives an id, title, dateString, and textEntry from user input
  */
 export const editEntry = async (id: string, title: string, dateString: string, textEntry: string, mood: string) => {
-  const [ year, month, day ] = dateString.split("-");
+  const [year, month, day] = dateString.split("-");
   try {
     const docRef = doc(FIREBASE_DB, "entries", id);
     await updateDoc(docRef, {
@@ -171,7 +171,7 @@ export const getUser = () => {
   const user = auth.currentUser;
   if (user) {
     return user.uid;
-  } else { 
+  } else {
     return "";
   }
 }
@@ -187,11 +187,59 @@ export const readNoOfDateEntry = async (dateString: any, userid: string) => {
   dateString.forEach((element: string) => {
     const { year, month, day } = splitDate(element);
     querySnapshot.forEach((doc) => {
-      if (doc.data().year === year && doc.data().month === month && doc.data().day === day && doc.data().userid === userid) {
+      let data = doc.data();
+      if (data.year === year && data.month === month && data.day === day && data.userid === userid) {
         i += 1;
       }
     });
     weeklyData.push(i);
+    i = 0;
+  });
+  return weeklyData;
+}
+
+/**
+ * Function to read all moods and count them
+ */
+export const readNoOfMoods = async (dateString: any, userid: string) => {
+  const querySnapshot = await getDocs(collection(FIREBASE_DB, "entries"));
+  let happy = 0, neutral = 0, sad = 0;
+  dateString.forEach((element: string) => {
+    const { year, month, day } = splitDate(element);
+    querySnapshot.forEach((doc) => {
+      let data = doc.data();
+      if (data.year === year && data.month === month && data.day === day && data.userid === userid) {
+        let moodData = doc.data().mood;
+        if (moodData == "Happy") {
+          happy += 1;
+        } else if (moodData == "Neutral") {
+          neutral += 1;
+        } else if (moodData == "Sad") {
+          sad += 1;
+        }
+      }
+    });
+  });
+  console.log([happy, neutral, sad]);
+  return [happy, neutral, sad];
+}
+
+/**
+ * Function to read the number of happy in a day
+ */
+export const readNoOfHappyInADay = async (dateString: any, userid: string) => {
+  const querySnapshot = await getDocs(collection(FIREBASE_DB, "entries"));
+  let i = 0;
+  const weeklyData: any[] = [];
+  dateString.forEach((element: string) => {
+    const { year, month, day } = splitDate(element);
+    querySnapshot.forEach((doc) => {
+      let data = doc.data();
+      if (data.year === year && data.month === month && data.day === day && data.userid === userid && data.mood === "Happy") {
+        i += 1;
+      }
+    });
+    weeklyData.push([i, element.split("-").reverse().join("-")]);
     i = 0;
   });
   return weeklyData;
