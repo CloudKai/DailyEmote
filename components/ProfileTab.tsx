@@ -40,6 +40,7 @@ export const ProfileTab = ({ name }: ProfileProps) => {
                   marginRight: 20,
                 }}
                 source = {{ uri: auth?.currentUser?.photoURL! }}
+                testID="profile-picture"
                 />
             </TouchableOpacity>
           </View>

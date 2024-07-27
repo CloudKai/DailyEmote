@@ -11,12 +11,16 @@ type CardProps = {
 export default function CardComponent({ item, gotoViewEntry }: CardProps) {
   return (
     <View>
-      <TouchableOpacity onPress={() => { gotoViewEntry(item.id) }}>
+      <TouchableOpacity
+        onPress={() => { gotoViewEntry(item.id) }}
+        testID={`card-${item.id}`}
+      >
         <Card containerStyle={{ height: 262 }}>
           <Card.Title
             numberOfLines={1}
             ellipsizeMode="tail"
             style={{ marginBottom: -15 }}
+            testID={`card-title-${item.id}`}
           >
             {item.title}
           </Card.Title>
@@ -27,11 +31,13 @@ export default function CardComponent({ item, gotoViewEntry }: CardProps) {
               uri:
                 'https://awildgeographer.files.wordpress.com/2015/02/john_muir_glacier.jpg',
             }}
+            testID={`card-image-${item.id}`}
           />
           <Text
             numberOfLines={2}
             ellipsizeMode="tail"
             style={{ textAlign: 'justify', paddingTop: 10, lineHeight: 19}}
+            testID={`card-text-${item.id}`}
           >
             {item.textEntry}
           </Text>

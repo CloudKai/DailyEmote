@@ -15,6 +15,7 @@ export default function HeaderComponent({ title, goBack }: HeaderProps) {
       <TouchableOpacity 
         onPress={() => goBack()} 
         style={headerStyles.backButton}
+        testID="back-button"
       >
         <MaterialIcons 
           name="keyboard-arrow-left" 

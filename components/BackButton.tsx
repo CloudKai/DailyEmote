@@ -4,7 +4,7 @@ import { View, TouchableOpacity, Text, Dimensions } from 'react-native'
 import { MaterialIcons } from '@expo/vector-icons'
 import { colors } from '../styleSheets/Styles'
 
-export function BackButton({ name }: { name: string }) {
+export default function BackButton({ name }: { name: string }) {
   const router = useRouter();
   
   return (
@@ -21,11 +21,13 @@ export function BackButton({ name }: { name: string }) {
           left: 0,
           zIndex: 1,
         }}
+        testID="back-button"
       >
         <MaterialIcons 
           name = 'keyboard-arrow-left'
           size = {30}
           color= {colors.gray}
+          testID="back-icon"
         /> 
       </TouchableOpacity>
 

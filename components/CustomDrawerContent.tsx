@@ -29,6 +29,7 @@ export default function CustomDrawerContent(props: any) {
           <Image
             source={{ uri: auth?.currentUser?.photoURL! }}
             style={{ width: 100, height: 100, borderRadius: 100 / 2, alignSelf: 'center' }}
+            testID="user-avatar" // Added testID for testing purposes
           />
 
           <Text
@@ -57,6 +58,7 @@ export default function CustomDrawerContent(props: any) {
                 color={color}
               />
             )}
+            testID="logout-button" // Added testID for testing purposes
           />
         </View>
       </DrawerContentScrollView>

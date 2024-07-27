@@ -1,5 +1,5 @@
-import { View, Text, Pressable, TextInput, StyleSheet } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import { View, Text, Pressable, TextInput, StyleSheet } from 'react-native';
+import React, { useState } from 'react';
 import RNDateTimePicker, {
   DateTimePickerEvent,
 } from "@react-native-community/datetimepicker";
@@ -43,6 +43,7 @@ export default function DateInput({ text, setText }: dateInputProps) {
           display="spinner"
           value={date}
           onChange={onDateChange}
+          testID="date-picker" 
         />
       )}
       <Text style={[styles.whiteText]}>Date: </Text>
@@ -52,23 +53,18 @@ export default function DateInput({ text, setText }: dateInputProps) {
           setDateModal(!dateModal);
           console.log("Opened date modal", dateModal);
         }}
+        testID="date-pressable" 
       >
-        <TextInput style={dateStyles.text} editable={false}>
-          {formatDate(date)}
-        </TextInput>
+        <TextInput 
+          style={dateStyles.text} 
+          editable={false} 
+          value={formatDate(date)} 
+          testID="date-text-input" // Added testID for testing purposes
+        />
       </Pressable>
     </View>
   )
 }
-
-/*
-<DateTimePickerAndroid
-  mode="date"
-  display="spinner"
-  value={date}
-  onChange={onDateChange}
-/>
-*/
 
 const dateStyles = StyleSheet.create({
   dateContainer: {

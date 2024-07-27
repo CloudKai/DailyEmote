@@ -1,16 +1,12 @@
 import { View, Text, TextInput, Pressable, SafeAreaView, StyleSheet, Alert } from 'react-native'
-import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker';
 import React, { useState } from 'react'
 import { router } from 'expo-router';
-import { addDoc, collection } from 'firebase/firestore';
-import { FIREBASE_DB } from '../../../FireBaseConfig';
 import { colors, styles } from '../../../styleSheets/Styles';
 import { addEntry, formatDate } from '../../../utils/FireBaseHandler';
 import ConfirmButton from '../../../components/ConfirmButton';
 import DateInput from '../../../components/entry/DateInput';
 import DescriptionInput from '../../../components/entry/DescriptionInput';
 import TitleInput from '../../../components/entry/TitleInput';
-import { BackButton } from '../../../components/BackButton';
 import HeaderComponent from '../../../components/HeaderComponent';
 
 /**
