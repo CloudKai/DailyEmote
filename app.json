@@ -20,7 +20,8 @@
         "foregroundImage": "./assets/AppIcon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.zongkai.DailyEmote"
+      "package": "com.zongkai.DailyEmote",
+      "googleServicesFile": "./google-services.json"
     },
     "web": {
       "favicon": "./assets/favicon.png"
