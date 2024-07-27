@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native'
 import { ProfileTab } from '../../../components/ProfileTab';
 import { colors } from '../../../styleSheets/Styles';
@@ -7,6 +7,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { formatDate, getUser, readNoOfDateEntry, readNoOfHappyInADay, readNoOfMoods } from '../../../utils/FireBaseHandler';
 import { Button } from '@rneui/base';
 import { Ionicons } from '@expo/vector-icons'
+import { useFocusEffect } from 'expo-router';
 
 // https://gifted-charts.web.app/
 
@@ -75,9 +76,9 @@ const data = () => {
   // };
 
   const happyData = [
-    {value: 0 },
-    {value: 10 },
-    {value: 8 },
+    { value: 0 },
+    { value: 10 },
+    { value: 8 },
   ];
 
   const prevWeek = async (date: number) => {
@@ -92,33 +93,35 @@ const data = () => {
     }
   }
 
-  useEffect(() => {
-    (async () => {
-      const date = new Date()
-      const dayIndex = date.getDay();
-      const diffToLastMonday = (dayIndex !== 0) ? dayIndex - 1 : 6;
-      const dateOfMonday = new Date(date.setDate(viewDate - diffToLastMonday));
-      const dateOfSunday = formatDate(new Date(date.setDate(dateOfMonday.getDate() + 6)))
-      setDayMonday(formatDate(dateOfMonday));
-      setDaySunday(dateOfSunday)
+  useFocusEffect(
+    useCallback(() => {
+      (async () => {
+        const date = new Date()
+        const dayIndex = date.getDay();
+        const diffToLastMonday = (dayIndex !== 0) ? dayIndex - 1 : 6;
+        const dateOfMonday = new Date(date.setDate(viewDate - diffToLastMonday));
+        const dateOfSunday = formatDate(new Date(date.setDate(dateOfMonday.getDate() + 6)))
+        setDayMonday(formatDate(dateOfMonday));
+        setDaySunday(dateOfSunday)
 
-      const weekData = await loadData(dateOfMonday, dateOfSunday);
-      const avgBarData = weekData.reduce((a, v) => a + v.value, 0) / weekData.length;
-      // console.log("Viewing Date " + viewDate);
-      // console.log(avgBarData);
-      // console.log(weekData);
-      setBarData(weekData);
-      setAvgBarData(avgBarData);
+        const weekData = await loadData(dateOfMonday, dateOfSunday);
+        const avgBarData = weekData.reduce((a, v) => a + v.value, 0) / weekData.length;
+        // console.log("Viewing Date " + viewDate);
+        // console.log(avgBarData);
+        // console.log(weekData);
+        setBarData(weekData);
+        setAvgBarData(avgBarData);
 
-      const weekMoodData = await loadMoodData(dateOfMonday, dateOfSunday);
-      setPieData(weekMoodData);
-      const happyPercent = 100 * (weekMoodData[0].value / weekMoodData[0].value + weekMoodData[1].value + weekMoodData[2].value)
-      setHappyPieData(Number.isNaN(happyPercent) ? 0 : happyPercent);
+        const weekMoodData = await loadMoodData(dateOfMonday, dateOfSunday);
+        setPieData(weekMoodData);
+        const happyPercent = 100 * (weekMoodData[0].value / (weekMoodData[0].value + weekMoodData[1].value + weekMoodData[2].value))
+        setHappyPieData(Number.isNaN(happyPercent) ? 0 : parseInt(happyPercent.toFixed(0)));
 
-      // const lineGraphData = await lineGraphMoods(dateOfMonday, dateOfSunday);
-      // setHappyData(lineGraphData);
-    })()
-  }, [viewDate]);
+        // const lineGraphData = await lineGraphMoods(dateOfMonday, dateOfSunday);
+        // setHappyData(lineGraphData);
+      })()
+    }, [viewDate, userid])
+  );
 
 
   return (
@@ -280,7 +283,7 @@ const data = () => {
                     <View style={{ justifyContent: 'center', alignItems: 'center' }}>
                       <Text
                         style={{ fontSize: 22, color: 'white', fontWeight: 'bold' }}>
-                        {happyPieData}
+                        {happyPieData}%
                       </Text>
                       <Text style={{ fontSize: 14, color: 'white' }}>Happiness</Text>
                     </View>

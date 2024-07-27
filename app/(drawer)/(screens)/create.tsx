@@ -1,4 +1,4 @@
-import { View, Text, TextInput, Pressable, SafeAreaView, StyleSheet, Alert, TouchableOpacity } from 'react-native'
+import { View, Text, SafeAreaView, StyleSheet, Alert, TouchableOpacity, ScrollView } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { router } from 'expo-router';
 import { MaterialCommunityIcons } from '@expo/vector-icons'
@@ -15,13 +15,11 @@ import HeaderComponent from '../../../components/HeaderComponent';
  * Contains the form to create a new entry
  */
 export default function create() {
-
-  
   const [title, setTitle] = useState("");
   const [textEntry, setTextEntry] = useState("");
   const [dateString, setDateString] = useState(formatDate(new Date())); //Format: "YYYY-MM-DD"
   const [mood, setMood] = useState("Happy");
-  
+
   /**
    * Function to handle when the add entry button is pressed
    */
@@ -32,6 +30,7 @@ export default function create() {
     }
     else {
       addEntry(title, dateString, textEntry, mood);
+      router.back();
     }
   }
 
@@ -44,89 +43,93 @@ export default function create() {
   };
 
   return (
-    <SafeAreaView style={{
-      flex: 1,
-      backgroundColor: colors.background, //Color: Dark Blue
-      alignItems: 'center',
-      padding: 10,
-      justifyContent: "flex-start",
-    }}>
-      <View style={addEntryStyles.headerContainer}>
-        <HeaderComponent title="Create Entry" goBack={goBack} />
-      </View>
-
-      <View style={{ padding: 10, alignItems: "center" }}>
-
-        <View style={addEntryStyles.inputContainer}>
-          <DateInput text={dateString} setText={setDateString} />
-        </View>
-
-        <View style={addEntryStyles.inputContainer}>
-          <TitleInput text={title} setText={setTitle} />
-        </View>
-
-        <Text style={{
-          fontSize: 20,
-          color: 'white',
-          paddingTop: 5,
-          alignSelf: 'center'
+      <ScrollView
+        contentContainerStyle={{ flexGrow: 1 }}
+        keyboardShouldPersistTaps='handled'
+      >
+        <SafeAreaView style={{
+          flex: 1,
+          backgroundColor: colors.background, //Color: Dark Blue
+          alignItems: 'center',
+          padding: 10,
+          justifyContent: "flex-start",
         }}>
-          Mood:
-        </Text>
-        <View style={{
-          flexDirection: 'row',
-          padding: 20,
-          justifyContent: 'space-between',
-          alignContent: 'space-evenly',
-        }}>
-          <TouchableOpacity
-            onPress={() => triggerMood("Sad")}
-            style={{
-              paddingHorizontal: 30,
+          <View style={addEntryStyles.headerContainer}>
+            <HeaderComponent title="Create Entry" goBack={goBack} />
+          </View>
+
+          <View style={{ padding: 10, alignItems: "center" }}>
+
+            <View style={addEntryStyles.inputContainer}>
+              <DateInput text={dateString} setText={setDateString} />
+            </View>
+
+            <View style={addEntryStyles.inputContainer}>
+              <TitleInput text={title} setText={setTitle} />
+            </View>
+
+            <Text style={{
+              fontSize: 20,
+              color: 'white',
+              paddingTop: 5,
+              alignSelf: 'center'
             }}>
-            <MaterialCommunityIcons
-              name="emoticon-sad-outline"
-              size={60}
-              color={mood === "Sad" ? "red" : "gray"}
-            />
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            onPress={() => triggerMood("Neutral")}
-            style={{
-              paddingHorizontal: 30,
+              Mood:
+            </Text>
+            <View style={{
+              flexDirection: 'row',
+              padding: 20,
+              justifyContent: 'space-between',
+              alignContent: 'space-evenly',
             }}>
-            <MaterialCommunityIcons
-              name="emoticon-neutral-outline"
-              size={60}
-              color={mood === "Neutral" ? "yellow" : "gray"}
-            />
-          </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => triggerMood("Sad")}
+                style={{
+                  paddingHorizontal: 30,
+                }}>
+                <MaterialCommunityIcons
+                  name="emoticon-sad-outline"
+                  size={60}
+                  color={mood === "Sad" ? "red" : "gray"}
+                />
+              </TouchableOpacity>
 
-          <TouchableOpacity
-            onPress={() => triggerMood("Happy")}
-            style={{
-              paddingHorizontal: 30,
-            }}>
-            <MaterialCommunityIcons
-              name="emoticon-happy-outline"
-              size={60}
-              color={mood === "Happy" ? "green" : "gray"}
-            />
-          </TouchableOpacity>
-        </View>
+              <TouchableOpacity
+                onPress={() => triggerMood("Neutral")}
+                style={{
+                  paddingHorizontal: 30,
+                }}>
+                <MaterialCommunityIcons
+                  name="emoticon-neutral-outline"
+                  size={60}
+                  color={mood === "Neutral" ? "yellow" : "gray"}
+                />
+              </TouchableOpacity>
 
-        <View style={addEntryStyles.inputContainer}>
-          <DescriptionInput text={textEntry} setText={setTextEntry} />
-        </View>
+              <TouchableOpacity
+                onPress={() => triggerMood("Happy")}
+                style={{
+                  paddingHorizontal: 30,
+                }}>
+                <MaterialCommunityIcons
+                  name="emoticon-happy-outline"
+                  size={60}
+                  color={mood === "Happy" ? "green" : "gray"}
+                />
+              </TouchableOpacity>
+            </View>
 
-      </View>
+            <View style={addEntryStyles.inputContainer}>
+              <DescriptionInput text={textEntry} setText={setTextEntry} />
+            </View>
+          </View>
 
-      <View style={addEntryStyles.buttonContainer}>
-        <ConfirmButton handlePress={handleAddEntry} title="Add Entry" />
-      </View>
+          <View style={addEntryStyles.buttonContainer}>
+            <ConfirmButton handlePress={handleAddEntry} title="Add Entry" />
+          </View>
 
-    </SafeAreaView>
+        </SafeAreaView>
+      </ScrollView>
   );
 }
 

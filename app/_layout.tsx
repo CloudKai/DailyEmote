@@ -1,8 +1,10 @@
 import { Stack } from 'expo-router';
 import 'expo-dev-client';
-import React = require('react');
+// import useNotificationService from '../utils/Notifcation';
+import React from 'react';
 
 const MainLayout = () => {
+  // useNotificationService();
 
   return (
     <Stack initialRouteName='index'>

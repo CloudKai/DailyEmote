@@ -94,6 +94,7 @@ export default function viewEntryFull() {
           <Ionicons name="create" size={24} color={colors.white} />
         </TouchableOpacity>
       </View>
+      
       {/* Entry Data */}
       <View style={viewEntryStyles.viewTextContainer}>
         <View style={viewEntryStyles.boxComponent}>
@@ -102,12 +103,14 @@ export default function viewEntryFull() {
             <Text style={styles.blackText}>{date}</Text>
           </View>
         </View>
+
         <View style={viewEntryStyles.boxComponent}>
           <Text style={styles.whiteText}>Title: </Text>
           <View style={viewEntryStyles.textBox}>
             <Text style={styles.blackText}>{title}</Text>
           </View>
         </View>
+
         <View style={[viewEntryStyles.boxComponent, { flexDirection: "column" }]}>
           <View style={{ flexDirection: 'row' }}>
             <Text style={styles.whiteText}>Description: </Text>
@@ -131,11 +134,14 @@ export default function viewEntryFull() {
               />
             )}
           </View>
+
           <ScrollView style={viewEntryStyles.entryBox}>
             <Text style={styles.blackText}>{textEntry}</Text>
           </ScrollView>
+
         </View>
       </View>
+
       {/* Delete Entry Button */}
       <View style={viewEntryStyles.buttonContainer}>
         <ConfirmButton title={"Delete Entry"} handlePress={handleDeleteButton} />
