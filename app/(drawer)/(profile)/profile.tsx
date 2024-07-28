@@ -11,6 +11,7 @@ import { TextInput } from 'react-native-gesture-handler';
 import { Ionicons } from '@expo/vector-icons'
 import { router } from 'expo-router';
 import HeaderComponent from '../../../components/HeaderComponent';
+import ConfirmButton from '../../../components/ConfirmButton';
 
 
 const Profile = () => {

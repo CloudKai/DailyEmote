@@ -50,13 +50,13 @@ export const usePushNotifications = (): PushNotificationState => {
       const pushToken = await messaging().getToken();
       token = pushToken; 
       setExpoPushToken(token);
-      console.log("FCM Token:", token);
+      console.log("Android Device Token:", token);
     } else if (Platform.OS === "android" && !Device.isDevice) {
       // For Android emulators
       const pushToken = (await Notifications.getExpoPushTokenAsync()).data;
       token = pushToken;
       setExpoPushToken(token);
-      console.log("Expo Push Token:", token);
+      console.log("Android Emulator Token:", token);
     } else {
       // For other platforms (e.g., web)
       Alert.alert("Push notifications are not supported on this platform");

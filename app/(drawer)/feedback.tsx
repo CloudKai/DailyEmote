@@ -4,7 +4,8 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import { FIREBASE_AUTH, FIREBASE_DB } from '../../FireBaseConfig'
 import { colors } from '../../styleSheets/Styles'
 import { addDoc, collection, onSnapshot, orderBy, query, where } from 'firebase/firestore'
-import BackButton from '../../components/BackButton'
+import HeaderComponent from '../../components/HeaderComponent'
+import { router } from 'expo-router'
 
 const feedback = () => {
   const [messages, setMessages] = useState<any[]>([])
@@ -47,14 +48,17 @@ const feedback = () => {
   }, []);
 
   const onSend = useCallback((messages: any[] = []) => {
-
     const { _id, createdAt, text, user } = messages[0]
     addDoc(collection(FIREBASE_DB, 'chats'), { _id, createdAt, text, user });
   }, [])
 
+  const handleGoBack = () => {
+    router.back();
+  }
+
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: colors.background }}>
-      <BackButton name="Feedback Chat" />
+      <HeaderComponent title="Feedback Chat" goBack={handleGoBack}/>
 
       <GiftedChat
         placeholder='Enter your Feedback'
