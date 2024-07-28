@@ -1,16 +1,13 @@
-import { View, Text, TextInput, Pressable, SafeAreaView, StyleSheet, Alert } from 'react-native'
-import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker';
-import React, { useState } from 'react'
+import { View, Text, SafeAreaView, StyleSheet, Alert, TouchableOpacity, ScrollView } from 'react-native'
+import React, { useEffect, useState } from 'react'
 import { router } from 'expo-router';
-import { addDoc, collection } from 'firebase/firestore';
-import { FIREBASE_DB } from '../../../FireBaseConfig';
+import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { colors, styles } from '../../../styleSheets/Styles';
 import { addEntry, formatDate } from '../../../utils/FireBaseHandler';
 import ConfirmButton from '../../../components/ConfirmButton';
 import DateInput from '../../../components/entry/DateInput';
 import DescriptionInput from '../../../components/entry/DescriptionInput';
 import TitleInput from '../../../components/entry/TitleInput';
-import { BackButton } from '../../../components/BackButton';
 import HeaderComponent from '../../../components/HeaderComponent';
 
 /**
@@ -18,10 +15,10 @@ import HeaderComponent from '../../../components/HeaderComponent';
  * Contains the form to create a new entry
  */
 export default function create() {
-
   const [title, setTitle] = useState("");
   const [textEntry, setTextEntry] = useState("");
   const [dateString, setDateString] = useState(formatDate(new Date())); //Format: "YYYY-MM-DD"
+  const [mood, setMood] = useState("Happy");
 
   /**
    * Function to handle when the add entry button is pressed
@@ -32,47 +29,107 @@ export default function create() {
       Alert.alert("Please don't leave any fields empty");
     }
     else {
-      addEntry(title, dateString, textEntry);
+      addEntry(title, dateString, textEntry, mood);
+      router.back();
     }
   }
+
+  const triggerMood = (newMood: React.SetStateAction<string>) => {
+    setMood(newMood);
+  };
 
   const goBack = () => {
     router.back();
   };
 
   return (
-    <SafeAreaView style={{
-      flex: 1,
-      backgroundColor: colors.background, //Color: Dark Blue
-      alignItems: 'center',
-      padding: 10,
-      justifyContent: "flex-start",
-    }}>
-      <View style={addEntryStyles.headerContainer}>
-        <HeaderComponent title="Create Entry" goBack={goBack}/>
-      </View>
+      <ScrollView
+        contentContainerStyle={{ flexGrow: 1 }}
+        keyboardShouldPersistTaps='handled'
+      >
+        <SafeAreaView style={{
+          flex: 1,
+          backgroundColor: colors.background, //Color: Dark Blue
+          alignItems: 'center',
+          padding: 10,
+          justifyContent: "flex-start",
+        }}>
+          <View style={addEntryStyles.headerContainer}>
+            <HeaderComponent title="Create Entry" goBack={goBack} />
+          </View>
 
-      <View style={{padding: 10, alignItems: "center"}}>
+          <View style={{ padding: 10, alignItems: "center" }}>
 
-        <View style={addEntryStyles.inputContainer}>
-          <DateInput text={dateString} setText={setDateString}/>
-        </View>
+            <View style={addEntryStyles.inputContainer}>
+              <DateInput text={dateString} setText={setDateString} />
+            </View>
 
-        <View style={addEntryStyles.inputContainer}>
-          <TitleInput text={title} setText={setTitle}/>
-        </View>
+            <View style={addEntryStyles.inputContainer}>
+              <TitleInput text={title} setText={setTitle} />
+            </View>
 
-        <View style={addEntryStyles.inputContainer}>
-          <DescriptionInput text={textEntry} setText={setTextEntry}/>
-        </View>
+            <Text style={{
+              fontSize: 20,
+              color: 'white',
+              paddingTop: 5,
+              alignSelf: 'center'
+            }}>
+              Mood:
+            </Text>
+            <View style={{
+              flexDirection: 'row',
+              padding: 20,
+              justifyContent: 'space-between',
+              alignContent: 'space-evenly',
+            }}>
+              <TouchableOpacity
+                onPress={() => triggerMood("Sad")}
+                style={{
+                  paddingHorizontal: 30,
+                }}>
+                <MaterialCommunityIcons
+                  name="emoticon-sad-outline"
+                  size={60}
+                  color={mood === "Sad" ? "red" : "gray"}
+                />
+              </TouchableOpacity>
 
-      </View>
+              <TouchableOpacity
+                onPress={() => triggerMood("Neutral")}
+                style={{
+                  paddingHorizontal: 30,
+                }}>
+                <MaterialCommunityIcons
+                  name="emoticon-neutral-outline"
+                  size={60}
+                  color={mood === "Neutral" ? "yellow" : "gray"}
+                />
+              </TouchableOpacity>
 
-      <View style={addEntryStyles.buttonContainer}>
-        <ConfirmButton handlePress={handleAddEntry} title="Add Entry"/>
-      </View>
+              <TouchableOpacity
+                onPress={() => triggerMood("Happy")}
+                style={{
+                  paddingHorizontal: 30,
+                }}>
+                <MaterialCommunityIcons
+                  name="emoticon-happy-outline"
+                  size={60}
+                  color={mood === "Happy" ? "green" : "gray"}
+                />
+              </TouchableOpacity>
+            </View>
 
-    </SafeAreaView>
+            <View style={addEntryStyles.inputContainer}>
+              <DescriptionInput text={textEntry} setText={setTextEntry} />
+            </View>
+          </View>
+
+          <View style={addEntryStyles.buttonContainer}>
+            <ConfirmButton handlePress={handleAddEntry} title="Add Entry" />
+          </View>
+
+        </SafeAreaView>
+      </ScrollView>
   );
 }
 
@@ -88,15 +145,14 @@ const addEntryStyles = StyleSheet.create({
   inputContainer: {
     justifyContent: "center",
     alignItems: "center",
-    padding: 10,
+    padding: 7,
     flexDirection: "row",
-    borderColor: "red",
-    borderWidth: 1,
+    borderColor: 'red',
+    borderWidth: 0,
   },
   buttonContainer: {
     justifyContent: "center",
     alignItems: "center",
-    padding: 1,
     width: "100%",
   },
 });

@@ -5,10 +5,10 @@
     "scheme": "diaryApp",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/AppIcon.png",
+    "icon": "./assets/icon.png", 
     "userInterfaceStyle": "automatic",
     "splash": {
-      "image": "./assets/AppIcon.png",
+      "image": "./assets/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -20,7 +20,8 @@
         "foregroundImage": "./assets/AppIcon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.zongkai.DailyEmote"
+      "package": "com.zongkai.DailyEmote",
+      "googleServicesFile": "./google-services.json"
     },
     "web": {
       "favicon": "./assets/favicon.png"

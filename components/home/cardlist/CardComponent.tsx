@@ -2,6 +2,7 @@ import { View, Text, TouchableOpacity } from 'react-native'
 import React from 'react'
 import { Card } from '@rneui/base'
 import { entryData } from '../../../utils/FireBaseHandler';
+import { MaterialCommunityIcons } from '@expo/vector-icons'
 
 type CardProps = {
   item: entryData;
@@ -10,7 +11,9 @@ type CardProps = {
 
 export default function CardComponent({ item, gotoViewEntry }: CardProps) {
   return (
-    <View>
+    <View style={{
+      width: 300,
+    }}>
       <TouchableOpacity onPress={() => { gotoViewEntry(item.id) }}>
         <Card containerStyle={{ height: 262 }}>
           <Card.Title
@@ -25,16 +28,37 @@ export default function CardComponent({ item, gotoViewEntry }: CardProps) {
             style={{ paddingTop: 30 }}
             source={{
               uri:
-                'https://awildgeographer.files.wordpress.com/2015/02/john_muir_glacier.jpg',
+                'https://cdn-icons-png.flaticon.com/512/8999/8999474.png',
             }}
           />
-          <Text
-            numberOfLines={2}
-            ellipsizeMode="tail"
-            style={{ textAlign: 'justify', paddingTop: 10, lineHeight: 19}}
-          >
-            {item.textEntry}
-          </Text>
+          <View style={{ flexDirection: 'row', paddingTop: 10 }}>
+            {item.mood === "Happy" ? (
+              <MaterialCommunityIcons
+                name="emoticon-happy-outline"
+                size={20}
+                color={"green"}
+              />
+            ) : item.mood === "Neutral" ? (
+              <MaterialCommunityIcons
+                name="emoticon-neutral-outline"
+                size={20}
+                color={"#9B870C"}
+              />
+            ) : (
+              <MaterialCommunityIcons
+                name="emoticon-sad-outline"
+                size={20}
+                color={"red"}
+              />
+            )}
+            <Text
+              numberOfLines={2}
+              ellipsizeMode="tail"
+              style={{ paddingStart: 5, textAlign: 'justify', lineHeight: 19 }}
+            >
+              {item.textEntry}
+            </Text>
+          </View>
         </Card>
       </TouchableOpacity>
     </View>

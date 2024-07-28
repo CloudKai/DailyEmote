@@ -13,25 +13,10 @@ const signupPage = () => {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [avatar, setAvatar] = useState("");
   const [loading, setLoading] = useState(false);
   const [isSelected, setSelection] = useState(false);
   const router = useRouter();
   const auth = FIREBASE_AUTH;
-
-  const checkImageURL = ((URL: string) => {
-    fetch(URL)
-      .then((res) => {
-        if (res.status == 404) {
-          return false;
-        } else {
-          return true;
-        }
-      })
-      .catch((err) => {
-        return false;
-      })
-  })
 
   /**
    * function when 'Sign Up' Button is pressed
@@ -51,8 +36,7 @@ const signupPage = () => {
         //await sendEmailVerification(auth.currentUser!);
         // Alert.alert('Check your email!');
 
-
-        const userImage = checkImageURL(avatar) ? avatar : "https://t4.ftcdn.net/jpg/00/23/72/59/360_F_23725944_W2aSrg3Kqw3lOmU4IAn7iXV88Rnnfch1.jpg";
+        const userImage = "https://t4.ftcdn.net/jpg/00/23/72/59/360_F_23725944_W2aSrg3Kqw3lOmU4IAn7iXV88Rnnfch1.jpg";
         await updateProfile(auth.currentUser!, {
           displayName: username,
           photoURL: userImage,
@@ -102,11 +86,11 @@ const signupPage = () => {
           placeholder='Enter Username'
           onChangeText={(text) => setUsername(text)} />
 
-        <TextInput
+        {/* <TextInput
           value={avatar}
           style={styles.textInput}
           placeholder='Enter your Image Url (Optional)'
-          onChangeText={(text) => setAvatar(text)} />
+          onChangeText={(text) => setAvatar(text)} /> */}
 
         <TextInput
           value={email}

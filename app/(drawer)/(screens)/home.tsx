@@ -1,6 +1,6 @@
-import { View, Text, ActivityIndicator} from 'react-native'
+import { View, Text, ActivityIndicator } from 'react-native'
 import { router, useFocusEffect } from 'expo-router';
-import { colors } from '../../../styleSheets/Styles';
+import { colors, styles } from '../../../styleSheets/Styles';
 import { ProfileTab } from '../../../components/ProfileTab';
 import React, { useCallback, useEffect, useState } from 'react';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -16,15 +16,22 @@ const home = () => {
   const userid = getUser();
   const [selectedDate, setSelectedDate] = useState<string>("");
   const [loading, setLoading] = useState(true);
+  const [showEntriesNum, setShowEntriesNum] = useState(false);
+  const [dataLength, setDataLength] = useState(0);
   const [entries, setEntries] = useState([] as entryData[]);
 
   const loadEntries = async () => {
-    setLoading(true);
+    setShowEntriesNum(false);
     setEntries([]);
+    setLoading(true);
     console.log("Loading entries for date: " + selectedDate)
     readDateEntry(selectedDate, userid).then((data) => {
       setEntries(data);
       setLoading(false);
+      if (data.length !== 0) {
+        setDataLength(data.length);
+        setShowEntriesNum(true);
+      }
     });
   };
 
@@ -48,32 +55,26 @@ const home = () => {
   );
 
   return (
-    <View style={{
-      flex: 1,
-      backgroundColor: colors.background, //Color: Dark Blue
-      alignItems: 'center',
-      justifyContent: 'center',
-      padding: 10,
-    }}>
-      <ProfileTab name="Calendar" /> 
+    <View style={styles.overlay}>
+      <ProfileTab name="Calendar" />
 
       <View style={{
         flex: 1,
         width: '100%',
         padding: 10,
       }}>
-        <ScrollView style={{flex: 1}}>
-          <View style={{flex: 1, paddingBottom: 10}}>
-          <CalendarComponent 
-            selectedDate={selectedDate} 
-            setSelectedDate={setSelectedDate} 
-            loadEntries={loadEntries}
-          />  
+        <ScrollView style={{ flex: 1 }}>
+          <View style={{ flex: 1, paddingBottom: 10 }}>
+            <CalendarComponent
+              selectedDate={selectedDate}
+              setSelectedDate={setSelectedDate}
+              loadEntries={loadEntries}
+            />
           </View>
 
-          {/* Display entries */}     
-          <View style={{flex: 1}}>
-            { selectedDate === "" ? (
+          {/* Display entries */}
+          <View style={{ flex: 1 }}>
+            {selectedDate === "" ? (
               <View style={{
                 alignItems: 'center',
               }}>
@@ -103,11 +104,30 @@ const home = () => {
             )}
           </View>
         </ScrollView>
+
+        <View>
+          {showEntriesNum ? (
+            <View>
+              <Text style={{
+                color: 'white',
+                justifyContent: 'center',
+                alignSelf: 'center',
+                paddingTop: 5,
+                paddingBottom: 15,
+                fontSize: 13,
+              }}>
+                Number of Entries: {dataLength}
+              </Text>
+            </View>
+          ) : (
+            <></>
+          )}
+        </View>
       </View>
-      
     </View>
+
   );
-  
+
 }
 
 export default home;

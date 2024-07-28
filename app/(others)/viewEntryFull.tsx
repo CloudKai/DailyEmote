@@ -6,6 +6,7 @@ import { deleteEntry, readSingleEntry } from "../../utils/FireBaseHandler";
 import HeaderComponent from "../../components/HeaderComponent";
 import { Ionicons } from "@expo/vector-icons";
 import ConfirmButton from "../../components/ConfirmButton";
+import { MaterialCommunityIcons } from '@expo/vector-icons'
 
 /**
  * Receives an entry id from the previous screen, displays the entry data for the given id
@@ -26,6 +27,7 @@ export default function viewEntryFull() {
   const [title, setTitle] = useState("");
   const [textEntry, setTextEntry] = useState("");
   const [date, setDate] = useState("");
+  const [mood, setMood] = useState("");
 
   /**
    * Function that loads the entry data onto the screen
@@ -35,6 +37,7 @@ export default function viewEntryFull() {
       setTitle(data.title);
       setTextEntry(data.textEntry);
       setDate(data.year + "-" + data.month + "-" + data.day);
+      setMood(data.mood);
     });
   }
 
@@ -91,27 +94,54 @@ export default function viewEntryFull() {
           <Ionicons name="create" size={24} color={colors.white} />
         </TouchableOpacity>
       </View>
+      
       {/* Entry Data */}
       <View style={viewEntryStyles.viewTextContainer}>
         <View style={viewEntryStyles.boxComponent}>
           <Text style={styles.whiteText}>Date: </Text>
           <View style={viewEntryStyles.textBox}>
-          <Text style={styles.blackText}>{date}</Text>
+            <Text style={styles.blackText}>{date}</Text>
           </View>
         </View>
+
         <View style={viewEntryStyles.boxComponent}>
           <Text style={styles.whiteText}>Title: </Text>
           <View style={viewEntryStyles.textBox}>
-          <Text style={styles.blackText}>{title}</Text>
+            <Text style={styles.blackText}>{title}</Text>
           </View>
         </View>
-        <View style={[viewEntryStyles.boxComponent, {flexDirection: "column"}]}>
-          <Text style={styles.whiteText}>Description: </Text>
+
+        <View style={[viewEntryStyles.boxComponent, { flexDirection: "column" }]}>
+          <View style={{ flexDirection: 'row' }}>
+            <Text style={styles.whiteText}>Description: </Text>
+            {mood === "Happy" ? (
+              <MaterialCommunityIcons
+                name="emoticon-happy-outline"
+                size={30}
+                color={"green"}
+              />
+            ) : mood === "Neutral" ? (
+              <MaterialCommunityIcons
+                name="emoticon-neutral-outline"
+                size={30}
+                color={"yellow"}
+              />
+            ) : (
+              <MaterialCommunityIcons
+                name="emoticon-sad-outline"
+                size={30}
+                color={"red"}
+              />
+            )}
+          </View>
+
           <ScrollView style={viewEntryStyles.entryBox}>
-          <Text style={styles.blackText}>{textEntry}</Text>
+            <Text style={styles.blackText}>{textEntry}</Text>
           </ScrollView>
+
         </View>
       </View>
+
       {/* Delete Entry Button */}
       <View style={viewEntryStyles.buttonContainer}>
         <ConfirmButton title={"Delete Entry"} handlePress={handleDeleteButton} />

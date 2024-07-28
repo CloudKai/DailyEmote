@@ -3,7 +3,7 @@ import React from 'react'
 import { colors } from '../../../styleSheets/Styles'
 import { entryData } from '../../../utils/FireBaseHandler';
 import { Card } from '@rneui/base';
-import CardComponent from './CardComponent';
+import CardComponent from '../cardlist/CardComponent';
 
 type CardListProps = {
   data: entryData[];
@@ -13,11 +13,19 @@ type CardListProps = {
 export default function CardListComponent( { data, gotoViewEntry }: CardListProps) {
   return (
     <View style={CardListStyles.container}>
-      {data.map((item) => {
-        return (
-          <CardComponent key={item.id} item={item} gotoViewEntry={gotoViewEntry} />
-        )
-      })}
+      <FlatList  
+          extraData={data}
+          data = {data}
+          horizontal
+          persistentScrollbar = {true}
+          showsHorizontalScrollIndicator = {false}
+          keyExtractor={i => i.id}
+          renderItem={({item}) => {
+            return (
+              <CardComponent item={item} gotoViewEntry={gotoViewEntry}/>
+            )
+          }}
+      />
     </View>
   )
 }
