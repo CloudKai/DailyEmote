@@ -34,7 +34,7 @@ const drawerLayout = () => {
 
             <Drawer.Screen
                 name = "(profile)"
-
+                
                 options = {{
                     drawerLabel: 'Profile',
                     headerTitle: 'Profile',
@@ -50,7 +50,7 @@ const drawerLayout = () => {
             
             <Drawer.Screen
                 name = "(settings)"
-
+                
                 options = {{
                     drawerLabel: 'Settings',
                     headerTitle: 'Settings',

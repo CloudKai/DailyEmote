@@ -48,6 +48,8 @@ const signInPage = () => {
       }
 
     } finally { 
+      setEmail("");
+      setPassword("");
       setLoading(false);
     }
   }

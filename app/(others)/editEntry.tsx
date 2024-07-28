@@ -1,8 +1,9 @@
-import { View, SafeAreaView, StyleSheet, Alert } from "react-native";
+import { View, SafeAreaView, StyleSheet, Alert, TouchableOpacity, Text, ScrollView } from "react-native";
 import React, { useEffect, useState } from "react";
 import { router, useLocalSearchParams } from "expo-router";
 import { editEntry, formatDate, readSingleEntry } from "../../utils/FireBaseHandler";
 import { colors, styles } from "../../styleSheets/Styles";
+import { MaterialCommunityIcons } from '@expo/vector-icons'
 import DateInput from "../../components/entry/DateInput";
 import ConfirmButton from "../../components/ConfirmButton";
 import DescriptionInput from "../../components/entry/DescriptionInput";
@@ -31,6 +32,12 @@ export default function editEntryScreen() {
   const [textEntry, setTextEntry] = useState("");
   const [date, setDate] = useState(formatDate(new Date(dateString))); //Format: "YYYY-MM-DD"
   const [loading, setLoading] = useState(true); //Loading state (Maybe remove it later)
+  const [mood, setMood] = useState("Happy");
+
+
+  const triggerMood = (newMood: React.SetStateAction<string>) => {
+    setMood(newMood);
+  };
 
   /**
    * Function that handles loading the entry data onto the screen
@@ -40,6 +47,7 @@ export default function editEntryScreen() {
       setTitle(data.title);
       setTextEntry(data.textEntry);
       setDate(data.year + "-" + data.month + "-" + data.day);
+      setMood(data.mood);
     });
   }
 
@@ -52,7 +60,7 @@ export default function editEntryScreen() {
       Alert.alert("Please don't leave any fields empty");
     }
     else {
-      editEntry(id, title, date, textEntry);
+      editEntry(id, title, date, textEntry, mood);
       setTitle("");
       setTextEntry("");
       setDate("");
@@ -88,37 +96,99 @@ export default function editEntryScreen() {
   }, []);
 
   return (
-    <SafeAreaView style={{
-      flex: 1,
-      backgroundColor: colors.background, //Color: Dark Blue
-      alignItems: 'center',
-      padding: 10,
-      justifyContent: "flex-start",
-    }}>
-      {/* Header */}
-      <View style={editEntryStyles.headerContainer}>
-        <HeaderComponent title={"Edit Entry"} goBack={goBack}/>
-      </View>
-      {/*Entry data input fields*/}
-      <View style={{padding: 10, alignItems: "center"}}>
-        {/* Date Input */}
-        <View style={editEntryStyles.inputContainer}>
-          <DateInput text={date} setText={setDate}/>
+    <ScrollView
+      contentContainerStyle={{ flexGrow: 1 }}
+      keyboardShouldPersistTaps='handled'
+    >
+      <SafeAreaView style={{
+        flex: 1,
+        backgroundColor: colors.background, //Color: Dark Blue
+        alignItems: 'center',
+        padding: 10,
+        justifyContent: "flex-start",
+      }}>
+        {/* Header */}
+        <View style={editEntryStyles.headerContainer}>
+          <HeaderComponent title={"Edit Entry"} goBack={goBack} />
         </View>
-        {/* Title Input */}
-        <View style={editEntryStyles.inputContainer}>
-          <TitleInput text={title} setText={setTitle}/>
+        {/*Entry data input fields*/}
+        <View style={{ padding: 10, alignItems: "center" }}>
+          {/* Date Input */}
+          <View style={editEntryStyles.boxComponent}>
+          <Text style={styles.whiteText}>Date: </Text>
+          <View style={editEntryStyles.textBox}>
+            <Text style={styles.blackText}>{date}</Text>
+          </View>
         </View>
-        {/* Description Input */}
-        <View style={editEntryStyles.inputContainer}>
-          <DescriptionInput text={textEntry} setText={setTextEntry}/>
+        
+          {/* Title Input */}
+          <View style={editEntryStyles.inputContainer}>
+            <TitleInput text={title} setText={setTitle} />
+          </View>
+
+          <Text style={{
+            fontSize: 20,
+            color: 'white',
+            paddingTop: 5,
+            alignSelf: 'center'
+          }}>
+            Mood:
+          </Text>
+          <View style={{
+            flexDirection: 'row',
+            padding: 20,
+            justifyContent: 'space-between',
+            alignContent: 'space-evenly',
+          }}>
+            <TouchableOpacity
+              onPress={() => triggerMood("Sad")}
+              style={{
+                paddingHorizontal: 30,
+              }}>
+              <MaterialCommunityIcons
+                name="emoticon-sad-outline"
+                size={60}
+                color={mood === "Sad" ? "red" : "gray"}
+              />
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              onPress={() => triggerMood("Neutral")}
+              style={{
+                paddingHorizontal: 30,
+              }}>
+              <MaterialCommunityIcons
+                name="emoticon-neutral-outline"
+                size={60}
+                color={mood === "Neutral" ? "yellow" : "gray"}
+              />
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              onPress={() => triggerMood("Happy")}
+              style={{
+                paddingHorizontal: 30,
+              }}>
+              <MaterialCommunityIcons
+                name="emoticon-happy-outline"
+                size={60}
+                color={mood === "Happy" ? "green" : "gray"}
+              />
+            </TouchableOpacity>
+          </View>
+
+
+          {/* Description Input */}
+          <View style={editEntryStyles.inputContainer}>
+            <DescriptionInput text={textEntry} setText={setTextEntry} />
+          </View>
         </View>
-      </View>
-      {/* Edit Entry Button */}
-      <View style={editEntryStyles.buttonContainer}>
-        <ConfirmButton handlePress={handleEditEntry} title="Edit Entry"/>
-      </View>
-    </SafeAreaView>
+        {/* Edit Entry Button */}
+        <View style={editEntryStyles.buttonContainer}>
+          <ConfirmButton handlePress={handleEditEntry} title="Edit Entry" />
+        </View>
+      </SafeAreaView>
+    </ScrollView>
   );
 };
 
@@ -136,13 +206,27 @@ const editEntryStyles = StyleSheet.create({
     alignItems: "center",
     padding: 10,
     flexDirection: "row",
-    borderColor: "red",
-    borderWidth: 1,
+    borderColor: 'red',
+    borderWidth: 0,
   },
   buttonContainer: {
     justifyContent: "center",
     alignItems: "center",
     padding: 1,
     width: "100%",
+  },
+  boxComponent: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 10,
+    width: '100%',
+  },
+  textBox: {
+    backgroundColor: colors.contrastBackground,
+    padding: 10,
+    margin: 10,
+    borderRadius: 10,
+    flex: 2,
   },
 });

@@ -3,30 +3,24 @@ import { styles, colors } from '../../../styleSheets/Styles';
 import { Ionicons } from '@expo/vector-icons'
 import { View, ScrollView, Text, FlatList, Button } from 'react-native';
 import React from 'react';
-import { router } from 'expo-router';
-import { Header } from '@rneui/base';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { useRouter } from 'expo-router';
 
 const mainSetting = () => {
+  const router = useRouter();
 
   const items = [
-    {
-      name: 'Account',
-      icon: 'key',
-      backgroundColor: colors.gray,
-      route: '../(profile)/profile',
-    },
     {
       name: 'Privacy',
       icon: 'lock-closed',
       backgroundColor: '#33A5D1',
-      route: '../(profile)/profile',
+      route: '/privacy',
     },
     {
       name: 'Notifications',
       icon: 'notifications',
       backgroundColor: colors.red,
-      route: '../(profile)/profile',
+      route: '/notification',
     },
 
   ];
@@ -36,13 +30,7 @@ const mainSetting = () => {
       name: 'Help',
       icon: 'information',
       backgroundColor: colors.green,
-      route: '../(profile)/profile',
-    },
-    {
-      name: 'Feedback',
-      icon: 'chatbox-ellipses',
-      backgroundColor: colors.green,
-      route: '../feedback',
+      route: '/help',
     },
   ];
 

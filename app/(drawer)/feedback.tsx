@@ -1,11 +1,10 @@
-import { View, Text, Button } from 'react-native'
 import React, { useCallback, useEffect, useState } from 'react'
 import { GiftedChat } from 'react-native-gifted-chat'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { FIREBASE_AUTH, FIREBASE_DB } from '../../FireBaseConfig'
 import { colors } from '../../styleSheets/Styles'
 import { addDoc, collection, onSnapshot, orderBy, query, where } from 'firebase/firestore'
-import BackButton from '../../components/BackButton'
+import { BackButton } from '../../components/BackButton'
 
 const feedback = () => {
   const [messages, setMessages] = useState<any[]>([])
@@ -46,8 +45,6 @@ const feedback = () => {
     };
 
   }, []);
-
-
 
   const onSend = useCallback((messages: any[] = []) => {
 

@@ -2,7 +2,7 @@ import { View, StyleSheet } from 'react-native'
 import React from 'react'
 import { colors } from '../../../styleSheets/Styles'
 import { entryData } from '../../../utils/FireBaseHandler';
-import CardComponent from './CardComponent';
+import CardComponent from '../cardlist/CardComponent';
 
 type CardListProps = {
   data: entryData[];
