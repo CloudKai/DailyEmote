@@ -1,6 +1,5 @@
 import { View, Text, SafeAreaView, StyleSheet, TouchableOpacity } from 'react-native'
 import React from 'react'
-import { router } from 'expo-router';
 import { MaterialIcons } from "@expo/vector-icons";
 import { colors } from '../styleSheets/Styles';
 
@@ -15,6 +14,7 @@ export default function HeaderComponent({ title, goBack }: HeaderProps) {
       <TouchableOpacity 
         onPress={() => goBack()} 
         style={headerStyles.backButton}
+        testID="back-button"
       >
         <MaterialIcons 
           name="keyboard-arrow-left" 

@@ -1,8 +1,7 @@
-import { View, Text, StyleSheet, FlatList } from 'react-native'
+import { View, StyleSheet } from 'react-native'
 import React from 'react'
 import { colors } from '../../../styleSheets/Styles'
 import { entryData } from '../../../utils/FireBaseHandler';
-import { Card } from '@rneui/base';
 import CardComponent from '../cardlist/CardComponent';
 
 type CardListProps = {
@@ -10,22 +9,12 @@ type CardListProps = {
   gotoViewEntry: (text: string) => void;
 }
 
-export default function CardListComponent( { data, gotoViewEntry }: CardListProps) {
+export default function CardListComponent({ data, gotoViewEntry }: CardListProps) {
   return (
     <View style={CardListStyles.container}>
-      <FlatList  
-          extraData={data}
-          data = {data}
-          horizontal
-          persistentScrollbar = {true}
-          showsHorizontalScrollIndicator = {false}
-          keyExtractor={i => i.id}
-          renderItem={({item}) => {
-            return (
-              <CardComponent item={item} gotoViewEntry={gotoViewEntry}/>
-            )
-          }}
-      />
+      {data.map((item) => (
+        <CardComponent key={item.id} item={item} gotoViewEntry={gotoViewEntry} />
+      ))}
     </View>
   )
 }

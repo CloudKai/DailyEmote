@@ -1,5 +1,5 @@
-import { View, Text, Pressable, TextInput, StyleSheet } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import { View, Text, Pressable, TextInput, StyleSheet } from 'react-native';
+import React, { useState } from 'react';
 import RNDateTimePicker, {
   DateTimePickerEvent,
 } from "@react-native-community/datetimepicker";
@@ -11,9 +11,7 @@ type dateInputProps = {
   setText: (text: string) => void;
 }
 
-const currDate = new Date();
-
-export default function DateInput({ text, setText }: dateInputProps) {
+export default function DateInput({ text, setText }: dateInputProps) {  
   const [dateModal, setDateModal] = useState(false);
   const [date, setDate] = useState(new Date(text));
 
@@ -26,13 +24,8 @@ export default function DateInput({ text, setText }: dateInputProps) {
     if (event.type === "dismissed") {
       setDateModal(!dateModal);
     } else if (event.type === "set") {
-      var currentDate = selectedDate || date;
-      if (currentDate > currDate) {
-        setDate(currDate);
-        currentDate = currDate;
-      } else {
-        setDate(currentDate);
-      }
+      const currentDate = selectedDate || date;
+      setDate(currentDate);
       setDateModal(!dateModal);
       console.log("Date selected: ", currentDate);
       const text = formatDate(currentDate);
@@ -50,6 +43,7 @@ export default function DateInput({ text, setText }: dateInputProps) {
           display="spinner"
           value={date}
           onChange={onDateChange}
+          testID="date-picker" 
         />
       )}
       <Text style={[styles.whiteText]}>Date: </Text>
@@ -59,23 +53,15 @@ export default function DateInput({ text, setText }: dateInputProps) {
           setDateModal(!dateModal);
           console.log("Opened date modal", dateModal);
         }}
+        testID="date-pressable" 
       >
-        <TextInput style={dateStyles.text} editable={false}>
+        <TextInput style={dateStyles.text} editable={false} testID="date-text-input">
           {formatDate(date)}
         </TextInput>
       </Pressable>
     </View>
   )
 }
-
-/*
-<DateTimePickerAndroid
-  mode="date"
-  display="spinner"
-  value={date}
-  onChange={onDateChange}
-/>
-*/
 
 const dateStyles = StyleSheet.create({
   dateContainer: {
@@ -90,6 +76,7 @@ const dateStyles = StyleSheet.create({
     margin: 10,
     borderRadius: 10,
     flex: 2,
+    zIndex: 1,
   },
   text: {
     color: colors.black,

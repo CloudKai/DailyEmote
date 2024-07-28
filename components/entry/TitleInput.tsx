@@ -18,6 +18,7 @@ export default function TitleInput({ text, setText }: textInputProps) {
         onChangeText={(text) => setText(text)}
         multiline={true}
         numberOfLines={1}
+        testID="title-input"
       />
     </View>
   )

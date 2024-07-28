@@ -4,10 +4,11 @@ import React from 'react'
 import { colors } from '../../../styleSheets/Styles';
 
 //Props for CalendarComponent
-export type CalendarComponentProps = {
-  selectedDate: string,
-  setSelectedDate: (date: string) => void,
-  loadEntries: () => void,
+export interface CalendarComponentProps {
+  selectedDate: string;
+  setSelectedDate: (date: string) => void;
+  loadEntries: () => void;
+  testID?: string; // Optional testID prop, for integration testing
 };
 
 /**
@@ -15,7 +16,7 @@ export type CalendarComponentProps = {
  * dates can be interacted with to open a modal that displays all entries from a given date.
  * 
  */
-export default function CalendarComponent( { selectedDate, setSelectedDate, loadEntries }: CalendarComponentProps) {
+export default function CalendarComponent( { selectedDate, setSelectedDate, loadEntries, testID }: CalendarComponentProps) {
 
   const handleDayPress = async (day: DateData) => {
     console.log("selectedDate " + day.dateString);
@@ -23,7 +24,7 @@ export default function CalendarComponent( { selectedDate, setSelectedDate, load
   };
   
   return (
-    <View style= {calendarStyles.calendarContainer}>
+    <View style= {calendarStyles.calendarContainer} testID={testID}>
       {/* Calendar */}
       <Calendar
           onDayPress={handleDayPress}
@@ -60,6 +61,7 @@ export default function CalendarComponent( { selectedDate, setSelectedDate, load
             textDayHeaderFontSize: 16,
           }}
           style={calendarStyles.calendar}
+          testID="calendar"
         />
     </View>
   )

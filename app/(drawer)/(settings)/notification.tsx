@@ -1,67 +1,115 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Switch, SafeAreaView, StyleSheet } from 'react-native';
-import { colors } from '../../../styleSheets/Styles';
+import { View, Text, Switch, SafeAreaView, StyleSheet, Alert, Pressable } from 'react-native';
+import { styles, colors } from '../../../styleSheets/Styles';
 import HeaderComponent from '../../../components/HeaderComponent';
 import { router } from 'expo-router';
-import { usePushNotifications } from '../../../utils/notifcationHandler';
-import messaging from "@react-native-firebase/messaging"
+import { usePushNotifications } from '../../../utils/notificationHandler';
+import ConfirmButton from '../../../components/ConfirmButton';
+import * as ExpoNotifs from 'expo-notifications';
+import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker';
+
+const messages = [
+  "Remember to write down how you are feeling today.",
+  "Don't forget to jot down your thoughts today.",
+  "Take a moment to reflect and write about your feelings today.",
+  "Have you noted how you feel today? Take a moment to do so.",
+  "It's a good time to record your feelings. How are you doing today?",
+];
+
+const getRandomMessage = () => {
+  return messages[Math.floor(Math.random() * messages.length)];
+};
 
 export default function Notifications() {
-
-  // const requestUserPermission = async () => {
-  //   const authStatus = await messaging().requestPermission();
-  //   const enabled = 
-  //   authStatus === messaging.AuthorizationStatus.AUTHORIZED || 
-  //   authStatus === messaging.AuthorizationStatus.PROVISIONAL;
-
-  //   if (enabled) {
-  //     console.log("Authorisation status:", authStatus);
-  //   }
-  // }; 
-
-  // useEffect{() => {
-  //   if(requestUserPermission()) {
-  //     messaging()
-  //       .getToken()
-  //       .then((token) => {
-  //         console.log(token);
-  //       });
-  //   } else {
-  //     console.log("Permission not granted", authStatus)
-  //   }
-
-  //   messaging()
-  //     .getInitialNotification()
-  //     .then(async (remoteMessage) => {
-  //       if(remoteMessage) {
-  //         console.log(
-  //             "Notification caused app to open from quit state:",
-  //             remoteMessage.notification
-  //         );
-  //       }
-  //     });
-
-  //     messaging.onNotificationOpenedApp((remoteMessage) => {
-  //       console.log(remoteMessage.notification)
-  //     })
-  // }}
-
+  const { expoPushToken, notification } = usePushNotifications();
   const [isEnabled, setIsEnabled] = useState(false);
+  const [showTimePicker, setShowTimePicker] = useState(false);
+  const [selectedTime, setSelectedTime] = useState(new Date());
 
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
+
+  const enableNotifications = () => {
+    if (expoPushToken) {
+      Alert.alert('Notifications Enabled');
+    } else {
+      Alert.alert('Failed to enable notifications');
+      setIsEnabled(false);
+    }
+  };
+
+  const handleTimeChange = (event: DateTimePickerEvent, selectedDate?: Date) => {
+    const currentDate = selectedDate || selectedTime;
+    setShowTimePicker(false);
+    setSelectedTime(currentDate);
+  };
+
+  // Trigger a notification in 3 second when triggered
+  const triggerDailyNotification = async () => {
+    if (isEnabled) {
+      const message = getRandomMessage();
+
+      await ExpoNotifs.scheduleNotificationAsync({
+        content: {
+          title: 'Reminder',
+          body: message,
+        },
+        trigger: { seconds: 3 },
+      });
+    } else {
+      Alert.alert('Notifications are disabled');
+    }
+  };
+
+  const setDailyNotification = async () => {
+    if (isEnabled) {
+      const trigger = new Date(selectedTime);
+      const message = getRandomMessage();
+      trigger.setSeconds(0);
+
+      await ExpoNotifs.cancelAllScheduledNotificationsAsync(); // Clear existing notifications
+      await ExpoNotifs.scheduleNotificationAsync({
+        content: {
+          title: 'Reminder',
+          body: message,
+        },
+        trigger: {
+          hour: trigger.getHours(),
+          minute: trigger.getMinutes(),
+          repeats: true,
+        },
+      });
+    }
+  };
 
   const goBack = () => {
     router.back();
   };
 
+  useEffect(() => {
+    if (isEnabled) {
+      enableNotifications();
+      setDailyNotification();
+    }
+  }, [isEnabled, selectedTime]);
+
+  useEffect(() => {
+    (async () => {
+      const { status } = await ExpoNotifs.requestPermissionsAsync();
+      if (status !== 'granted') {
+        Alert.alert('Permission to access notifications was denied');
+      }
+    })();
+  }, []);
+
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.headerContainer}>
+    <SafeAreaView style={notifStyles.container}>
+      <View style={notifStyles.headerContainer}>
         <HeaderComponent title="Notifications" goBack={goBack} />
       </View>
-      <View style={styles.content}>
-        <View style={styles.switchContainer}>
-          <Text style={styles.label}>Enable Notifications</Text>
+      <View style={notifStyles.content}>
+
+        <View style={notifStyles.switchContainer}>
+          <Text style={notifStyles.label}>Enable Notifications</Text>
           <Switch
             trackColor={{ false: "#767577", true: "#81b0ff" }}
             thumbColor={isEnabled ? "#f5dd4b" : "#f4f3f4"}
@@ -70,15 +118,36 @@ export default function Notifications() {
           />
         </View>
 
-        {/* <Text>Token: {expoPushToken?.data ?? ""}</Text>
-        <Text>Notification: {data}</Text> */}
+        <View style={notifStyles.textContainer}>
+          <Text style={styles.whiteText}>Daily Reminder: </Text>
+          <Pressable style={styles.textInput} onPress={() => setShowTimePicker(true)}>
+            <Text style={styles.blackText}>
+              {selectedTime.toLocaleTimeString([], { hour: 'numeric', minute: 'numeric', hour12: true })}
+            </Text>
+          </Pressable>
+        </View>
 
+        {showTimePicker && (
+          <DateTimePicker
+            value={selectedTime}
+            mode="time"
+            display="default"
+            onChange={handleTimeChange}
+          />
+        )}
+
+        <View style={notifStyles.buttonContainer}>
+          <ConfirmButton 
+            title="Trigger Daily Notification" 
+            handlePress={triggerDailyNotification} 
+          />
+        </View>
       </View>
     </SafeAreaView>
   );
 }
 
-const styles = StyleSheet.create({
+const notifStyles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.background,
@@ -110,4 +179,12 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: 'white',
   },
+  buttonContainer: {
+    width: '90%',
+    marginTop: 20,
+  },
+  textContainer: {
+    flexDirection: 'column',
+    marginTop: 20,
+  }
 });

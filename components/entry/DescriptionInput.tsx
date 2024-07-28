@@ -18,6 +18,7 @@ export default function DescriptionInput({ text, setText }: textInputProps) {
         onChangeText={(text) => setText(text)}
         multiline={true}
         numberOfLines={4}
+        testID="description-input" 
       />
     </View>
   )

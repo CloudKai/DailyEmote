@@ -115,11 +115,8 @@ export default function editEntryScreen() {
         <View style={{ padding: 10, alignItems: "center" }}>
           {/* Date Input */}
           <View style={editEntryStyles.boxComponent}>
-          <Text style={styles.whiteText}>Date: </Text>
-          <View style={editEntryStyles.textBox}>
-            <Text style={styles.blackText}>{date}</Text>
+            <DateInput text={date} setText={setDate} />
           </View>
-        </View>
         
           {/* Title Input */}
           <View style={editEntryStyles.inputContainer}>
@@ -228,5 +225,6 @@ const editEntryStyles = StyleSheet.create({
     margin: 10,
     borderRadius: 10,
     flex: 2,
+    zIndex: 1,
   },
 });

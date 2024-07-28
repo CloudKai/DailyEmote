@@ -11,15 +11,17 @@ type CardProps = {
 
 export default function CardComponent({ item, gotoViewEntry }: CardProps) {
   return (
-    <View style={{
-      width: 300,
-    }}>
-      <TouchableOpacity onPress={() => { gotoViewEntry(item.id) }}>
+    <View>
+      <TouchableOpacity
+        onPress={() => { gotoViewEntry(item.id) }}
+        testID={`card-${item.id}`}
+      >
         <Card containerStyle={{ height: 262 }}>
           <Card.Title
             numberOfLines={1}
             ellipsizeMode="tail"
             style={{ marginBottom: -15 }}
+            testID={`card-title-${item.id}`}
           >
             {item.title}
           </Card.Title>
@@ -55,6 +57,7 @@ export default function CardComponent({ item, gotoViewEntry }: CardProps) {
               numberOfLines={2}
               ellipsizeMode="tail"
               style={{ paddingStart: 5, textAlign: 'justify', lineHeight: 19 }}
+              testID={`card-text-${item.id}`}
             >
               {item.textEntry}
             </Text>

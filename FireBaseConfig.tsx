@@ -1,5 +1,5 @@
 // Import the functions you need from the SDKs you need
-import *as firebase from "firebase/app";
+import * as firebase from "firebase/app";
 import { getApp, getApps, initializeApp } from "firebase/app";
 import { getAuth, initializeAuth, getReactNativePersistence } from "firebase/auth";
 import { collection, getFirestore } from 'firebase/firestore';

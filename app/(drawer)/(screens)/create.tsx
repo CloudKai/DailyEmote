@@ -30,6 +30,9 @@ export default function create() {
     }
     else {
       addEntry(title, dateString, textEntry, mood);
+      setTitle("");
+      setTextEntry("");
+      setDateString(formatDate(new Date()));
       router.back();
     }
   }

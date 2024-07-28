@@ -88,7 +88,7 @@ const signInPage = () => {
           secureTextEntry={true} />
 
         { loading ? (
-          <ActivityIndicator size="large" color="#0000ff"/>
+          <ActivityIndicator testID='loadingIndicator' size="large" color="#0000ff"/>
         ) : (
           <View>
             <View style={{marginVertical: 15}}>
