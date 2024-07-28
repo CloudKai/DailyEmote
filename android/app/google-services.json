@@ -7,9 +7,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1067322831926:android:e270df28c3f3ca7f1b5497",
+        "mobilesdk_app_id": "1:1067322831926:android:b9a05af7b4b335781b5497",
         "android_client_info": {
-          "package_name": "com.company.dairyApp"
+          "package_name": "com.zongkai.DailyEmote"
         }
       },
       "oauth_client": [],

@@ -31,10 +31,6 @@ const signupPage = () => {
 
       try {
         const response = await createUserWithEmailAndPassword(auth, email, password);
-        //console.log('response.user :', response?.user);
-
-        //await sendEmailVerification(auth.currentUser!);
-        // Alert.alert('Check your email!');
 
         const userImage = "https://t4.ftcdn.net/jpg/00/23/72/59/360_F_23725944_W2aSrg3Kqw3lOmU4IAn7iXV88Rnnfch1.jpg";
         await updateProfile(auth.currentUser!, {

@@ -47,7 +47,6 @@ describe('SignupPage', () => {
   it('renders correctly', () => {
     const { getByPlaceholderText, getByText } = render(<SignupPage />);
     expect(getByPlaceholderText('Enter Username')).toBeTruthy();
-    expect(getByPlaceholderText('Enter your Image Url (Optional)')).toBeTruthy();
     expect(getByPlaceholderText('Enter Email')).toBeTruthy();
     expect(getByPlaceholderText('Enter Password')).toBeTruthy();
     expect(getByText('Read our')).toBeTruthy();

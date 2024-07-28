@@ -172,4 +172,3 @@ apply from: new File(["node", "--print", "require.resolve('@react-native-communi
 applyNativeModulesAppBuildGradle(project)
 
 apply plugin: 'com.google.gms.google-services'
-apply plugin: 'com.android.application'
