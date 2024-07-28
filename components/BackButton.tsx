@@ -20,7 +20,6 @@ export default function BackButton({ name }: { name: string }) {
           position: 'absolute',
           left: 0,
           zIndex: 1,
-          zIndex: 1,
         }}
         testID="back-button"
       >
@@ -37,7 +36,6 @@ export default function BackButton({ name }: { name: string }) {
         color: colors.gray,
         fontWeight: 'bold'
       }}> 
-        {name} 
         {name} 
       </Text>
     </View>

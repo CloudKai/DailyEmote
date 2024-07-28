@@ -55,12 +55,9 @@ export default function DateInput({ text, setText }: dateInputProps) {
         }}
         testID="date-pressable" 
       >
-        <TextInput 
-          style={dateStyles.text} 
-          editable={false} 
-          value={formatDate(date)} 
-          testID="date-text-input" // Added testID for testing purposes
-        />
+        <TextInput style={dateStyles.text} editable={false} testID="date-text-input">
+          {formatDate(date)}
+        </TextInput>
       </Pressable>
     </View>
   )
@@ -79,6 +76,7 @@ const dateStyles = StyleSheet.create({
     margin: 10,
     borderRadius: 10,
     flex: 2,
+    zIndex: 1,
   },
   text: {
     color: colors.black,

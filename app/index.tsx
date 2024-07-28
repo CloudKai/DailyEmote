@@ -7,17 +7,9 @@ import messaging from '@react-native-firebase/messaging';
 const index = () => {
 
     const [showOnBoarding, setShowOnBoarding] = useState<any>(null);
-    const { registerForPushNotificationsAsync } = usePushNotifications();
 
     useEffect(() => {
         checkIfAlreadyOnBoarded();
-        registerForPushNotificationsAsync().then(() => {
-            // Subscribe to the topic
-            messaging()
-              .subscribeToTopic('all-users')
-              .then(() => console.log('Subscribed to topic!'))
-              .catch(error => console.error('Failed to subscribe to topic', error));
-          });
     }, [])
 
     const checkIfAlreadyOnBoarded = async () => {

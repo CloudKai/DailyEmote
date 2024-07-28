@@ -33,27 +33,35 @@ export const usePushNotifications = (): PushNotificationState => {
 
   const registerForPushNotificationsAsync = async (): Promise<string | undefined> => {
     let token;
-    if (Device.isDevice) {
-      const { status: existingStatus } =
-        await Notifications.getPermissionsAsync();
-      let finalStatus = existingStatus;
+    const { status: existingStatus } = await Notifications.getPermissionsAsync();
+    let finalStatus = existingStatus;
 
-      if (existingStatus !== "granted") {
-        const { status } = await Notifications.requestPermissionsAsync();
-        finalStatus = status;
-      }
-      if (finalStatus !== "granted") {
-        Alert.alert("Failed to get push token for push notification");
-        return undefined;
-      }
+    if (existingStatus !== "granted") {
+      const { status } = await Notifications.requestPermissionsAsync();
+      finalStatus = status;
+    }
+    if (finalStatus !== "granted") {
+      Alert.alert("Failed to get push token for push notification");
+      return undefined;
+    }
 
+    if (Platform.OS === "android" && Device.isDevice) {
+      // For physical Android devices
       const pushToken = await messaging().getToken();
       token = pushToken; 
       setExpoPushToken(token);
       console.log("FCM Token:", token);
+    } else if (Platform.OS === "android" && !Device.isDevice) {
+      // For Android emulators
+      const pushToken = (await Notifications.getExpoPushTokenAsync()).data;
+      token = pushToken;
+      setExpoPushToken(token);
+      console.log("Expo Push Token:", token);
     } else {
-      Alert.alert("Must be using a physical device for Push notifications");
-      return undefined;    }
+      // For other platforms (e.g., web)
+      Alert.alert("Push notifications are not supported on this platform");
+      return undefined;
+    }
 
     if (Platform.OS === "android") {
       Notifications.setNotificationChannelAsync("default", {
