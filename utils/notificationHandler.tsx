@@ -31,6 +31,18 @@ export const usePushNotifications = (): PushNotificationState => {
   const notificationListener = useRef<Notifications.Subscription>();
   const responseListener = useRef<Notifications.Subscription>();
 
+  const createNotificationChannel = async () => {
+    if (Platform.OS === "android") {
+      await Notifications.setNotificationChannelAsync("default", {
+        name: "default",
+        importance: Notifications.AndroidImportance.MAX,
+        vibrationPattern: [0, 250, 250, 250],
+        lightColor: "#FF231F7C",
+      });
+      console.log("Notification channel set for Android device or emulator");
+    }
+  };
+
   const registerForPushNotificationsAsync = async (): Promise<string | undefined> => {
     let token;
     const { status: existingStatus } = await Notifications.getPermissionsAsync();
@@ -45,32 +57,24 @@ export const usePushNotifications = (): PushNotificationState => {
       return undefined;
     }
 
-    if (Platform.OS === "android" && Device.isDevice) {
-      // For physical Android devices
-      const pushToken = await messaging().getToken();
-      token = pushToken; 
-      setExpoPushToken(token);
-      console.log("Android Device Token:", token);
-    } else if (Platform.OS === "android" && !Device.isDevice) {
+    if (Device.isDevice) {
+      if (Platform.OS === "android") {
+        const pushToken = await messaging().getToken();
+        token = pushToken;
+        setExpoPushToken(token);
+        console.log("Android Device Token:", token);
+      } else {
+        // Other devices (iOS) will not be supported
+      }
+    } else {
       // For Android emulators
       const pushToken = (await Notifications.getExpoPushTokenAsync()).data;
       token = pushToken;
       setExpoPushToken(token);
       console.log("Android Emulator Token:", token);
-    } else {
-      // For other platforms (e.g., web)
-      Alert.alert("Push notifications are not supported on this platform");
-      return undefined;
     }
 
-    if (Platform.OS === "android") {
-      Notifications.setNotificationChannelAsync("default", {
-        name: "default",
-        importance: Notifications.AndroidImportance.MAX,
-        vibrationPattern: [0, 250, 250, 250],
-        lightColor: "#FF231F7C",
-      });
-    }
+    await createNotificationChannel();
 
     return token;
   }

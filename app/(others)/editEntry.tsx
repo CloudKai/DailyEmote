@@ -182,7 +182,7 @@ export default function editEntryScreen() {
         </View>
         {/* Edit Entry Button */}
         <View style={editEntryStyles.buttonContainer}>
-          <ConfirmButton handlePress={handleEditEntry} title="Edit Entry" />
+          <ConfirmButton handlePress={handleEditEntry} title="Save Entry" />
         </View>
       </SafeAreaView>
     </ScrollView>

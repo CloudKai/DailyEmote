@@ -2,10 +2,10 @@
   "expo": {
     "name": "DailyEmote",
     "slug": "DailyEmote",
-    "scheme": "diaryApp",
+    "scheme": ["diaryapp"],
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png", 
+    "icon": "./assets/icon.png",
     "userInterfaceStyle": "automatic",
     "splash": {
       "image": "./assets/splash.png",
@@ -13,7 +13,10 @@
       "backgroundColor": "#FFB200"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "runtimeVersion": {
+        "policy": "appVersion"
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -21,7 +24,8 @@
         "backgroundColor": "#ffffff"
       },
       "package": "com.zongkai.DailyEmote",
-      "googleServicesFile": "./google-services.json"
+      "googleServicesFile": "./google-services.json",
+      "runtimeVersion": "1.0.0"
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -40,6 +44,12 @@
         "projectId": "dca0c6dd-7f9b-436e-8a07-17d963900f46"
       }
     },
-    "owner": "wzhua.02"
+    "owner": "wzhua.02",
+    "updates": {
+      "enabled": true,
+      "checkAutomatically": "ON_LOAD",
+      "fallbackToCacheTimeout": 0,
+      "url": "https://u.expo.dev/dca0c6dd-7f9b-436e-8a07-17d963900f46"
+    }
   }
 }

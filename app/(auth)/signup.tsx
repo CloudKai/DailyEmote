@@ -30,13 +30,15 @@ const signupPage = () => {
       setLoading(true);
 
       try {
-        const response = await createUserWithEmailAndPassword(auth, email, password);
+        const response = await createUserWithEmailAndPassword(auth, email, password)
 
         const userImage = "https://t4.ftcdn.net/jpg/00/23/72/59/360_F_23725944_W2aSrg3Kqw3lOmU4IAn7iXV88Rnnfch1.jpg";
         await updateProfile(auth.currentUser!, {
           displayName: username,
           photoURL: userImage,
-        })
+        }).then(() => {
+          router.replace('/signin');
+        });
 
         await setDoc(doc(FIREBASE_DB, "users", response?.user?.uid), {
           username,
@@ -44,8 +46,7 @@ const signupPage = () => {
           password,
           userID: response?.user?.uid,
           avatar: userImage,
-        });
-        router.replace('/signin');
+        })
 
       } catch (error: any) {
         let msg = error.message;

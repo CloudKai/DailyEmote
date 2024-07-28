@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Switch, SafeAreaView, StyleSheet, Alert, Pressable } from 'react-native';
+import { View, Text, Switch, SafeAreaView, StyleSheet, Alert, Pressable, Platform } from 'react-native';
 import { styles, colors } from '../../../styleSheets/Styles';
 import HeaderComponent from '../../../components/HeaderComponent';
 import { router } from 'expo-router';
@@ -21,15 +21,16 @@ const getRandomMessage = () => {
 };
 
 export default function Notifications() {
-  const { expoPushToken, notification } = usePushNotifications();
+  const { expoPushToken, notification, registerForPushNotificationsAsync } = usePushNotifications();
   const [isEnabled, setIsEnabled] = useState(false);
   const [showTimePicker, setShowTimePicker] = useState(false);
   const [selectedTime, setSelectedTime] = useState(new Date());
 
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
-  const enableNotifications = () => {
-    if (expoPushToken) {
+  const enableNotifications = async () => {
+    const token = await registerForPushNotificationsAsync();
+    if (token) {
       Alert.alert('Notifications Enabled');
     } else {
       Alert.alert('Failed to enable notifications');
@@ -90,7 +91,7 @@ export default function Notifications() {
       enableNotifications();
       setDailyNotification();
     }
-  }, [isEnabled, selectedTime]);
+  }, [isEnabled]);
 
   useEffect(() => {
     (async () => {
