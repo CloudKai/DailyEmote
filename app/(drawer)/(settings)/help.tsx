@@ -33,7 +33,7 @@ const help = () => {
         color: 'white',
         textAlign: 'center'
       }}>
-        Sorry no help. Good Luck!
+        Contact Us: DailyEmote_help@gmail.com
       </Text>
     </View>
 

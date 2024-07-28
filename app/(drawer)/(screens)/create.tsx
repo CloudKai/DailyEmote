@@ -15,7 +15,6 @@ import HeaderComponent from '../../../components/HeaderComponent';
  * Contains the form to create a new entry
  */
 export default function create() {
-
   const [title, setTitle] = useState("");
   const [textEntry, setTextEntry] = useState("");
   const [dateString, setDateString] = useState(formatDate(new Date())); //Format: "YYYY-MM-DD"

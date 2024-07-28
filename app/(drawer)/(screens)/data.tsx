@@ -5,7 +5,7 @@ import { colors } from '../../../styleSheets/Styles';
 import { BarChart, LineChart, PieChart, PopulationPyramid } from "react-native-gifted-charts";
 import { ScrollView } from 'react-native-gesture-handler';
 import { formatDate, getUser, readNoOfDateEntry, readNoOfHappyInADay, readNoOfMoods } from '../../../utils/FireBaseHandler';
-import { Button } from '@rneui/base';
+import { Button, color } from '@rneui/base';
 import { Ionicons } from '@expo/vector-icons'
 import { useFocusEffect } from 'expo-router';
 
@@ -140,7 +140,8 @@ const data = () => {
           flexDirection: 'row',
           justifyContent: 'space-evenly',
           alignItems: 'center',
-          alignContent: 'center'
+          alignContent: 'center',
+          paddingTop: 10
         }}>
 
           {/* To change to ionicon button */}
@@ -236,10 +237,13 @@ const data = () => {
               showReferenceLine1
               referenceLine1Position={avgBarData}
               referenceLine1Config={{
-                color: 'blue',
+                color: 'green',
                 dashWidth: 2,
-                dashGap: 3,
+                dashGap: 7,
+                labelText: 'avg',
+                labelTextStyle: {color: 'green'}
               }}
+            
             />
           </View>
         </View>
@@ -306,7 +310,7 @@ const data = () => {
 
 
         {/* Start of Line Chart */}
-        <View style={{
+        {/* <View style={{
           paddingBottom: 20,
         }}>
           <Text style={{
@@ -341,7 +345,7 @@ const data = () => {
             yAxisColor="lightgray"
             xAxisColor="lightgray"
           />
-        </View>
+        </View> */}
         {/* </View> */}
         {/* End of Line Chart */}
 
