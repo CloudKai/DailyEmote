@@ -1,6 +1,8 @@
-Install [Git](https://github.com/git-guides/install-git) if you do not have it.
+Download the App
 
-To test the program:
+
+
+To debug the program, follow these steps:
 
 1. **Requires Andriod Emulators either via Mobile Device or Virtual Device Emulator!**
 
