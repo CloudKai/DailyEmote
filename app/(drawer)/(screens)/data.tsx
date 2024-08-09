@@ -18,17 +18,23 @@ const data = () => {
   const [dayMonday, setDayMonday] = useState("");
   const [daySunday, setDaySunday] = useState("");
 
-  const getWeek = (dateOfMonday: Date, dateOfSun: String, date = new Date()) => {
-    const dateOfMon = formatDate(dateOfMonday);
-    const dateOfTues = formatDate(new Date(date.setDate(dateOfMonday.getDate() + 1)));
-    const dateOfWed = formatDate(new Date(date.setDate(dateOfMonday.getDate() + 2)));
-    const dateOfThur = formatDate(new Date(date.setDate(dateOfMonday.getDate() + 3)));
-    const dateOfFri = formatDate(new Date(date.setDate(dateOfMonday.getDate() + 4)));
-    const dateOfSat = formatDate(new Date(date.setDate(dateOfMonday.getDate() + 5)));
-    //Sunday already done
-    // console.log(dateOfMon, dateOfTues, dateOfWed, dateOfThur, dateOfFri, dateOfSat, dateOfSun);
-    return [dateOfMon, dateOfTues, dateOfWed, dateOfThur, dateOfFri, dateOfSat, dateOfSun];
-  }
+  const getWeek = (dateOfMonday: Date, dateOfSun: String) => {
+    const dates: String[] = [];  
+    let currentDate = new Date(dateOfMonday);
+  
+    for (let i = 0; i < 7; i++) {
+      const tempDate = new Date(currentDate); 
+      tempDate.setDate(dateOfMonday.getDate() + i); // Adjust date
+      dates.push(formatDate(tempDate)); // Format and store date
+    }
+  
+    // Add Sunday date directly
+    dates.push(dateOfSun);
+  
+    // console.log(...dates);
+    
+    return dates;
+  };
 
   const [barData, setBarData] = useState<any>([]);
   const [avgBarData, setAvgBarData] = useState(0);

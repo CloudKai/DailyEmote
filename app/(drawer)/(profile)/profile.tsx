@@ -1,4 +1,4 @@
-import { TouchableOpacity, Image, ScrollView, View, Text, Button } from 'react-native'
+import { TouchableOpacity, Image, ScrollView, View, Text, Button, Alert } from 'react-native'
 import React, { useEffect, useRef, useState } from 'react'
 import { FIREBASE_AUTH, FIREBASE_DB } from '../../../FireBaseConfig';
 import { colors, styles } from '../../../styleSheets/Styles';
@@ -97,8 +97,16 @@ const Profile = () => {
         } catch (error) {
           // console.log(error.message);
         }
-    }
-    
+    } else {
+      Alert.alert(
+        'Profile Updated',
+        'Your information has successfully updated',
+        [
+          { text: 'OK', onPress: () => router.back() }
+        ],
+      );
+    }    
+
   }
 
   const handleImageSelection = async () => {

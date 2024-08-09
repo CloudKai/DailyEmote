@@ -28,10 +28,11 @@ const home = () => {
     readDateEntry(selectedDate, userid).then((data) => {
       setEntries(data);
       setLoading(false);
-      // if (data.length !== 0) {
-      //   setDataLength(data.length);
-      //   setShowEntriesNum(true);
-      // }
+      
+      if (data.length !== 0) {
+        setDataLength(data.length);
+        setShowEntriesNum(true);
+      }
     });
   };
 

@@ -11,7 +11,9 @@ type CardProps = {
 
 export default function CardComponent({ item, gotoViewEntry }: CardProps) {
   return (
-    <View>
+    <View style={{
+      width: 300,
+    }}>
       <TouchableOpacity
         onPress={() => { gotoViewEntry(item.id) }}
         testID={`card-${item.id}`}
@@ -20,20 +22,20 @@ export default function CardComponent({ item, gotoViewEntry }: CardProps) {
           <Card.Title
             numberOfLines={1}
             ellipsizeMode="tail"
-            style={{ marginBottom: -15 }}
+            style={{ marginBottom: -5, fontSize: 18 }}
             testID={`card-title-${item.id}`}
           >
             {item.title}
           </Card.Title>
           <Card.Divider style={{ marginTop: 15 }} />
-          <Card.Image
+          {/* <Card.Image
             style={{ paddingTop: 30 }}
             source={{
               uri:
                 'https://cdn-icons-png.flaticon.com/512/8999/8999474.png',
             }}
-          />
-          <View style={{ flexDirection: 'row', paddingTop: 10 }}>
+          /> */}
+          <View style={{ flexDirection: 'row' }}>
             {item.mood === "Happy" ? (
               <MaterialCommunityIcons
                 name="emoticon-happy-outline"
@@ -54,9 +56,9 @@ export default function CardComponent({ item, gotoViewEntry }: CardProps) {
               />
             )}
             <Text
-              numberOfLines={2}
+              numberOfLines={9}
               ellipsizeMode="tail"
-              style={{ paddingStart: 5, textAlign: 'justify', lineHeight: 19 }}
+              style={{ paddingStart: 5, paddingEnd: 15, textAlign: 'auto', lineHeight: 20 }}
               testID={`card-text-${item.id}`}
             >
               {item.textEntry}

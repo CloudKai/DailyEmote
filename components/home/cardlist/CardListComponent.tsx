@@ -1,4 +1,4 @@
-import { View, StyleSheet } from 'react-native'
+import { View, StyleSheet, FlatList } from 'react-native'
 import React from 'react'
 import { colors } from '../../../styleSheets/Styles'
 import { entryData } from '../../../utils/FireBaseHandler';
@@ -12,9 +12,19 @@ type CardListProps = {
 export default function CardListComponent({ data, gotoViewEntry }: CardListProps) {
   return (
     <View style={CardListStyles.container}>
-      {data.map((item) => (
-        <CardComponent key={item.id} item={item} gotoViewEntry={gotoViewEntry} />
-      ))}
+      <FlatList  
+          extraData={data}
+          data = {data}
+          horizontal
+          persistentScrollbar = {true}
+          showsHorizontalScrollIndicator = {false}
+          keyExtractor={i => i.id}
+          renderItem={({item}) => {
+            return (
+              <CardComponent key={item.id} item={item} gotoViewEntry={gotoViewEntry}/>
+            )
+          }}
+      />
     </View>
   )
 }

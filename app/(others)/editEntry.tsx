@@ -115,7 +115,10 @@ export default function editEntryScreen() {
         <View style={{ padding: 10, alignItems: "center" }}>
           {/* Date Input */}
           <View style={editEntryStyles.boxComponent}>
-            <DateInput text={date} setText={setDate} />
+            <Text style={styles.whiteText}>Date: </Text>
+            <View style={editEntryStyles.textBox}>
+              <Text style={styles.blackText}>{date}</Text>
+            </View>
           </View>
         
           {/* Title Input */}

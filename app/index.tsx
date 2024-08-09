@@ -26,7 +26,7 @@ const index = () => {
         if(onboarded == '1') {
             //hide onboarding
             //To test onboarding, set this true
-            setShowOnBoarding(true);
+            setShowOnBoarding(false);
         } else {
             //show onboarding
             setShowOnBoarding(true);

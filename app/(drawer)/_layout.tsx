@@ -65,6 +65,22 @@ const drawerLayout = () => {
             />
 
             <Drawer.Screen
+                name = "focusTimer"
+
+                options = {{
+                    drawerLabel: 'Timer',
+                    headerTitle: 'Focus Timer',
+                    drawerIcon: ({ size, color }) => (
+                        <Ionicons 
+                            name = "stopwatch-outline" 
+                            size = {size} 
+                            color = {color} 
+                        />
+                    ),
+                }}
+            />
+
+            <Drawer.Screen
                 name = "feedback"
 
                 options = {{
